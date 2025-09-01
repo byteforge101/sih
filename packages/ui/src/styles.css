@@ -1,2 +1,14 @@
-/* Component-level styles for the UI package */
-@import "tailwindcss" prefix(ui);
+
+@import "tailwindcss";
+@import "@repo/tailwind-config";
+
+
+
+body {
+  background-color: #ffffff;
+  color: #1f2937; 
+}
+
+.hero-gradient {
+  background: linear-gradient(180deg, #f0f5ff 0%, #ffffff 100%);
+}
