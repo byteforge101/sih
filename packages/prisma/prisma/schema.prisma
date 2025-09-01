@@ -1,0 +1,234 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  STUDENT
+  MENTOR
+  GUARDIAN
+  ADMIN
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+  EXCUSED
+}
+
+enum FeeStatus {
+  PAID
+  DUE
+  OVERDUE
+}
+
+enum NotificationType {
+  ACADEMIC_ALERT
+  FEE_REMINDER
+  COUNSELING_SESSION
+  COMMUNITY_UPDATE
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  role      Role
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  student   Student?
+  mentor    Mentor?
+  guardian  Guardian?
+  notifications Notification[]
+}
+
+model Student {
+  id              String  @id @default(cuid())
+  userId          String  @unique
+  user            User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rollNumber      String  @unique
+  enrollmentYear  Int
+  isAtRisk        Boolean @default(false)
+
+  mentorId        String?
+  mentor          Mentor? @relation(fields: [mentorId], references: [id])
+  guardianId      String?
+  guardian        Guardian? @relation(fields: [guardianId], references: [id])
+  
+  attendance      AttendanceRecord[]
+  scores          ScoreRecord[]
+  fees            FeeRecord[]
+  counselingSessions CounselingSession[]
+  projectEnrollments StudentProject[]
+}
+
+model Mentor {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  department String?
+  
+  mentees Student[]
+  counselingSessions CounselingSession[]
+}
+
+model Guardian {
+  id            String  @id @default(cuid())
+  userId        String  @unique
+  user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  phoneNumber   String?
+  
+  wards         Student[]
+}
+
+model Course {
+  id          String   @id @default(cuid())
+  name        String
+  courseCode  String   @unique
+  description String?
+
+  sessions    CourseSession[]
+  scores      ScoreRecord[]
+}
+
+model AttendanceRecord {
+  id              String   @id @default(cuid())
+  date            DateTime
+  status          AttendanceStatus
+  
+  studentId       String
+  student         Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  courseSessionId String
+  courseSession   CourseSession @relation(fields: [courseSessionId], references: [id], onDelete: Cascade)
+  
+  @@unique([studentId, courseSessionId])
+}
+
+model ScoreRecord {
+  id          String   @id @default(cuid())
+  assessmentType String
+  score       Float
+  maxScore    Float
+  date        DateTime
+  
+  studentId   String
+  student     Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  courseId    String
+  course      Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+}
+
+model FeeRecord {
+  id          String    @id @default(cuid())
+  amount      Float
+  dueDate     DateTime
+  status      FeeStatus @default(DUE)
+  paidDate    DateTime?
+  
+  studentId   String
+  student     Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  message   String
+  isRead    Boolean  @default(false)
+  type      NotificationType
+  createdAt DateTime @default(now())
+}
+
+model CounselingSession {
+  id        String    @id @default(cuid())
+  date      DateTime
+  notes     String?   @db.Text
+  
+  studentId String
+  student   Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  mentorId  String
+  mentor    Mentor    @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+}
+
+model CourseSession {
+  id          String    @id @default(cuid())
+  topic       String
+  startTime   DateTime
+  endTime     DateTime
+  
+  courseId    String
+  course      Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  
+  attendanceRecords AttendanceRecord[]
+  sentimentHotspots SentimentHotspot[]
+  threeDAssets      ThreeDAsset[]
+}
+
+model SentimentHotspot {
+  id                String   @id @default(cuid())
+  timestampInSeconds Int
+  confusionLevel    Float
+  
+  courseSessionId   String
+  courseSession     CourseSession @relation(fields: [courseSessionId], references: [id], onDelete: Cascade)
+}
+
+model ThreeDAsset {
+  id              String   @id @default(cuid())
+  name            String
+  assetUrl        String
+  description     String?
+  createdAt       DateTime @default(now())
+
+  courseSessionId String
+  courseSession   CourseSession @relation(fields: [courseSessionId], references: [id], onDelete: Cascade)
+}
+
+model CommunityProject {
+  id              String   @id @default(cuid())
+  title           String
+  description     String   @db.Text
+  status          String
+  
+  partnerId       String?
+  partner         CommunityPartner? @relation(fields: [partnerId], references: [id])
+  studentEnrollments StudentProject[]
+}
+
+model CommunityPartner {
+  id      String    @id @default(cuid())
+  name    String
+  type    String
+  
+  projects CommunityProject[]
+}
+
+model StudentProject {
+  studentId        String
+  student          Student          @relation(fields: [studentId], references: [id])
+  communityProjectId String
+  communityProject CommunityProject @relation(fields: [communityProjectId], references: [id])
+  role             String?
+  contributionNotes String? @db.Text
+  
+  rewards          Reward[]
+
+  @@id([studentId, communityProjectId])
+}
+
+model Reward {
+  id              String    @id @default(cuid())
+  description     String
+  amount          Float?
+  dateAwarded     DateTime
+  
+  studentId        String
+  communityProjectId String
+  studentProject   StudentProject @relation(fields: [studentId, communityProjectId], references: [studentId, communityProjectId])
+}
