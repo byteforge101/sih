@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 export default function Testimonials() {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-slate-50">
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -13,12 +13,12 @@ export default function Testimonials() {
           transition={{ duration: 0.6 }}
           className="max-w-3xl mx-auto text-center bg-orange-50 border-l-4 border-orange-400 p-8 rounded-lg shadow-md"
         >
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Proof In Every Story</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">From a Mentor's Perspective</h2>
           <blockquote className="text-lg italic text-gray-700 leading-relaxed">
-            “Eduvance completely transformed how I approach learning. The courses are not just informative, they're incredibly engaging. Even with my full-time job, I was able to learn at my own pace.”
+            [cite_start]“Previously, we could only identify struggling students after their end-term results. [cite: 4] This platform gives us clear, early warnings from scattered data, allowing us to provide timely counseling and support. It's a game-changer for student engagement and success.”
           </blockquote>
           <cite className="block font-semibold text-gray-600 mt-6 not-italic">
-            - Melinda Syahmore
+            - Dr. Anjali Sharma, Academic Mentor
           </cite>
         </motion.div>
       </div>

@@ -5,10 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
 const faqs = [
-  { q: "Can I get a job after completing a course?", a: "Many of our students have successfully transitioned into new roles after completing our courses. We provide career guidance and portfolio reviews in our Pro Plan to help you succeed." },
-  { q: "Can I learn at my own pace?", a: "Absolutely! All our courses are self-paced, allowing you to learn on a schedule that works for you." },
-  { q: "What kind of support is available?", a: "We offer email support for all plans, priority support for the Trainer Plan, and 1-on-1 mentorship for the Pro Plan." },
-  { q: "Are certificates internationally recognized?", a: "Our certificates are highly regarded by industry professionals and can be a valuable addition to your resume and LinkedIn profile." },
+  { q: "How does the system detect at-risk students?", a: "It auto-ingests spreadsheets of attendance, scores, and fee records and applies transparent, rule-based thresholds to flag students in a clear, color-coded view. [cite: 8, 9, 10]" },
+  { q: "Is the facial recognition attendance system mandatory?", a: "It is consent-based and designed to reduce proxy marking. [cite_start]The system includes fallback options to ensure reliable tracking for everyone. [cite: 12, 14]" },
+  { q: "What are 'confusion hotspots'?", a: "The system analyzes student facial reactions and quick polls during a lecture to create heatmaps on the lecture timeline, showing where students are most confused. [cite_start]This helps teachers improve delivery. [cite: 16, 17]" },
+  { q: "How does the Community-Linked Learning work?", a: "It bridges classroom learning with real-world local problems from partners like village councils and industries. [cite_start]Students can earn recognition and micro-scholarships for solving these issues. [cite: 22, 25]" },
 ];
 
 const AccordionItem = ({ q, a }: { q: string, a: string }) => {
@@ -52,7 +52,7 @@ export default function FAQ() {
             transition={{ duration: 0.5 }}
             className="text-3xl md:text-4xl font-bold text-gray-800 text-center mb-10"
         >
-            Frequently Asked Question
+            Frequently Asked Questions
         </motion.h2>
         <div>
           {faqs.map((faq, i) => (

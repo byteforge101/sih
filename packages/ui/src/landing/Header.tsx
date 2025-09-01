@@ -15,13 +15,13 @@ export default function Header() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-2xl font-bold text-gray-800">Eduvance</h1>
+          <h1 className="text-2xl font-bold text-gray-800">Student Success AI</h1>
         </motion.div>
         <nav className="hidden md:flex items-center space-x-8">
-          <a href="#" className="text-gray-600 hover:text-blue-600">Home</a>
-          <a href="#" className="text-gray-600 hover:text-blue-600">Courses</a>
-          <a href="#" className="text-gray-600 hover:text-blue-600">About</a>
-          <a href="#" className="text-gray-600 hover:text-blue-600">Contact</a>
+          <a href="#" className="text-gray-600 hover:text-blue-600">Pillars</a>
+          <a href="#" className="text-gray-600 hover:text-blue-600">Features</a>
+          <a href="#" className="text-gray-600 hover:text-blue-600">Impact</a>
+          <a href="#" className="text-gray-600 hover:text-blue-600">FAQ</a>
         </nav>
         <div className="hidden md:block">
           <motion.button
@@ -29,7 +29,7 @@ export default function Header() {
             whileTap={{ scale: 0.95 }}
             className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
           >
-            Log In
+            Dashboard Login
           </motion.button>
         </div>
         <div className="md:hidden">
@@ -45,12 +45,12 @@ export default function Header() {
           animate={{ opacity: 1, y: 0 }}
           className="md:hidden mt-4 bg-white shadow-lg rounded-lg p-4 mx-6"
         >
-            <a href="#" className="block py-2 text-gray-600 hover:text-blue-600">Home</a>
-            <a href="#" className="block py-2 text-gray-600 hover:text-blue-600">Courses</a>
-            <a href="#" className="block py-2 text-gray-600 hover:text-blue-600">About</a>
-            <a href="#" className="block py-2 text-gray-600 hover:text-blue-600">Contact</a>
+            <a href="#" className="block py-2 text-gray-600 hover:text-blue-600">Pillars</a>
+            <a href="#" className="block py-2 text-gray-600 hover:text-blue-600">Features</a>
+            <a href="#" className="block py-2 text-gray-600 hover:text-blue-600">Impact</a>
+            <a href="#" className="block py-2 text-gray-600 hover:text-blue-600">FAQ</a>
             <button className="w-full mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold">
-              Log In
+              Dashboard Login
             </button>
         </motion.div>
       )}

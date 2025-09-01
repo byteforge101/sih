@@ -1,7 +1,7 @@
 
 'use client';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Zap, Globe } from 'lucide-react';
+import { GraduationCap, Rocket, Users } from 'lucide-react';
 
 export default function Growth() {
   return (
@@ -16,42 +16,42 @@ export default function Growth() {
         >
           <div className="lg:w-1/2">
             <div className="w-full h-80 bg-gray-200 rounded-lg shadow-lg">
-              {/* Placeholder for an engaging image */}
+              {/* Placeholder for an impact-related image */}
             </div>
           </div>
           <div className="lg:w-1/2 text-center lg:text-left">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-              Gateway To Personal And Professional Growth
+              Transforming Institutes into Hubs of Innovation
             </h2>
             <p className="text-gray-600 mb-8">
-              We are dedicated to providing an unparalleled learning experience that is accessible, high-quality, and impactful.
+              [cite_start]Our platform enables early academic rescue, immersive learning, and social responsibility for a measurable societal impact. [cite: 27]
             </p>
             <div className="space-y-6">
               <div className="flex items-center justify-center lg:justify-start gap-4">
                 <div className="bg-blue-100 text-blue-600 p-3 rounded-full">
-                  <Globe className="w-6 h-6" />
+                  <GraduationCap className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg">Accessibility</h3>
-                  <p className="text-gray-500">Learn from anywhere, at any time.</p>
+                  <h3 className="font-bold text-lg">Early Academic Rescue</h3>
+                  <p className="text-gray-500">Prevent failures before they happen.</p>
                 </div>
               </div>
                <div className="flex items-center justify-center lg:justify-start gap-4">
                 <div className="bg-green-100 text-green-600 p-3 rounded-full">
-                  <ShieldCheck className="w-6 h-6" />
+                  <Rocket className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg">Quality</h3>
-                  <p className="text-gray-500">Courses taught by industry experts.</p>
+                  <h3 className="font-bold text-lg">Immersive Learning</h3>
+                  [cite_start]<p className="text-gray-500">Engage students with low-cost, high-tech tools. [cite: 20]</p>
                 </div>
               </div>
                <div className="flex items-center justify-center lg:justify-start gap-4">
                 <div className="bg-orange-100 text-orange-600 p-3 rounded-full">
-                  <Zap className="w-6 h-6" />
+                  <Users className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg">Impact</h3>
-                  <p className="text-gray-500">Gain practical skills for real-world success.</p>
+                  <h3 className="font-bold text-lg">Social Responsibility</h3>
+                  [cite_start]<p className="text-gray-500">Connect students with community problems. [cite: 22]</p>
                 </div>
               </div>
             </div>

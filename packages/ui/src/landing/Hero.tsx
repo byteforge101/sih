@@ -12,7 +12,7 @@ export default function Hero() {
           transition={{ duration: 0.6 }}
           className="text-4xl md:text-6xl font-extrabold text-gray-800 leading-tight"
         >
-          Elevate Your Future With <br /> <span className="text-blue-600">Practical Skills</span>
+          AI-Based Drop-out Prediction <br /> and <span className="text-blue-600">Counseling System</span>
         </motion.h1>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
@@ -20,7 +20,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mt-6 max-w-2xl mx-auto text-lg text-gray-600"
         >
-          Start learning from the world's best institutions and instructors. Get access to high-quality courses and transform your life.
+          [cite_start]A lightweight, explainable platform that uses existing resources to predict student drop-out risk before it's too late. [cite: 5, 6]
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -29,7 +29,7 @@ export default function Hero() {
           className="mt-8 flex justify-center gap-4"
         >
           <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors">
-            Get Started
+            Request a Demo
           </button>
         </motion.div>
       </div>
