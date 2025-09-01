@@ -27,4 +27,4 @@ jobs:
         env:
             NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
         
-      run: npm run build
+        run: npm run build
