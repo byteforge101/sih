@@ -1,4 +1,4 @@
-import  { AuthOptions } from 'next-auth';
+import NextAuth, { AuthOptions } from 'next-auth';
 
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
@@ -21,7 +21,7 @@ export const authOptions: AuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          return null;
+          throw new Error('Invalid credentials');
         }
 
         const user = await prisma.user.findUnique({
@@ -35,7 +35,7 @@ export const authOptions: AuthOptions = {
 
         if (!user || !user.password) {
           console.log('No user found or no password');
-          return null;
+          throw new Error('Invalid credentials');
         }
 
         const isPasswordCorrect = await bcrypt.compare(
@@ -45,7 +45,7 @@ export const authOptions: AuthOptions = {
 
         if (!isPasswordCorrect) {
           console.log('Invalid password');
-          return null;
+          throw new Error('Invalid credentials');
         }
         console.log('User authenticated:', user);
         return user;
@@ -53,7 +53,7 @@ export const authOptions: AuthOptions = {
     }),
   ],
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   
