@@ -10,6 +10,7 @@
     "start-sih": "cd apps/sih && npm run start"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "prettier": "^3.6.0",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "prisma": "^6.15.0",
@@ -24,6 +25,7 @@
     "packages/*"
   ],
   "dependencies": {
-    "@prisma/client": "^6.15.0"
+    "@prisma/client": "^6.15.0",
+    "bcrypt": "^6.0.0"
   }
 }
