@@ -282,7 +282,7 @@ const SignUpForm = () => {
             });
 
             if (signInResult?.ok) {
-                router.push('/dashboard'); // Redirect to dashboard or a relevant page
+                router.push('/mainapp/dashboard'); // Redirect to dashboard or a relevant page
             } else {
                 setError(signInResult?.error || 'Sign in failed after account creation.');
                 setIsLoading(false);
@@ -368,13 +368,13 @@ const SignInForm = () => {
             setError('Invalid email or password. Please try again.');
             setIsLoading(false);
         } else if (result?.ok) {
-            router.push('/dashboard');
+            router.push('/mainapp/dashboard');
         }
     };
     
     const handleGoogleSignIn = () => {
         setIsLoading(true);
-        signIn('google', { callbackUrl: '/dashboard' });
+        signIn('google', { callbackUrl: '/mainapp/dashboard' });
     }
 
     return (
