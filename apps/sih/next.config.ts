@@ -8,14 +8,6 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
 
-  async rewrites() {
-    return [
-      {
-        source: '/api/auth/:path*',
-        destination: '/api/auth/route',
-      },
-    ];
-  },
 };
 
 export default nextConfig;
