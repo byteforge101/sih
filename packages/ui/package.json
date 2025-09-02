@@ -9,8 +9,10 @@
   ],
   "exports": {
     "./landing/*": "./src/landing/*.tsx",
+    "./dashboard/*": "./src/dashboard/*.tsx",
     "./styles.css": "./dist/index.css",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./*": "./src/*.tsx"
   },
   "license": "MIT",
   "scripts": {
