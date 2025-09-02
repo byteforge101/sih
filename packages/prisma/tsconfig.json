@@ -1,0 +1,17 @@
+{
+    "extends": "@repo/typescript-config/base.json",
+    "compilerOptions": {
+      "outDir": "./dist",
+      "rootDir": ".",
+      "module": "NodeNext",
+      "moduleResolution": "NodeNext",
+      "esModuleInterop": true
+    },
+    "ts-node": {
+      "esm": true,
+      
+      "experimentalSpecifierResolution": "node"
+    },
+     "include": ["./src","./prisma/seed.ts"],
+    "exclude": ["./dist", "node_modules"]
+  }

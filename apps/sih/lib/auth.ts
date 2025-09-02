@@ -1,11 +1,10 @@
-import NextAuth, { AuthOptions } from 'next-auth';
+import  { AuthOptions } from 'next-auth';
 
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
-import { PrismaClient } from '@prisma/client';
+import prisma from '@repo/prisma/client';
 import bcrypt from 'bcrypt';
 
-const prisma = new PrismaClient();
 
 export const authOptions: AuthOptions = {
   
@@ -22,7 +21,7 @@ export const authOptions: AuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error('Invalid credentials');
+          return null;
         }
 
         const user = await prisma.user.findUnique({
@@ -35,7 +34,8 @@ export const authOptions: AuthOptions = {
         });
 
         if (!user || !user.password) {
-          throw new Error('Invalid credentials');
+          console.log('No user found or no password');
+          return null;
         }
 
         const isPasswordCorrect = await bcrypt.compare(
@@ -44,49 +44,46 @@ export const authOptions: AuthOptions = {
         );
 
         if (!isPasswordCorrect) {
-          throw new Error('Invalid credentials');
+          console.log('Invalid password');
+          return null;
         }
-
+        console.log('User authenticated:', user);
         return user;
       },
     }),
   ],
-  pages: {
-    signIn: '/auth',
-    error: '/auth/error',
-  },
   session: {
-    strategy: 'jwt',
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
+  
   callbacks: {
-    /**
-     * This callback is used to control if a user is allowed to sign in.
-     */
+  
     async signIn({ user, account }) {
-      // Allow sign in for credentials provider
+      
       if (account?.provider === 'credentials') {
         return true;
       }
       
-      // For Google provider, check if the email exists in the database
+     
       if (account?.provider === 'google') {
-        if (!user.email) return false; // Should not happen with Google
+        if (!user.email) return false; 
 
         const existingUser = await prisma.user.findUnique({
           where: { email: user.email },
         });
 
-        // If user exists, allow sign in. If not, prevent it.
+      
         return !!existingUser;
       }
 
-      // Deny by default for any other providers
+    
       return false;
     },
     
     async jwt({ token, user, account }) {
       if (account && user) {
-        // On initial sign-in (for any provider), fetch the complete user profile
+      
         const dbUser = await prisma.user.findUnique({
           where: { id: user.id },
           include: { student: true, mentor: true, guardian: true }
@@ -128,10 +125,12 @@ export const authOptions: AuthOptions = {
       return session;
     },
   },
-  secret: process.env.NEXTAUTH_SECRET,
-  debug: process.env.NODE_ENV === 'development',
+
+  secret: process.env.NEXTAUTH_SECRET ,
+  debug: process.env.NODE_ENV === "development",
+  pages: {
+    error: '/auth/error',
+    signIn: '/auth',
+  },
+
 };
-
-const handler = NextAuth(authOptions);
-
-export { handler as GET, handler as POST };
