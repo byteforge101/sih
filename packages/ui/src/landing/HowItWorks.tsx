@@ -39,7 +39,7 @@ export default function HowItWorks() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+          className="flex  justify-center gap-4 max-md:flex-col"
         >
           {steps.map((step) => (
             <motion.div 
