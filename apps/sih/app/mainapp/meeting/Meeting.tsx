@@ -5,7 +5,7 @@ import io, { Socket } from 'socket.io-client';
 import { Mic, MicOff, Video, VideoOff, Maximize, Pin, PinOff, PhoneOff, LoaderCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-const SIGNALING_SERVER_URL = 'http://localhost:8080';
+const SIGNALING_SERVER_URL = process.env.NEXT_PUBLIC_SIGNALING_URL || 'http://localhost:8080';
 
 // VideoCard component with improved unpin icon logic
 const VideoCard = ({
