@@ -15,7 +15,8 @@
     "next": "^15.4.2",
     "next-auth": "^4.24.11",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^15.4.6",
@@ -23,6 +24,7 @@
     "@repo/tailwind-config": "*",
     "@repo/typescript-config": "*",
     "@repo/ui": "*",
+    "@repo/zod": "*",
     "@tailwindcss/postcss": "^4.1.5",
     "@types/node": "^22.15.30",
     "@types/react": "^19.1.0",
@@ -31,7 +33,6 @@
     "eslint": "^9.33.0",
     "postcss": "^8.5.3",
     "tailwindcss": "^4.1.5",
-    "typescript": "5.9.2",
-    "@repo/zod": "*"
+    "typescript": "5.9.2"
   }
 }
