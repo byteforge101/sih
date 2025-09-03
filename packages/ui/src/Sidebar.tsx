@@ -4,16 +4,23 @@ import { Session } from 'next-auth';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  LayoutDashboard, User, Users, BookOpen, HeartHandshake, Shield, GraduationCap, ChevronLeft, ChevronRight, LucideIcon
+  LayoutDashboard, User, Users, BookOpen, HeartHandshake, Shield, GraduationCap, ChevronLeft, ChevronRight, LucideIcon, Video
 } from 'lucide-react';
 import React, { useState } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 const studentLinks = [
-  { href: '/mainapp/dashboard', label: 'Dashboard', icon: LayoutDashboard }, { href: '/mainapp/profile', label: 'My Profile', icon: User }, { href: '/mainapp/courses', label: 'My Courses', icon: BookOpen }, { href: '/mainapp/projects', label: 'Community Projects', icon: HeartHandshake },
+  { href: '/mainapp/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/mainapp/profile', label: 'My Profile', icon: User },
+  { href: '/mainapp/courses', label: 'My Courses', icon: BookOpen },
+  { href: '/mainapp/meeting', label: 'Meetings', icon: Video },
+  { href: '/mainapp/projects', label: 'Community Projects', icon: HeartHandshake },
 ];
 const mentorLinks = [
-  { href: '/mainapp/dashboard', label: 'Dashboard', icon: LayoutDashboard }, { href: '/mainapp/mentees', label: 'My Mentees', icon: Users }, { href: '/mainapp/counseling', label: 'Counseling', icon: HeartHandshake },
+  { href: '/mainapp/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/mainapp/mentees', label: 'My Mentees', icon: Users },
+  { href: '/mainapp/counseling', label: 'Counseling', icon: HeartHandshake },
+  { href: '/mainapp/meeting', label: 'Meetings', icon: Video },
 ];
 const guardianLinks = [
   { href: '/mainapp/dashboard', label: 'Dashboard', icon: LayoutDashboard }, { href: '/mainapp/wards', label: 'My Wards', icon: Shield },
@@ -101,4 +108,3 @@ export default function Sidebar({ session }: { session: Session | null }) {
     </motion.aside>
   );
 }
-
