@@ -5,7 +5,8 @@
     "main": "./src/index.ts",
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
-      "seed": "tsx prisma/seed.ts"
+      "seed": "tsx prisma/seed.ts",
+      "build":"npx prisma generate"
     },
     "type": "module",
     "keywords": [],
