@@ -81,11 +81,11 @@ export const authOptions: AuthOptions = {
       return false;
     },
     
-    async jwt({ token, user, account }) {
-      if (account && user) {
+    async jwt({ token, user, profile, account }) {
+      if (account) {
       
         const dbUser = await prisma.user.findUnique({
-          where: { id: user.id },
+          where: { email: user.email as string },
           include: { student: true, mentor: true, guardian: true }
         });
         
