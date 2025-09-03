@@ -15,7 +15,8 @@
     "type": "commonjs",
     "dependencies": {
         "@types/express": "^5.0.3",
-        "socket.io": "^4.8.1"
+        "socket.io": "^4.8.1",
+        "@repo/typescript-config": "*"
     },
     "devDependencies": {
         "typescript": "5.9.2"
