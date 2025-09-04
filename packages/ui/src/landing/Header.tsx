@@ -1,7 +1,6 @@
-// src/app/components/Header.tsx
 'use client';
 import { motion, Variants } from 'framer-motion';
-import { Menu, X, GraduationCap, Link } from 'lucide-react';
+import { Menu, X, GraduationCap } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 const navLinks = [
@@ -67,7 +66,6 @@ export default function Header() {
       }`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
-        {/* Logo */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -81,7 +79,6 @@ export default function Header() {
           </a>
         </motion.div>
 
-        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
           {navLinks.map((link) => (
             <a 
@@ -95,18 +92,19 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* CTA Button */}
+        {/* --- FIX FOR DESKTOP BUTTON --- */}
         <div className="hidden md:block">
-          <motion.button
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300"
-          >
-            Dashboard Login
-          </motion.button>
+          <a href="/auth">
+            <motion.button
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300"
+            >
+              Dashboard Login
+            </motion.button>
+          </a>
         </div>
 
-        {/* Mobile Menu Button */}
         <div className="md:hidden">
           <button onClick={() => setIsOpen(!isOpen)} className="text-gray-800">
             {isOpen ? <X size={28} /> : <Menu size={28} />}
@@ -114,7 +112,6 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <motion.div
         variants={mobileMenuVariants}
         initial={false}
@@ -135,10 +132,13 @@ export default function Header() {
               </a>
             </motion.li>
           ))}
+          {/* --- FIX FOR MOBILE BUTTON --- */}
           <motion.li variants={listItemVariants}>
-             <Link href="/auth" className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-xl">
-               Dashboard Login
-             </Link>
+             <a href="/auth">
+               <button className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-xl">
+                 Dashboard Login
+               </button>
+             </a>
           </motion.li>
         </motion.ul>
       </motion.div>
