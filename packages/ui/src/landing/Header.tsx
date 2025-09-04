@@ -1,7 +1,7 @@
 // src/app/components/Header.tsx
 'use client';
 import { motion, Variants } from 'framer-motion';
-import { Menu, X, GraduationCap } from 'lucide-react';
+import { Menu, X, GraduationCap, Link } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 const navLinks = [
@@ -136,9 +136,9 @@ export default function Header() {
             </motion.li>
           ))}
           <motion.li variants={listItemVariants}>
-             <button className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-xl">
+             <Link href="/auth" className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-xl">
                Dashboard Login
-             </button>
+             </Link>
           </motion.li>
         </motion.ul>
       </motion.div>
