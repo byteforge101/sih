@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 
 const SIGNALING_SERVER_URL = process.env.NEXT_PUBLIC_SIGNALING_URL || 'http://localhost:8080';
 
-// VideoCard component with improved unpin icon logic
 const VideoCard = ({
   stream,
   isMuted,
@@ -53,7 +52,7 @@ const VideoCard = ({
       <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/60 to-transparent">
         <span className="text-white text-sm font-medium drop-shadow-md">{isLocal ? "You" : `Participant ${participantId.substring(0, 4)}`}</span>
       </div>
-      <div className="absolute top-2 right-2 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <div className="absolute top-2 right-2 flex items-center gap-2 transition-opacity duration-300">
         <button onClick={onPin} className="p-2 bg-black/40 rounded-full text-white hover:bg-blue-500 backdrop-blur-sm">
           {variant === 'main' && !isLocal ? <PinOff size={20} /> : <Pin size={16} />}
         </button>
@@ -101,7 +100,7 @@ export default function MeetingRoom({ meetingId, userRole }: { meetingId: string
       localStream?.getTracks().forEach(track => track.stop());
       Object.values(peerConnections.current).forEach(pc => pc.close());
     };
-  }, [meetingId, userRole]); // localStream is not needed here
+  }, [meetingId, userRole]);
 
   useEffect(() => {
     if (!socket || !localStream) return;
@@ -187,36 +186,37 @@ export default function MeetingRoom({ meetingId, userRole }: { meetingId: string
 
   }, [socket, localStream, userRole, mainStream]);
 
-
   const toggleAudio = () => {
     if (localStream) {
-      (localStream as any).getAudioTracks()[0].enabled = !isAudioMuted;
-      setIsAudioMuted(prev => !prev);
+      const audioTrack = localStream.getAudioTracks()[0];
+      if (audioTrack) {
+        audioTrack.enabled = !audioTrack.enabled;
+        setIsAudioMuted(!audioTrack.enabled);
+      }
     }
   };
 
   const toggleVideo = () => {
     if (localStream) {
-      (localStream as any).getVideoTracks()[0].enabled = !isVideoHidden;
-      setIsVideoHidden(prev => !prev);
+        const videoTrack = localStream.getVideoTracks()[0];
+        if (videoTrack) {
+            videoTrack.enabled = !videoTrack.enabled;
+            setIsVideoHidden(!videoTrack.enabled);
+        }
     }
   };
   
-  // <-- FIX: Improved pin/unpin logic
   const handlePin = (id: string, stream: MediaStream) => {
     if (mainStream?.id === id) { 
-      // This is an "unpin" action
-      // The default view is always the mentor's video
       if (userRole === 'MENTOR' && localStream) {
-        setMainStream({ id: 'local', stream: localStream }); // Mentor unpins to self
+        setMainStream({ id: 'local', stream: localStream });
       } else {
-        // A student unpins to the mentor. Assume mentor is the first remote stream.
         const firstRemote = Object.entries(remoteStreams)[0];
         if (firstRemote) {
           setMainStream({ id: firstRemote[0], stream: firstRemote[1] });
         }
       }
-    } else { // This is a "pin" action
+    } else {
       setMainStream({ id, stream });
     }
   };
@@ -241,7 +241,6 @@ export default function MeetingRoom({ meetingId, userRole }: { meetingId: string
 
   return (
     <div className="h-full bg-slate-100 flex flex-col md:flex-row p-4 gap-4">
-        {/* Main Stage */}
         <div className="flex-1 flex flex-col items-center justify-center gap-4">
             <div className="w-full h-full flex items-center justify-center">
                 {mainStream ? (
@@ -260,7 +259,6 @@ export default function MeetingRoom({ meetingId, userRole }: { meetingId: string
                     </div>
                 )}
             </div>
-            {/* Controls */}
             <div className="p-4 bg-white/60 backdrop-blur-xl border border-slate-200/50 rounded-full flex justify-center items-center gap-4 shadow-lg">
                 <button onClick={toggleAudio} className={`p-4 rounded-full transition-colors ${isAudioMuted ? 'bg-red-500 text-white' : 'bg-slate-200 text-slate-700 hover:bg-slate-300'}`}>
                     {isAudioMuted ? <MicOff /> : <Mic />}
@@ -274,7 +272,6 @@ export default function MeetingRoom({ meetingId, userRole }: { meetingId: string
             </div>
         </div>
 
-        {/* Participants Filmstrip */}
         <div className="w-full md:w-64 bg-white/60 backdrop-blur-xl border border-slate-200/50 rounded-2xl p-4 flex flex-row md:flex-col gap-4 overflow-x-auto md:overflow-y-auto">
             <h2 className="font-bold text-slate-700 text-lg hidden md:block">Participants ({participants.length})</h2>
             {thumbnailParticipants.map(({ id, stream }) => (
@@ -289,7 +286,6 @@ export default function MeetingRoom({ meetingId, userRole }: { meetingId: string
                     />
                 </div>
             ))}
-             {/* Local student video placeholder in filmstrip if not pinned */}
              {userRole === "STUDENT" && localStream && mainStream?.id !== 'local' && thumbnailParticipants.every(p => p.id !== 'local') && (
                 <div className="w-48 md:w-full flex-shrink-0">
                     <VideoCard 
