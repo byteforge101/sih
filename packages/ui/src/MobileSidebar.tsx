@@ -12,26 +12,24 @@ import {
   Shield,
   GraduationCap,
   LucideIcon,
-  X
+  X,
+  Video
 } from 'lucide-react';
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// NOTE: In a real app, you would use a state manager like Zustand or Jotai
-// to control the `isOpen` state globally. The AppBar would trigger it.
-// For this example, we'll simulate it with a simple button inside.
-
-// --- Navigation Links (can be shared from the main sidebar) ---
 const studentLinks = [
     { href: '/mainapp/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/mainapp/profile', label: 'My Profile', icon: User },
     { href: '/mainapp/courses', label: 'My Courses', icon: BookOpen },
+    { href: '/mainapp/meeting', label: 'Meetings', icon: Video },
     { href: '/mainapp/projects', label: 'Community Projects', icon: HeartHandshake },
 ];
 const mentorLinks = [
     { href: '/mainapp/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/mainapp/mentees', label: 'My Mentees', icon: Users },
     { href: '/mainapp/counseling', label: 'Counseling', icon: HeartHandshake },
+    { href: '/mainapp/meeting', label: 'Meetings', icon: Video },
 ];
 const guardianLinks = [
     { href: '/mainapp/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -50,8 +48,6 @@ const mobileNavVariants = {
 
 
 export default function MobileSidebar({ session }: { session: Session | null }) {
-    // THIS IS A TEMPORARY STATE FOR DEMONSTRATION
-    // In a real app, this would come from a global store.
     const [isOpen, setIsOpen] = React.useState(false);
 
     const pathname = usePathname();
@@ -67,7 +63,6 @@ export default function MobileSidebar({ session }: { session: Session | null }) 
 
   return (
     <>
-        {/* This button is temporary to show functionality */}
         <button onClick={() => setIsOpen(true)} className="lg:hidden fixed bottom-4 right-4 z-50 p-4 bg-cyan-500 text-white rounded-full shadow-lg">
             Open Menu
         </button>
@@ -75,7 +70,6 @@ export default function MobileSidebar({ session }: { session: Session | null }) 
         <AnimatePresence>
             {isOpen && (
                 <>
-                    {/* Backdrop */}
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -84,7 +78,6 @@ export default function MobileSidebar({ session }: { session: Session | null }) 
                         className="fixed inset-0 bg-black/50 z-40 lg:hidden"
                     />
 
-                    {/* Mobile Sidebar */}
                     <motion.aside
                         variants={mobileNavVariants}
                         initial="closed"
