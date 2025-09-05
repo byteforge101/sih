@@ -48,7 +48,7 @@ const textVariants: Variants = {
 }
 
 export default function Sidebar({ session }: { session: Session | null }) {
-  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
   let navLinks: { href: string; label: string; icon: LucideIcon; }[] = [];
 
