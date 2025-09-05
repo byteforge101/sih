@@ -4,7 +4,7 @@ import { Session } from 'next-auth';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  LayoutDashboard, User, Users, BookOpen, HeartHandshake, Shield, GraduationCap, ChevronLeft, ChevronRight, LucideIcon, Video
+  LayoutDashboard, User, Users, BookOpen, HeartHandshake, Shield, GraduationCap, ChevronLeft, ChevronRight, LucideIcon, Video, HelpCircle
 } from 'lucide-react';
 import React, { useState } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
@@ -14,6 +14,7 @@ const studentLinks = [
   { href: '/mainapp/profile', label: 'My Profile', icon: User },
   { href: '/mainapp/courses', label: 'My Courses', icon: BookOpen },
   { href: '/mainapp/meeting', label: 'Meetings', icon: Video },
+  { href: '/mainapp/community-qs', label: 'Community Qs', icon: HelpCircle },
   { href: '/mainapp/projects', label: 'Community Projects', icon: HeartHandshake },
 ];
 const mentorLinks = [
@@ -21,6 +22,7 @@ const mentorLinks = [
   { href: '/mainapp/mentees', label: 'My Mentees', icon: Users },
   { href: '/mainapp/counseling', label: 'Counseling', icon: HeartHandshake },
   { href: '/mainapp/meeting', label: 'Meetings', icon: Video },
+  { href: '/mainapp/community-qs', label: 'Community Qs', icon: HelpCircle },
 ];
 const guardianLinks = [
   { href: '/mainapp/dashboard', label: 'Dashboard', icon: LayoutDashboard }, { href: '/mainapp/wards', label: 'My Wards', icon: Shield },
@@ -46,7 +48,7 @@ const textVariants: Variants = {
 }
 
 export default function Sidebar({ session }: { session: Session | null }) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
   const pathname = usePathname();
   let navLinks: { href: string; label: string; icon: LucideIcon; }[] = [];
 

@@ -2,14 +2,16 @@
 
 import { Session } from 'next-auth';
 import { signIn, signOut } from 'next-auth/react';
-import { LogIn, LogOut, Menu, Search, Bell } from 'lucide-react';
+import { LogIn, LogOut, Menu, Search, Bell, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function AppBar({ 
   session,
+  rewardPoints,
   onMenuClick 
 }: { 
   session: Session | null;
+  rewardPoints?: number | null;
   onMenuClick?: () => void; 
 }) {
   const userInitials = session?.user?.name?.split(' ').map((n) => n[0]).join('');
@@ -29,6 +31,12 @@ export default function AppBar({
       <div className="flex items-center gap-4">
         {session?.user ? (
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-4">
+            {(session?.user as any)?.role === 'STUDENT' && rewardPoints !== null && (
+              <div className="flex items-center gap-2 bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-semibold">
+                <Award size={16} />
+                <span>{rewardPoints}</span>
+              </div>
+            )}
             <motion.button whileHover={{ scale: 1.1 }} className="p-2 rounded-full hover:bg-slate-200/50 transition-colors">
                 <Bell className="text-slate-600" />
             </motion.button>
@@ -55,4 +63,3 @@ export default function AppBar({
     </header>
   );
 }
-
