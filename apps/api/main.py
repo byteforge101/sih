@@ -11,7 +11,7 @@ import database as db
 app = FastAPI()
 
 # ... (CORS Middleware remains the same) ...
-origins = ["http://localhost:3001"]
+origins = ["http://localhost:3001","https://sih-sih-co98.vercel.app"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
