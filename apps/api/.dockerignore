@@ -1,0 +1,23 @@
+# Python virtual environment
+venv/
+Uvenv/
+
+# Python caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local environment files
+.env*
+
+# Testing caches
+.pytest_cache
+.coverage
+
+# VS Code directory
+.vscode/
+
+# Docker files
+Dockerfile
+.dockerignore
