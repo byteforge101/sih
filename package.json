@@ -12,8 +12,8 @@
     "db:studio": "dotenv -e packages/prisma/prisma/.env -- npx prisma studio",
     "db:generate": "dotenv -e packages/prisma/prisma/.env -- npx prisma generate",
     "db:push": "dotenv -e packages/prisma/prisma/.env -- npx prisma db push",
-    "setup": "npm run setup --workspaces",
-    "postinstall": "npm run setup"
+    "setup:api": "npm run setup --workspace=api",
+  "postinstall": "npm run setup:api"
   },
   "prisma": {
     "schema": "packages/prisma/prisma/schema.prisma"
