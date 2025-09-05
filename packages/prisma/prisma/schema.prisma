@@ -1,10 +1,12 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [vector]
 }
 
 enum Role {
@@ -55,6 +57,7 @@ model Student {
   rollNumber         String              @unique
   enrollmentYear     Int
   isAtRisk           Boolean             @default(false)
+  encoding Unsupported("vector(4096)")?
   mentorId           String?
   mentor             Mentor?             @relation(fields: [mentorId], references: [id])
   guardianId         String?
