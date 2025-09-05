@@ -5,7 +5,7 @@ build
 .swc/
 
 npm-debug.log*
-
+*/.env
 .env.local
 .env.development.local
 .env.test.local

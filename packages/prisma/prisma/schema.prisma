@@ -68,6 +68,7 @@ model Student {
   fees               FeeRecord[]
   counselingSessions CounselingSession[]
   projectEnrollments StudentProject[]
+  
 }
 
 model Mentor {
