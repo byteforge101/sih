@@ -104,7 +104,7 @@ export const EnrollStudentFace = () => {
       formData.append("image", imageBlob, `${rollNumber}.jpg`);
       formData.append("roll_number", rollNumber);
 
-      const response = await fetch("http://localhost:8000/enroll", {
+      const response = await fetch(getHttpUrl("/enroll"), {
         method: "POST",
         body: formData,
       });
