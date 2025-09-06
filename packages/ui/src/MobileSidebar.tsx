@@ -13,7 +13,8 @@ import {
   GraduationCap,
   LucideIcon,
   X,
-  Video
+  Video,
+  HelpCircle,
 } from 'lucide-react';
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -23,6 +24,7 @@ const studentLinks = [
     { href: '/mainapp/profile', label: 'My Profile', icon: User },
     { href: '/mainapp/courses', label: 'My Courses', icon: BookOpen },
     { href: '/mainapp/meeting', label: 'Meetings', icon: Video },
+    { href: '/mainapp/community-qs', label: 'Community Qs', icon: HelpCircle },
     { href: '/mainapp/projects', label: 'Community Projects', icon: HeartHandshake },
 ];
 const mentorLinks = [
@@ -30,6 +32,7 @@ const mentorLinks = [
     { href: '/mainapp/mentees', label: 'My Mentees', icon: Users },
     { href: '/mainapp/counseling', label: 'Counseling', icon: HeartHandshake },
     { href: '/mainapp/meeting', label: 'Meetings', icon: Video },
+    { href: '/mainapp/community-qs', label: 'Community Qs', icon: HelpCircle },
 ];
 const guardianLinks = [
     { href: '/mainapp/dashboard', label: 'Dashboard', icon: LayoutDashboard },

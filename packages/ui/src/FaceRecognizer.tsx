@@ -3,7 +3,17 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import Webcam from "react-webcam";
 
-// Let's define the possible states for clarity
+// --- API Configuration ---
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const IS_SECURE = API_BASE_URL.startsWith("https");
+
+const getWebSocketUrl = (path: string) => {
+  const protocol = IS_SECURE ? "wss://" : "ws://";
+  const domain = API_BASE_URL.replace(/^https?:\/\//, '');
+  return `${protocol}${domain}${path}`;
+};
+// -------------------------
+
 type ConnectionStatus = "Connecting..." | "Connected" | "Disconnected";
 
 // Use NEXT_PUBLIC_API_URL from environment variables
@@ -19,21 +29,17 @@ export const FaceRecognizer = () => {
     useState<ConnectionStatus>("Connecting...");
 
   const connectWebSocket = useCallback(() => {
-    // Prevent multiple connection attempts
     if (socketRef.current && socketRef.current.readyState < 2) {
       return;
     }
 
     setConnectionStatus("Connecting...");
-    // Use API_URL for WebSocket connection
-    const wsUrl = `${API_URL?.replace(/^http/, "ws")}/ws/recognize`;
-    const ws = new WebSocket(wsUrl);
+    const ws = new WebSocket(getWebSocketUrl("/ws/recognize"));
     socketRef.current = ws;
 
     ws.onopen = () => {
       console.log("WebSocket connected");
       setConnectionStatus("Connected");
-      // Start sending frames only after connection is open
       if (intervalRef.current) clearInterval(intervalRef.current);
       intervalRef.current = setInterval(captureAndSendFrame, 500);
     };

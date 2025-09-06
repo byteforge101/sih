@@ -37,14 +37,20 @@ enum NotificationType {
   COMMUNITY_UPDATE
 }
 
+enum SubmissionStatus {
+  PENDING
+  APPROVED
+  DISAPPROVED
+}
+
 model User {
-  id            String         @id @default(cuid())
-  email         String         @unique
+  id            String          @id @default(cuid())
+  email         String          @unique
   name          String
   password      String
   role          Role
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
   student       Student?
   mentor        Mentor?
   guardian      Guardian?
@@ -52,23 +58,24 @@ model User {
 }
 
 model Student {
-  id                 String              @id @default(cuid())
-  userId             String              @unique
-  user               User                @relation(fields: [userId], references: [id], onDelete: Cascade)
-  rollNumber         String              @unique
-  enrollmentYear     Int
-  isAtRisk           Boolean             @default(false)
-  encoding Unsupported("vector(4096)")?
-  mentorId           String?
-  mentor             Mentor?             @relation(fields: [mentorId], references: [id])
-  guardianId         String?
-  guardian           Guardian?           @relation(fields: [guardianId], references: [id])
-  attendance         AttendanceRecord[]
-  scores             ScoreRecord[]
-  fees               FeeRecord[]
-  counselingSessions CounselingSession[]
-  projectEnrollments StudentProject[]
-  
+  id                      String                       @id @default(cuid())
+  userId                  String                       @unique
+  user                    User                         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rollNumber              String                       @unique
+  enrollmentYear          Int
+  isAtRisk                Boolean                      @default(false)
+  rewardPoints            Int                          @default(0)
+  encoding                Unsupported("vector(4096)")?
+  mentorId                String?
+  mentor                  Mentor?                      @relation(fields: [mentorId], references: [id])
+  guardianId              String?
+  guardian                Guardian?                    @relation(fields: [guardianId], references: [id])
+  attendance              AttendanceRecord[]
+  scores                  ScoreRecord[]
+  fees                    FeeRecord[]
+  counselingSessions      CounselingSession[]
+  projectEnrollments      StudentProject[]
+  communityQuestionSubmissions CommunityQuestionSubmission[]
 }
 
 model Mentor {
@@ -79,6 +86,7 @@ model Mentor {
   mentees            Student[]
   counselingSessions CounselingSession[]
   meetings           Meeting[]
+  communityQuestions CommunityQuestion[]
 }
 
 model Guardian {
@@ -99,13 +107,13 @@ model Course {
 }
 
 model AttendanceRecord {
-  id              String        @id @default(cuid())
+  id              String           @id @default(cuid())
   date            DateTime
   status          AttendanceStatus
   studentId       String
-  student         Student       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  student         Student          @relation(fields: [studentId], references: [id], onDelete: Cascade)
   courseSessionId String
-  courseSession   CourseSession @relation(fields: [courseSessionId], references: [id], onDelete: Cascade)
+  courseSession   CourseSession    @relation(fields: [courseSessionId], references: [id], onDelete: Cascade)
 
   @@unique([studentId, courseSessionId])
 }
@@ -228,4 +236,26 @@ model Meeting {
   mentorId  String
   mentor    Mentor   @relation(fields: [mentorId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
+}
+
+model CommunityQuestion {
+  id           String                        @id @default(cuid())
+  description  String                        @db.Text
+  imageUrl     String?
+  mentorId     String
+  mentor       Mentor                        @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+  createdAt    DateTime                      @default(now())
+  submissions  CommunityQuestionSubmission[]
+}
+
+model CommunityQuestionSubmission {
+  id                  String            @id @default(cuid())
+  answerText          String?           @db.Text
+  answerImageUrl      String?
+  status              SubmissionStatus  @default(PENDING)
+  studentId           String
+  student             Student           @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  communityQuestionId String
+  communityQuestion   CommunityQuestion @relation(fields: [communityQuestionId], references: [id], onDelete: Cascade)
+  createdAt           DateTime          @default(now())
 }
