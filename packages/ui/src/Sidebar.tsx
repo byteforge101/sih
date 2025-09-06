@@ -4,8 +4,8 @@ import { Session } from 'next-auth';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  LayoutDashboard, User, Users, BookOpen, HeartHandshake, Shield, GraduationCap, ChevronLeft, ChevronRight, LucideIcon, Video, HelpCircle
-} from 'lucide-react';
+  LayoutDashboard, User, Users, BookOpen, HeartHandshake, Shield, GraduationCap, ChevronLeft, ChevronRight, LucideIcon, Video, Camera, HelpCircle
+} from 'lucide-react'; 
 import React, { useState } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 
@@ -16,6 +16,7 @@ const studentLinks = [
   { href: '/mainapp/meeting', label: 'Meetings', icon: Video },
   { href: '/mainapp/community-qs', label: 'Community Qs', icon: HelpCircle },
   { href: '/mainapp/projects', label: 'Community Projects', icon: HeartHandshake },
+  { href: '/mainapp/face-enrollment', label: 'Enroll Face', icon: Camera }, 
 ];
 const mentorLinks = [
   { href: '/mainapp/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -48,7 +49,7 @@ const textVariants: Variants = {
 }
 
 export default function Sidebar({ session }: { session: Session | null }) {
-  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
   let navLinks: { href: string; label: string; icon: LucideIcon; }[] = [];
 

@@ -10,14 +10,9 @@ const IS_SECURE = API_BASE_URL.startsWith("https");
 
 const getWebSocketUrl = (path: string) => {
   const protocol = IS_SECURE ? "wss://" : "ws://";
-  const domain = API_BASE_URL.replace(/^https?:\/\//, "");
+  const domain = API_BASE_URL.replace(/^https?:\/\//, '');
   return `${protocol}${domain}${path}`;
 };
-
-const getHttpUrl = (path: string) => {
-  return `${API_BASE_URL}${path}`;
-};
-// -------------------------
 
 type Status =
   | "IDLE"
@@ -27,14 +22,17 @@ type Status =
   | "SUCCESS"
   | "ERROR";
 
-export const EnrollStudentFace = () => {
+interface EnrollStudentFaceProps {
+    handleEnroll: (formData: FormData) => Promise<{ message: string }>;
+}
+
+export const EnrollStudentFace = ({ handleEnroll }: EnrollStudentFaceProps) => {
   const webcamRef = useRef<Webcam>(null);
   const socketRef = useRef<WebSocket | null>(null);
-  const [rollNumber, setRollNumber] = useState("");
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [status, setStatus] = useState<Status>("IDLE");
   const [message, setMessage] = useState(
-    "Enter a roll number and start auto-capture."
+    "Click 'Start Auto-Capture' to begin."
   );
 
   const captureAndLock = useCallback(() => {
@@ -48,10 +46,6 @@ export const EnrollStudentFace = () => {
   }, [webcamRef]);
 
   const startAnalysis = useCallback(() => {
-    if (!rollNumber) {
-      setMessage("Please enter a roll number first.");
-      return;
-    }
     setStatus("ANALYZING");
     setMessage("Starting analysis... Please look at the camera.");
 
@@ -90,31 +84,20 @@ export const EnrollStudentFace = () => {
       setStatus("ERROR");
       setMessage("Could not connect to analysis service.");
     };
-  }, [rollNumber, captureAndLock]);
+  }, [captureAndLock]);
 
-  const handleEnroll = async () => {
-    if (!capturedImage || !rollNumber) return;
-
+  const onEnrollSubmit = async () => {
+    if (!capturedImage) return;
     setStatus("ENROLLING");
-    setMessage("Enrolling student...");
+    setMessage("Enrolling your face...");
 
     try {
       const imageBlob = await fetch(capturedImage).then((res) => res.blob());
       const formData = new FormData();
-      formData.append("image", imageBlob, `${rollNumber}.jpg`);
-      formData.append("roll_number", rollNumber);
+      formData.append("image", imageBlob, `enrollment.jpg`);
+      
+      const result = await handleEnroll(formData);
 
-      const response = await fetch("http://localhost:8000/enroll", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || "Enrollment failed.");
-      }
-
-      const result = await response.json();
       setStatus("SUCCESS");
       setMessage(`✅ Success! ${result.message}`);
       setCapturedImage(null);
@@ -132,38 +115,22 @@ export const EnrollStudentFace = () => {
   const reset = () => {
     setStatus("IDLE");
     setCapturedImage(null);
-    setMessage("Enter a roll number and start auto-capture.");
+    setMessage("Click 'Start Auto-Capture' to begin.");
     socketRef.current?.close();
   };
 
   return (
-    <div className="p-4 border rounded-lg">
-      <h2 className="text-xl font-bold mb-2">Smart Student Enrollment</h2>
-      <div className="mb-4">
-        <label htmlFor="rollNumber" className="block mb-1">
-          Student Roll Number
-        </label>
-        <input
-          id="rollNumber"
-          type="text"
-          value={rollNumber}
-          onChange={(e) => setRollNumber(e.target.value.toUpperCase())}
-          placeholder="e.g., CS101"
-          className="p-2 border rounded w-full"
-          disabled={status !== "IDLE"}
+    <div className="p-4 border rounded-lg bg-white shadow-md">
+      <h2 className="text-xl font-bold mb-4">Smart Face Enrollment</h2>
+      <div className="flex flex-col md:flex-row gap-4">
+        <Webcam
+          audio={false}
+          ref={webcamRef}
+          screenshotFormat="image/jpeg"
+          className="rounded-md w-full md:w-1/2"
+          mirrored={true}
         />
-      </div>
-      <div className="flex gap-4">
-        <div className="w-1/2">
-          <Webcam
-            audio={false}
-            ref={webcamRef}
-            screenshotFormat="image/jpeg"
-            className="rounded-md"
-            mirrored={true}
-          />
-        </div>
-        <div className="w-1/2">
+        <div className="w-full md:w-1/2">
           {capturedImage ? (
             <img
               src={capturedImage}
@@ -172,7 +139,7 @@ export const EnrollStudentFace = () => {
             />
           ) : (
             <div className="w-full h-full bg-gray-200 rounded-md flex items-center justify-center text-center p-4">
-              <p>{message}</p>
+              <p className="text-slate-600">{message}</p>
             </div>
           )}
         </div>
@@ -189,7 +156,7 @@ export const EnrollStudentFace = () => {
         {status === "CAPTURED" && (
           <>
             <Button
-              onClick={handleEnroll}
+              onClick={onEnrollSubmit}
               className="bg-green-500 hover:bg-green-700"
             >
               Enroll This Photo
@@ -202,15 +169,11 @@ export const EnrollStudentFace = () => {
             </Button>
           </>
         )}
-        {(status === "ENROLLING" ||
-          status === "SUCCESS" ||
-          status === "ERROR") && (
+        {(status === "ENROLLING" || status === "SUCCESS" || status === "ERROR") && (
           <Button onClick={reset}>Enroll Another</Button>
         )}
       </div>
-      {(status === "ENROLLING" ||
-        status === "SUCCESS" ||
-        status === "ERROR") && (
+       {(status === "ENROLLING" || status === "SUCCESS" || status === "ERROR") && (
         <p className="mt-4 text-center font-bold">{message}</p>
       )}
     </div>
