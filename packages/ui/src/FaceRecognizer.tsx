@@ -6,6 +6,9 @@ import Webcam from "react-webcam";
 // Let's define the possible states for clarity
 type ConnectionStatus = "Connecting..." | "Connected" | "Disconnected";
 
+// Use NEXT_PUBLIC_API_URL from environment variables
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export const FaceRecognizer = () => {
   const webcamRef = useRef<Webcam>(null);
   const socketRef = useRef<WebSocket | null>(null);
@@ -22,7 +25,9 @@ export const FaceRecognizer = () => {
     }
 
     setConnectionStatus("Connecting...");
-    const ws = new WebSocket("ws://localhost:8000/ws/recognize");
+    // Use API_URL for WebSocket connection
+    const wsUrl = `${API_URL?.replace(/^http/, "ws")}/ws/recognize`;
+    const ws = new WebSocket(wsUrl);
     socketRef.current = ws;
 
     ws.onopen = () => {
@@ -35,20 +40,16 @@ export const FaceRecognizer = () => {
 
     ws.onmessage = (event) => setRecognizedName(event.data);
 
-    // THIS IS THE KEY CHANGE. We will handle all cleanup and retries here.
     ws.onclose = () => {
       console.log(
         "WebSocket disconnected. Attempting to reconnect in 3 seconds..."
       );
       setConnectionStatus("Disconnected");
       if (intervalRef.current) clearInterval(intervalRef.current);
-      // Always attempt to reconnect after a closure.
       setTimeout(connectWebSocket, 3000);
     };
 
-    // The onerror event will usually be followed by onclose, which will handle the retry.
     ws.onerror = () => {
-      // This is a normal event while the backend is starting up.
       console.log("WebSocket connection attempt failed, will retry...");
     };
   }, []);
@@ -65,9 +66,7 @@ export const FaceRecognizer = () => {
   useEffect(() => {
     connectWebSocket();
     return () => {
-      // Cleanup on component unmount
       if (intervalRef.current) clearInterval(intervalRef.current);
-      // Remove the onclose listener before closing to prevent reconnect attempts
       if (socketRef.current) {
         socketRef.current.onclose = null;
         socketRef.current.close();
@@ -75,7 +74,6 @@ export const FaceRecognizer = () => {
     };
   }, [connectWebSocket]);
 
-  // Determine the color and text for the status indicator
   const getStatusIndicator = () => {
     switch (connectionStatus) {
       case "Connected":

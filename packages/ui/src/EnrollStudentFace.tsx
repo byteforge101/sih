@@ -12,6 +12,8 @@ type Status =
   | "SUCCESS"
   | "ERROR";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export const EnrollStudentFace = () => {
   const webcamRef = useRef<Webcam>(null);
   const socketRef = useRef<WebSocket | null>(null);
@@ -40,7 +42,7 @@ export const EnrollStudentFace = () => {
     setStatus("ANALYZING");
     setMessage("Starting analysis... Please look at the camera.");
 
-    const ws = new WebSocket("ws://localhost:8000/ws/analyze_face");
+    const ws = new WebSocket(`${API_URL}/ws/analyze_face`);
     socketRef.current = ws;
 
     ws.onopen = () => {
@@ -92,7 +94,7 @@ export const EnrollStudentFace = () => {
       formData.append("image", imageBlob, `${rollNumber}.jpg`);
       formData.append("roll_number", rollNumber);
 
-      const response = await fetch("http://localhost:8000/enroll", {
+      const response = await fetch(`${API_URL}/enroll`, {
         method: "POST",
         body: formData,
       });
