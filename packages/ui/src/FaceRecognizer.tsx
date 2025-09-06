@@ -3,7 +3,17 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import Webcam from "react-webcam";
 
-// Let's define the possible states for clarity
+// --- API Configuration ---
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const IS_SECURE = API_BASE_URL.startsWith("https");
+
+const getWebSocketUrl = (path: string) => {
+  const protocol = IS_SECURE ? "wss://" : "ws://";
+  const domain = API_BASE_URL.replace(/^https?:\/\//, '');
+  return `${protocol}${domain}${path}`;
+};
+// -------------------------
+
 type ConnectionStatus = "Connecting..." | "Connected" | "Disconnected";
 
 export const FaceRecognizer = () => {
@@ -16,39 +26,33 @@ export const FaceRecognizer = () => {
     useState<ConnectionStatus>("Connecting...");
 
   const connectWebSocket = useCallback(() => {
-    // Prevent multiple connection attempts
     if (socketRef.current && socketRef.current.readyState < 2) {
       return;
     }
 
     setConnectionStatus("Connecting...");
-    const ws = new WebSocket("ws://localhost:8000/ws/recognize");
+    const ws = new WebSocket(getWebSocketUrl("/ws/recognize"));
     socketRef.current = ws;
 
     ws.onopen = () => {
       console.log("WebSocket connected");
       setConnectionStatus("Connected");
-      // Start sending frames only after connection is open
       if (intervalRef.current) clearInterval(intervalRef.current);
       intervalRef.current = setInterval(captureAndSendFrame, 500);
     };
 
     ws.onmessage = (event) => setRecognizedName(event.data);
 
-    // THIS IS THE KEY CHANGE. We will handle all cleanup and retries here.
     ws.onclose = () => {
       console.log(
         "WebSocket disconnected. Attempting to reconnect in 3 seconds..."
       );
       setConnectionStatus("Disconnected");
       if (intervalRef.current) clearInterval(intervalRef.current);
-      // Always attempt to reconnect after a closure.
       setTimeout(connectWebSocket, 3000);
     };
 
-    // The onerror event will usually be followed by onclose, which will handle the retry.
     ws.onerror = () => {
-      // This is a normal event while the backend is starting up.
       console.log("WebSocket connection attempt failed, will retry...");
     };
   }, []);
@@ -65,9 +69,7 @@ export const FaceRecognizer = () => {
   useEffect(() => {
     connectWebSocket();
     return () => {
-      // Cleanup on component unmount
       if (intervalRef.current) clearInterval(intervalRef.current);
-      // Remove the onclose listener before closing to prevent reconnect attempts
       if (socketRef.current) {
         socketRef.current.onclose = null;
         socketRef.current.close();
@@ -75,7 +77,6 @@ export const FaceRecognizer = () => {
     };
   }, [connectWebSocket]);
 
-  // Determine the color and text for the status indicator
   const getStatusIndicator = () => {
     switch (connectionStatus) {
       case "Connected":

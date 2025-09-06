@@ -4,6 +4,21 @@ import React, { useState, useRef, useCallback, useEffect } from "react";
 import Webcam from "react-webcam";
 import { Button } from "./Button";
 
+// --- API Configuration ---
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const IS_SECURE = API_BASE_URL.startsWith("https");
+
+const getWebSocketUrl = (path: string) => {
+  const protocol = IS_SECURE ? "wss://" : "ws://";
+  const domain = API_BASE_URL.replace(/^https?:\/\//, '');
+  return `${protocol}${domain}${path}`;
+};
+
+const getHttpUrl = (path: string) => {
+  return `${API_BASE_URL}${path}`;
+};
+// -------------------------
+
 type Status =
   | "IDLE"
   | "ANALYZING"
@@ -40,12 +55,11 @@ export const EnrollStudentFace = () => {
     setStatus("ANALYZING");
     setMessage("Starting analysis... Please look at the camera.");
 
-    const ws = new WebSocket("ws://localhost:8000/ws/analyze_face");
+    const ws = new WebSocket(getWebSocketUrl("/ws/analyze_face"));
     socketRef.current = ws;
 
     ws.onopen = () => {
       console.log("Analysis WebSocket connected");
-      // Send frames periodically for analysis
       const intervalId = setInterval(() => {
         if (ws.readyState === WebSocket.OPEN && webcamRef.current) {
           const imageSrc = webcamRef.current.getScreenshot();
@@ -53,7 +67,7 @@ export const EnrollStudentFace = () => {
         } else {
           clearInterval(intervalId);
         }
-      }, 500); // Analyze 2 frames per second
+      }, 500);
     };
 
     ws.onmessage = (event) => {
@@ -62,7 +76,6 @@ export const EnrollStudentFace = () => {
         setMessage(
           `Face detected. Confidence: ${Math.round(data.confidence * 100)}%. Hold still...`
         );
-        // We capture if confidence is very high (e.g., > 99%)
         if (data.confidence > 0.99) {
           captureAndLock();
         }
@@ -80,7 +93,6 @@ export const EnrollStudentFace = () => {
   }, [rollNumber, captureAndLock]);
 
   const handleEnroll = async () => {
-    // This logic is mostly the same as before, but it's now a separate step
     if (!capturedImage || !rollNumber) return;
 
     setStatus("ENROLLING");
@@ -92,7 +104,7 @@ export const EnrollStudentFace = () => {
       formData.append("image", imageBlob, `${rollNumber}.jpg`);
       formData.append("roll_number", rollNumber);
 
-      const response = await fetch("http://localhost:8000/enroll", {
+      const response = await fetch(getHttpUrl("/enroll"), {
         method: "POST",
         body: formData,
       });
@@ -106,14 +118,13 @@ export const EnrollStudentFace = () => {
       setStatus("SUCCESS");
       setMessage(`✅ Success! ${result.message}`);
       setCapturedImage(null);
-      setTimeout(() => setStatus("IDLE"), 5000); // Reset after 5 seconds
+      setTimeout(() => setStatus("IDLE"), 5000);
     } catch (error: any) {
       setStatus("ERROR");
       setMessage(`❌ Error: ${error.message}`);
     }
   };
 
-  // Cleanup WebSocket on component unmount
   useEffect(() => {
     return () => socketRef.current?.close();
   }, []);
