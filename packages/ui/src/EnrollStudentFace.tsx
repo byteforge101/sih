@@ -10,7 +10,7 @@ const IS_SECURE = API_BASE_URL.startsWith("https");
 
 const getWebSocketUrl = (path: string) => {
   const protocol = IS_SECURE ? "wss://" : "ws://";
-  const domain = API_BASE_URL.replace(/^https?:\/\//, '');
+  const domain = API_BASE_URL.replace(/^https?:\/\//, "");
   return `${protocol}${domain}${path}`;
 };
 
@@ -26,8 +26,6 @@ type Status =
   | "ENROLLING"
   | "SUCCESS"
   | "ERROR";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const EnrollStudentFace = () => {
   const webcamRef = useRef<Webcam>(null);

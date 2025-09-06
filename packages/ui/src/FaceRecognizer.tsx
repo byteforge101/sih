@@ -9,15 +9,12 @@ const IS_SECURE = API_BASE_URL.startsWith("https");
 
 const getWebSocketUrl = (path: string) => {
   const protocol = IS_SECURE ? "wss://" : "ws://";
-  const domain = API_BASE_URL.replace(/^https?:\/\//, '');
+  const domain = API_BASE_URL.replace(/^https?:\/\//, "");
   return `${protocol}${domain}${path}`;
 };
 // -------------------------
 
 type ConnectionStatus = "Connecting..." | "Connected" | "Disconnected";
-
-// Use NEXT_PUBLIC_API_URL from environment variables
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const FaceRecognizer = () => {
   const webcamRef = useRef<Webcam>(null);
