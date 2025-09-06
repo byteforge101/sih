@@ -98,20 +98,6 @@ export const EnrollStudentFace = ({ handleEnroll }: EnrollStudentFaceProps) => {
       
       const result = await handleEnroll(formData);
 
-<<<<<<< HEAD
-=======
-      const response = await fetch(getHttpUrl("/enroll"), {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || "Enrollment failed.");
-      }
-
-      const result = await response.json();
->>>>>>> 1c140e76656a73baf649688754320f36b0ea0deb
       setStatus("SUCCESS");
       setMessage(`✅ Success! ${result.message}`);
       setCapturedImage(null);
