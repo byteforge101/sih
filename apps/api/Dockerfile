@@ -17,6 +17,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 6. Copy the rest of your application code into the container
 COPY . .
 
+# Copy model files into the container
+COPY models/ ./models/
+
 # 7. Declare the environment variable that the app needs.
 ENV DATABASE_URL=""
 
