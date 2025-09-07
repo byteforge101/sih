@@ -1,0 +1,13 @@
+{
+  "age": 21,
+  "gender": "Female",
+  "study_hours_per_day": 5,
+  "social_media_hours": 5,
+  "part_time_job": "No",
+  "attendance_percentage": 85,
+  "sleep_hours": 7,
+  "diet_quality": "Good",
+  "exercise_hours": 3,
+  "parental_education_level": "Master",
+  "mental_health": 5
+}
