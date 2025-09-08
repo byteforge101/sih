@@ -8,6 +8,10 @@ import { getGuardianDashboardData } from '../../../actions/guardian/get-guardian
 import StudentDashboard from '@repo/ui/dashboard/student-dashboard';
 import MentorDashboard from '@repo/ui/dashboard/mentor-dashboard';
 import GuardianDashboard from '@repo/ui/dashboard/guardian-dashboard';
+import { addMentee } from '../../../actions/mentor/add-mentee';
+import { searchStudents } from '../../../actions/mentor/search-students';
+
+
 
 export  function StudentDashboardLoader() {
     const [data, setData] = useState<any>(null);
@@ -32,7 +36,7 @@ export function MentorDashboardLoader() {
         fetchData();
     }, []);
     if (!data) return <div>Loading...</div>;
-    return <MentorDashboard data={data} />;
+    return <MentorDashboard data={data} searchStudentsAction={searchStudents} addMenteeAction={addMentee} />;
 }
 
 export function GuardianDashboardLoader() {
