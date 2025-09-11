@@ -75,7 +75,7 @@ export default function Sidebar({ session }: { session: Session | null }) {
                 <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-emerald-500 rounded-full flex items-center justify-center shadow-inner-lg">
                     <GraduationCap size={24} className="text-white"/>
                 </div>
-                <span className="text-2xl font-bold bg-gradient-to-r from-cyan-600 to-emerald-600 bg-clip-text text-transparent whitespace-nowrap">EduVance</span>
+                <span className="text-2xl font-bold bg-gradient-to-r from-cyan-600 to-emerald-600 bg-clip-text text-transparent whitespace-nowrap">learnova</span>
             </motion.div>
             )}
           </AnimatePresence>

@@ -5,7 +5,7 @@ const Navbar: React.FC = () => {
   return (
     <nav className="flex justify-between items-center px-8 py-4 bg-white shadow-sm">
       {/* Replace with your actual logo */}
-      <h1 className="font-bold text-2xl text-slate-800">Eduvance</h1>
+      <h1 className="font-bold text-2xl text-slate-800">learnova</h1>
       
       <div className="hidden md:flex items-center space-x-8">
         <a

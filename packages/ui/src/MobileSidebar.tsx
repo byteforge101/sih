@@ -94,7 +94,7 @@ export default function MobileSidebar({ session }: { session: Session | null }) 
                         <div className="p-4 flex items-center justify-between border-b border-slate-200/50">
                             <div className="flex items-center gap-2">
                                 <GraduationCap size={28} className="text-cyan-500"/>
-                                <span className="text-xl font-bold text-cyan-700">EduVance</span>
+                                <span className="text-xl font-bold text-cyan-700">learnova</span>
                             </div>
                             <button onClick={() => setIsOpen(false)} className="p-1 rounded-full hover:bg-white transition-colors">
                                 <X size={20} className="text-slate-600"/>

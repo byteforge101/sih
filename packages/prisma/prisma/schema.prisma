@@ -1,7 +1,7 @@
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["postgresqlExtensions"]
-  binaryTargets = ["native", "debian-openssl-3.0.x"]
+  binaryTargets   = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
@@ -44,13 +44,13 @@ enum SubmissionStatus {
 }
 
 model User {
-  id            String          @id @default(cuid())
-  email         String          @unique
+  id            String         @id @default(cuid())
+  email         String         @unique
   name          String
   password      String
   role          Role
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
   student       Student?
   mentor        Mentor?
   guardian      Guardian?
@@ -58,24 +58,38 @@ model User {
 }
 
 model Student {
-  id                      String                       @id @default(cuid())
-  userId                  String                       @unique
-  user                    User                         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  rollNumber              String                       @unique
-  enrollmentYear          Int
-  isAtRisk                Boolean                      @default(false)
-  rewardPoints            Int                          @default(0)
-  encoding                Unsupported("vector(4096)")?
-  mentorId                String?
-  mentor                  Mentor?                      @relation(fields: [mentorId], references: [id])
-  guardianId              String?
-  guardian                Guardian?                    @relation(fields: [guardianId], references: [id])
-  attendance              AttendanceRecord[]
-  scores                  ScoreRecord[]
-  fees                    FeeRecord[]
-  counselingSessions      CounselingSession[]
-  projectEnrollments      StudentProject[]
+  id                       String                            @id @default(cuid())
+  userId                   String                            @unique
+  user                     User                              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rollNumber               String                            @unique
+  enrollmentYear           Int
+  isAtRisk                 Boolean                           @default(false)
+  rewardPoints             Int                               @default(0)
+  encoding                 Unsupported("vector(4096)")?
+  mentorId                 String?
+  mentor                   Mentor?                           @relation(fields: [mentorId], references: [id])
+  guardianId               String?
+  guardian                 Guardian?                         @relation(fields: [guardianId], references: [id])
+  attendance               AttendanceRecord[]
+  scores                   ScoreRecord[]
+  fees                     FeeRecord[]
+  counselingSessions       CounselingSession[]
+  projectEnrollments       StudentProject[]
   communityQuestionSubmissions CommunityQuestionSubmission[]
+
+
+  age                      Int?
+  predictedscore           Float?
+  gender                   String?
+  study_hours_per_day      Int?
+  social_media_hours       Int?
+  part_time_job            String?
+  attendance_percentage    Int?
+  sleep_hours              Int?
+  diet_quality             String?
+  exercise_hours           Int?
+  parental_education_level String?
+  mental_health            Int?
 }
 
 model Mentor {
@@ -90,9 +104,9 @@ model Mentor {
 }
 
 model Guardian {
-  id          String  @id @default(cuid())
-  userId      String  @unique
-  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          String    @id @default(cuid())
+  userId      String    @unique
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   phoneNumber String?
   wards       Student[]
 }
@@ -107,13 +121,13 @@ model Course {
 }
 
 model AttendanceRecord {
-  id              String           @id @default(cuid())
+  id              String          @id @default(cuid())
   date            DateTime
   status          AttendanceStatus
   studentId       String
-  student         Student          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  student         Student         @relation(fields: [studentId], references: [id], onDelete: Cascade)
   courseSessionId String
-  courseSession   CourseSession    @relation(fields: [courseSessionId], references: [id], onDelete: Cascade)
+  courseSession   CourseSession   @relation(fields: [courseSessionId], references: [id], onDelete: Cascade)
 
   @@unique([studentId, courseSessionId])
 }
@@ -191,12 +205,12 @@ model ThreeDAsset {
 }
 
 model CommunityProject {
-  id                 String           @id @default(cuid())
-  title              String
-  description        String           @db.Text
-  status             String
-  partnerId          String?
-  partner            CommunityPartner? @relation(fields: [partnerId], references: [id])
+  id                   String           @id @default(cuid())
+  title                String
+  description          String           @db.Text
+  status               String
+  partnerId            String?
+  partner              CommunityPartner? @relation(fields: [partnerId], references: [id])
   studentEnrollments StudentProject[]
 }
 
@@ -220,13 +234,13 @@ model StudentProject {
 }
 
 model Reward {
-  id                 String         @id @default(cuid())
-  description        String
-  amount             Float?
-  dateAwarded        DateTime
-  studentId          String
+  id                   String         @id @default(cuid())
+  description          String
+  amount               Float?
+  dateAwarded          DateTime
+  studentId            String
   communityProjectId String
-  studentProject     StudentProject @relation(fields: [studentId, communityProjectId], references: [studentId, communityProjectId])
+  studentProject       StudentProject @relation(fields: [studentId, communityProjectId], references: [studentId, communityProjectId])
 }
 
 model Meeting {
@@ -239,13 +253,13 @@ model Meeting {
 }
 
 model CommunityQuestion {
-  id           String                        @id @default(cuid())
-  description  String                        @db.Text
-  imageUrl     String?
-  mentorId     String
-  mentor       Mentor                        @relation(fields: [mentorId], references: [id], onDelete: Cascade)
-  createdAt    DateTime                      @default(now())
-  submissions  CommunityQuestionSubmission[]
+  id            String                        @id @default(cuid())
+  description   String                        @db.Text
+  imageUrl      String?
+  mentorId      String
+  mentor        Mentor                        @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+  createdAt     DateTime                      @default(now())
+  submissions   CommunityQuestionSubmission[]
 }
 
 model CommunityQuestionSubmission {
