@@ -136,14 +136,14 @@ const AuthPage: React.FC = () => {
                         <div className="bg-white/20 p-2 rounded-lg">
                             <GraduationCap size={32} />
                         </div>
-                        <h1 className="text-2xl font-bold tracking-wider bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">Student Success AI</h1>
+                        <h1 className="text-2xl font-bold tracking-wider bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">learnova</h1>
                     </div>
                     <p className="mt-8 text-indigo-100 text-lg leading-relaxed font-light backdrop-blur-[2px]">
                         Empowering institutions with AI to predict student success and foster growth. Welcome to the future of education.
                     </p>
                 </div>
                 <div className="text-sm text-indigo-300">
-                    &copy; {new Date().getFullYear()} Student Success AI.
+                    &copy; {new Date().getFullYear()} learnova.
                 </div>
             </div>
         </div>

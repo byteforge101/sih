@@ -16,6 +16,8 @@ import {
   Video,
   Camera,
   HelpCircle,
+  ClipboardEdit
+ // Added a new icon for details
 } from 'lucide-react';
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -23,6 +25,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 const studentLinks = [
     { href: '/mainapp/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/mainapp/profile', label: 'My Profile', icon: User },
+    // ADDED: New link for student details
+    { href: '/mainapp/student-details', label: 'Student Details', icon: ClipboardEdit },
     { href: '/mainapp/courses', label: 'My Courses', icon: BookOpen },
     { href: '/mainapp/meeting', label: 'Meetings', icon: Video },
     { href: '/mainapp/community-qs', label: 'Community Qs', icon: HelpCircle },
@@ -31,7 +35,7 @@ const studentLinks = [
 ];
 const mentorLinks = [
     { href: '/mainapp/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { href: '/mainapp/mentees', label: 'My Mentees', icon: Users },
+    { href: '/mainapp/mentees', label: 'My Mentees', icon: Users }, // This link was already present
     { href: '/mainapp/counseling', label: 'Counseling', icon: HeartHandshake },
     { href: '/mainapp/meeting', label: 'Meetings', icon: Video },
     { href: '/mainapp/community-qs', label: 'Community Qs', icon: HelpCircle },
