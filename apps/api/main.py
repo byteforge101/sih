@@ -85,7 +85,7 @@ async def analyze_face(websocket: WebSocket):
 @app.websocket("/ws/recognize")
 async def recognize_face(websocket: WebSocket, db_session: Session = Depends(db.get_db)):
     await websocket.accept()
-    print("WebSocket connection established.")
+    print("WebSocket connection established for multi-face recognition.") # Updated log message
     try:
         while True:
             base64_str = await websocket.receive_text()
@@ -97,35 +97,47 @@ async def recognize_face(websocket: WebSocket, db_session: Session = Depends(db.
             nparr = np.frombuffer(img_bytes, np.uint8)
             frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
             
-            recognized_info = "..." 
+            # This list will hold all the results for the current frame
+            recognition_results = []
+            
             try:
-                embedding = DeepFace.represent(frame, model_name='VGG-Face', enforce_detection=False)[0]['embedding']
-                
-                # --- THIS IS THE CORRECTED QUERY SYNTAX ---
-                closest_student = db_session.query(db.Student).filter(db.Student.encoding != None).order_by(db.Student.encoding.op('<->')(embedding)).first()
-                
-                # The `op('<->')` returns the distance, so we need to get it differently
-                if closest_student:
-                    # To get the distance with .op(), we can re-calculate it or just trust the ordering
-                    distance = np.linalg.norm(np.array(closest_student.encoding) - np.array(embedding))
-                    print(f"DEBUG: Closest match found: {closest_student.rollNumber} with distance: {distance:.4f}")
+                # 1. Use DeepFace.represent to find ALL faces.
+                # It returns a list of dictionaries, one for each face found.
+                face_objects = DeepFace.represent(frame, model_name='VGG-Face', enforce_detection=False)
 
-                    MATCH_THRESHOLD = 1.2 
-                    if distance < MATCH_THRESHOLD:
-                        recognized_info = closest_student.rollNumber
-                    else:
-                        recognized_info = "Unknown"
-                else:
-                    print("DEBUG: No encodings found in the database to compare against.")
-                    recognized_info = "Unknown"
-                
-                print(f"DEBUG: Match result: {recognized_info}")
+                # 2. Loop through each face found in the frame
+                for face in face_objects:
+                    embedding = face['embedding']
+                    facial_area = face['facial_area'] # The bounding box: {'x': ..., 'y': ..., 'w': ..., 'h': ...}
+                    
+                    # 3. For each face, query the database to find the closest match
+                    closest_student = db_session.query(db.Student).filter(db.Student.encoding != None).order_by(db.Student.encoding.op('<->')(embedding)).first()
+                    
+                    recognized_name = "Unknown"
+                    if closest_student:
+                        # Re-calculate the distance to use for the threshold check
+                        distance = np.linalg.norm(np.array(closest_student.encoding) - np.array(embedding))
+                        
+                        MATCH_THRESHOLD = 1.2 
+                        if distance < MATCH_THRESHOLD:
+                            recognized_name = closest_student.rollNumber
+                    
+                    # 4. Add the result (name and box) to our list for this frame
+                    recognition_results.append({
+                        "name": recognized_name,
+                        "box": facial_area
+                    })
 
             except (ValueError, IndexError):
+                # This can happen if DeepFace fails on a frame or finds no faces.
+                # We simply send back an empty list in this case.
                 print("DEBUG: DeepFace could not find a face in the current frame.")
-                recognized_info = "No face detected"
+                pass
 
-            await websocket.send_text(recognized_info)
+            # 5. Send the entire list of results back to the frontend as a JSON string.
+            # This is the crucial change that fixes the error.
+            await websocket.send_text(json.dumps(recognition_results))
+            
     except Exception as e:
         print(f"FATAL WEBSOCKET ERROR: {e}") 
         print("Client disconnected.")
