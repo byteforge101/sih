@@ -3,9 +3,9 @@
 import { motion } from 'framer-motion';
 
 const steps = [
-    { name: 'Data Ingestion', description: 'Upload scattered data like attendance and test scores. [cite: 5, 8]', isPopular: false },
-    { name: 'AI-Powered Analysis', description: 'The system applies rules to identify early warning signs and flags at-risk students. [cite: 9, 10]', isPopular: true },
-    { name: 'Intervention & Support', description: 'Mentors receive alerts and provide counseling to ensure student recovery. [cite: 10, 11]', isPopular: false },
+    { name: 'Data Ingestion', description: 'Upload scattered data like attendance and test scores.', isPopular: false },
+    { name: 'AI-Powered Analysis', description: 'The system applies rules to identify early warning signs and flags at-risk students.', isPopular: true },
+    { name: 'Intervention & Support', description: 'Mentors receive alerts and provide counseling to ensure student recovery.', isPopular: false },
   ];
 const containerVariants = {
   hidden: { opacity: 0 },

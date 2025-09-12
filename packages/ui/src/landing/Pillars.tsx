@@ -7,31 +7,31 @@ const pillars = [
   {
     number: '01',
     title: 'Early Intervention Dashboard',
-    description: 'Flags at-risk students using attendance, scores, and fees data.',
+    description: 'Flags At-Risk Students Using Attendance, Scores, And Fees Data.',
     icon: <LayoutDashboard size={32} />,
   },
   {
     number: '02',
     title: 'Facial Recognition Attendance',
-    description: 'Reduces proxy marking and ensures reliable engagement tracking.',
+    description: 'Reduces Proxy Marking And Ensures Reliable Engagement Tracking.',
     icon: <UserIcon size={32} />,
   },
   {
     number: '03',
-    title: 'Lecture Sentiment Heatmaps',
-    description: 'Visualizes "confusion hotspots" on lecture timelines.',
+    title: 'Sentiment Analysis',
+    description: 'Leverages Emotional Cues To Infer Student Understanding.',
     icon: <Smile size={32} />,
   },
   {
     number: '04',
-    title: 'AI-Powered 3D Whiteboard',
-    description: 'Converts teacher gestures into interactive 3D diagrams.',
+    title: 'Data Anonymization',
+    description: 'Information Is Anonymized To Protect Student Privacy.',
     icon: <Box size={32} />,
   },
   {
     number: '05',
     title: 'Community-Linked Learning',
-    description: 'Bridges learning with real-world local problems.',
+    description: 'Bridges Learning With Real-World Local Problems.',
     icon: <Globe size={32} />,
   },
 ];

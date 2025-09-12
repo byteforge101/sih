@@ -18,7 +18,7 @@ export default function Home() {
       <Pillars />
       <Features />
       <HowItWorks />
-      <Growth />
+      <Growth imageUrl='/images/innovation.jpg'/>
       <Testimonials />
       <FAQ />
       <CTA />
