@@ -225,3 +225,134 @@ async def predict(input: StudentInput):
         return JSONResponse(status_code=200, content={"predicted_exam_score": round(float(prediction[0]),2)})
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
+
+# --- Dropout Prediction Model Endpoints ---
+
+# Load your model
+try:
+    with open('models/model3.pkl', "rb") as f:
+        model = pickle.load(f)
+except FileNotFoundError:
+    model = None
+    print("model3.pkl file not found. Place it in the same directory as this script.")
+
+# Health check endpoint
+@app.get("/health")
+def health_check():
+    if model is not None:
+        return {"status": "ok"}
+    else:
+        raise HTTPException(status_code=500, detail="Model not loaded.")
+    
+# User-facing Pydantic model
+class StudentData(BaseModel):
+    application_mode: str
+    course: str
+    attendance: str
+    previous_qualification: str
+    mothers_qualification: str
+    fathers_qualification: str
+    mothers_occupation: str
+    fathers_occupation: str
+    displaced: str
+    debtor: str
+    tuition_fees_up_to_date: str
+    gender: str
+    scholarship_holder: str
+    age_at_enrollment: int
+    international: str
+    curricular_units_1st_sem_credited: int
+    curricular_units_1st_sem_enrolled: int
+    curricular_units_1st_sem_evaluations: int
+    curricular_units_1st_sem_approved: int
+    curricular_units_1st_sem_grade: float
+    curricular_units_1st_sem_without_evaluations: int
+    curricular_units_2nd_sem_credited: int
+    curricular_units_2nd_sem_enrolled: int
+    curricular_units_2nd_sem_evaluations: int
+    curricular_units_2nd_sem_approved: int
+    curricular_units_2nd_sem_grade: float
+    curricular_units_2nd_sem_without_evaluations: int
+
+# Helper mapping functions
+def application_mode_to_numeric(val):
+    mapping = {"General": 1, "Transfer": 7, "Other": 8}
+    return mapping.get(val, 0)
+
+def course_to_numeric(val):
+    mapping = {"CS": 1, "Maths": 2, "Business": 3, "Engineering": 5, "Medical": 11, "Arts": 15, "Other": 12}
+    return mapping.get(val, 0)
+
+def attendance_to_numeric(val):
+    return 1 if val.lower() == "daytime" else 0
+
+def previous_qualification_to_numeric(val):
+    mapping = {"Secondary": 1, "High School": 2, "Other": 3}
+    return mapping.get(val, 0)
+
+def mothers_qualification_to_numeric(val):
+    mapping = {"Secondary": 1, "High School": 2, "Graduate": 3, "Other": 4}
+    return mapping.get(val, 0)
+
+def fathers_qualification_to_numeric(val):
+    mapping = {"Secondary": 1, "High School": 2, "Graduate": 3, "Other": 4}
+    return mapping.get(val, 0)
+
+def mothers_occupation_to_numeric(val):
+    mapping = {"Office Worker": 1, "Self-Employed": 2, "Unemployed": 3, "Other": 4}
+    return mapping.get(val, 0)
+
+def fathers_occupation_to_numeric(val):
+    mapping = {"Office Worker": 1, "Self-Employed": 2, "Unemployed": 3, "Other": 4}
+    return mapping.get(val, 0)
+
+def yesno_to_numeric(val):
+    return 1 if val.lower() == "yes" else 0
+
+def gender_to_numeric(val):
+    return 0 if val.lower() == "male" else 1
+
+@app.get("/")
+def home():
+    return {"message": "Welcome to the Student Dropout Prediction API"}
+
+@app.post("/dropout")
+def predict(data: StudentData):
+    if model is None:
+        raise HTTPException(status_code=500, detail="Model not loaded.")
+    features = [
+        application_mode_to_numeric(data.application_mode),
+        course_to_numeric(data.course),
+        attendance_to_numeric(data.attendance),
+        previous_qualification_to_numeric(data.previous_qualification),
+        mothers_qualification_to_numeric(data.mothers_qualification),
+        fathers_qualification_to_numeric(data.fathers_qualification),
+        mothers_occupation_to_numeric(data.mothers_occupation),
+        fathers_occupation_to_numeric(data.fathers_occupation),
+        yesno_to_numeric(data.displaced),
+        yesno_to_numeric(data.debtor),
+        yesno_to_numeric(data.tuition_fees_up_to_date),
+        gender_to_numeric(data.gender),
+        yesno_to_numeric(data.scholarship_holder),
+        data.age_at_enrollment,
+        yesno_to_numeric(data.international),
+        data.curricular_units_1st_sem_credited,
+        data.curricular_units_1st_sem_enrolled,
+        data.curricular_units_1st_sem_evaluations,
+        data.curricular_units_1st_sem_approved,
+        data.curricular_units_1st_sem_grade,
+        data.curricular_units_1st_sem_without_evaluations,
+        data.curricular_units_2nd_sem_credited,
+        data.curricular_units_2nd_sem_enrolled,
+        data.curricular_units_2nd_sem_evaluations,
+        data.curricular_units_2nd_sem_approved,
+        data.curricular_units_2nd_sem_grade,
+        data.curricular_units_2nd_sem_without_evaluations
+    ]
+    features_np = np.array([features]).astype(float)
+    try:
+        pred = model.predict(features_np)[0]
+        label_map = {0: "Dropout", 1: "Graduate", 2: "Enrolled"}
+        return JSONResponse(content={"result": label_map.get(pred, "Unknown")})
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
