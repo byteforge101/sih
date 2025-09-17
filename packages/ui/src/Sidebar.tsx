@@ -25,6 +25,7 @@ const mentorLinks = [
   { href: '/mainapp/counseling', label: 'Counseling', icon: HeartHandshake },
   { href: '/mainapp/meeting', label: 'Meetings', icon: Video },
   { href: '/mainapp/community-qs', label: 'Community Qs', icon: HelpCircle },
+  {href: '/take-attendance', label: 'take-attendance', icon: HelpCircle }
 ];
 const guardianLinks = [
   { href: '/mainapp/dashboard', label: 'Dashboard', icon: LayoutDashboard }, { href: '/mainapp/wards', label: 'My Wards', icon: Shield },

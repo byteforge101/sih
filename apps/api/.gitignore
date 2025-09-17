@@ -1,7 +1,0 @@
-node_modules
-# Keep environment variables out of version control
-.env
-/__pycache__
-/Uvenv
-/venv
-/generated/prisma
