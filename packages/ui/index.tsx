@@ -1,5 +1,7 @@
 // File: packages/ui/index.tsx
 "use client";
 export * from "./src/Button";
-export * from "./src/EnrollStudentFace"; // <-- Add this line
-export * from "./src/FaceRecognizer"; // <-- Add this line
+export * from "./src/EnrollStudentFace"; 
+export * from "./src/FaceRecognizer";
+export * from "./src/MarkAttendance";
+export * from "./src/MeetingAttendanceList"; 

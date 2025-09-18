@@ -10,7 +10,7 @@ type StudentSearchResult = {
   id: string;
   mentor: {
     id: string;
-  };
+  }|null;
   user: {
     name: string;
   };

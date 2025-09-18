@@ -1,20 +1,27 @@
-"use server";
+// apps/sih/actions/student/check-encoding.ts
 
-import { getServerSession } from "next-auth";
-import { authOptions } from "../../lib/auth";
-import prisma from "@repo/prisma/client";
+'use server';
+
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../../lib/auth';
+import prisma from '@repo/prisma/client';
 
 export async function checkEncoding() {
-    const session = await getServerSession(authOptions);
-    if (!session?.user || (session.user as any).role !== 'STUDENT') {
-        return { encoding: true }; // Not a student, so no need to check
-    }
+  const session = await getServerSession(authOptions);
 
-    const student = await prisma.student.findUnique({
-        where: { id: (session.user as any).id },
-        
-    
-    }) as any;
+  if (!session?.user || (session.user as any).role !== 'STUDENT') {
+    throw new Error('Not authorized or not a student.');
+  }
 
-    return { encoding: !!student?.encoding };
+  const userId = session.user.id;
+
+  const result: { exists: boolean }[] = await prisma.$queryRawUnsafe(
+    `SELECT ("encoding" IS NOT NULL) as "exists" FROM "Student" WHERE "userId" = $1`,
+    userId
+  );
+
+  
+  const hasEncoding = result[0]?.exists ?? false;
+
+  return { hasEncoding };
 }

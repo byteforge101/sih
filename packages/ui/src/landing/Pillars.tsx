@@ -18,14 +18,14 @@ const pillars = [
   },
   {
     number: '03',
-    title: 'Lecture Sentiment Heatmaps',
-    description: 'Visualizes "confusion hotspots" on lecture timelines.',
+    title: 'sentiment analysis',
+    description: 'Check emotional cues and draw inferences',
     icon: <Smile size={32} />,
   },
   {
     number: '04',
-    title: 'AI-Powered 3D Whiteboard',
-    description: 'Converts teacher gestures into interactive 3D diagrams.',
+    title: 'counselling sessions',
+    description: 'connect students with counsellors',
     icon: <Box size={32} />,
   },
   {
@@ -70,7 +70,7 @@ export default function Pillars() {
             <motion.div
               key={pillar.number}
               variants={itemVariants}
-              className="relative group bg-slate-50/70 backdrop-blur-sm rounded-xl p-6 text-center border border-slate-200 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden"
+              className="relative group w-[30%] bg-slate-50/70 backdrop-blur-sm rounded-xl p-6 text-center border border-slate-200 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden"
             >
               <div className="absolute -top-2 -right-2 text-8xl font-black text-slate-200/50 group-hover:text-slate-300/60 transition-colors duration-300">
                 {pillar.number}

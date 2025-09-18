@@ -71,11 +71,13 @@ model Student {
   guardianId               String?
   guardian                 Guardian?                         @relation(fields: [guardianId], references: [id])
   attendance               AttendanceRecord[]
+  meetingAttendance        MeetingAttendance[] 
   scores                   ScoreRecord[]
   fees                     FeeRecord[]
   counselingSessions       CounselingSession[]
   projectEnrollments       StudentProject[]
   communityQuestionSubmissions CommunityQuestionSubmission[]
+
 
 
   age                      Int?
@@ -118,6 +120,16 @@ model Course {
   description String?
   sessions    CourseSession[]
   scores      ScoreRecord[]
+}
+
+model MeetingAttendance {
+  studentId String
+  student   Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  meetingId String
+  meeting   Meeting  @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+  timestamp DateTime @default(now())
+
+  @@id([studentId, meetingId])
 }
 
 model AttendanceRecord {
@@ -250,6 +262,7 @@ model Meeting {
   mentorId  String
   mentor    Mentor   @relation(fields: [mentorId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
+  attendees MeetingAttendance[]
 }
 
 model CommunityQuestion {

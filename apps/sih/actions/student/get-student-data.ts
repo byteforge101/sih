@@ -45,8 +45,8 @@ export async function getStudentDashboardData() {
         student: studentData,
         stats: {
             attendancePercentage: 85, // Placeholder - needs calculation logic
-            cgpa: 8.2, // Placeholder - needs calculation logic
-            overdueFees,
+            cgpa: '8.2', // Placeholder - needs calculation logic
+            overdueFees : overdueFees.toString(),
             totalCourses
         }
     };
