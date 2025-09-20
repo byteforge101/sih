@@ -34,7 +34,7 @@ export default function AdminDashboard({ data }: { data: AdminDashboardData }) {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <StatCard title="Total Students" value={stats.totalStudents} icon={Users} color="from-blue-400 to-cyan-500" />
                 <StatCard title="Total Mentors" value={stats.totalMentors} icon={UserCheck} color="from-green-400 to-emerald-500" />
-                <StatCard title="At-Risk Students" value={stats.atRiskStudents} icon={AlertTriangle} color="from-red-400 to-rose-500" />
+                <StatCard title="At-Risk Students" value={stats.isAtRiskStudents} icon={AlertTriangle} color="from-red-400 to-rose-500" />
                 <StatCard title="Community Projects" value={stats.totalProjects} icon={FolderKanban} color="from-purple-400 to-violet-500" />
             </div>
 

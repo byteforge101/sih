@@ -14,6 +14,9 @@ export default async function StudentProfile() {
     }
     const student = await prisma.student.findUnique({
         where: { userId: session.user.id },
+        include: {
+            user: true,
+        },
     });
 
     if (!student) {
@@ -22,7 +25,9 @@ export default async function StudentProfile() {
 
     if (student.profileCompleted) {
         return (
+            
             <StudentProfileCard student={student} />
+            
         );
     }
 
@@ -38,8 +43,8 @@ export default async function StudentProfile() {
 
 
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-3xl font-bold mb-6">Complete Your Profile</h1>
+        <div className="container mx-auto w-full">
+            
             <StudentProfileForm
                 applicationModes={applicationModes}
                 courses={courses}

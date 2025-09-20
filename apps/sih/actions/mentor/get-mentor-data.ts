@@ -36,7 +36,7 @@ export async function getMentorDashboardData() {
     return {
         mentor: mentorData,
         stats: {
-            atRiskStudents: mentorData.mentees.length,
+            isAtRiskStudents: mentorData.mentees.length,
             totalMentees,
             upcomingSessions: 5, // Placeholder
         }

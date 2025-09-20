@@ -81,7 +81,7 @@ export default function MentorDashboard({
 
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <StatCard title="Total Mentees" value={stats.totalMentees} icon={Users} color="from-blue-400 to-cyan-500" />
-                <StatCard title="At-Risk Students" value={stats.atRiskStudents} icon={AlertTriangle} color="from-red-400 to-rose-500" />
+                <StatCard title="At-Risk Students" value={stats.isAtRiskStudents} icon={AlertTriangle} color="from-red-400 to-rose-500" />
                 <StatCard title="Upcoming Sessions" value={stats.upcomingSessions} icon={Calendar} color="from-purple-400 to-violet-500" />
             </div>
 
