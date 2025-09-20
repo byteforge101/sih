@@ -11,9 +11,7 @@
     "db:reset": "dotenv -e packages/prisma/prisma/.env -- npx prisma migrate reset",
     "db:studio": "dotenv -e packages/prisma/prisma/.env -- npx prisma studio",
     "db:generate": "dotenv -e packages/prisma/prisma/.env -- npx prisma generate",
-    "db:push": "dotenv -e packages/prisma/prisma/.env -- npx prisma db push",
-    "setup:api": "npm run setup --workspace=api",
-  "postinstall": "npm run setup:api"
+    "db:push": "dotenv -e packages/prisma/prisma/.env -- npx prisma db push"
   },
   "prisma": {
     "schema": "packages/prisma/prisma/schema.prisma"
@@ -35,6 +33,7 @@
     "packages/*"
   ],
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@prisma/client": "^6.15.0",
     "@supabase/supabase-js": "^2.57.2",
     "bcrypt": "^6.0.0",

@@ -59,7 +59,7 @@ export default function CTA() {
               variants={contentItemVariants}
               className="text-slate-300 mb-8 max-w-xl mx-auto text-lg"
             >
-              [cite_start]Transform your institute into a hub of innovation and measurable societal impact using your existing resources. [cite: 27]
+              Transform your institute into a hub of innovation and measurable societal impact using your existing resources.
             </motion.p>
             
             <motion.div variants={contentItemVariants}>

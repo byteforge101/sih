@@ -1,9 +1,14 @@
-
 'use client';
+
 import { motion } from 'framer-motion';
 import { GraduationCap, Rocket, Users } from 'lucide-react';
 
-export default function Growth() {
+// This component now accepts an `imageUrl` prop to tell it which image to display.
+interface GrowthProps {
+  imageUrl: string;
+}
+
+export default function Growth({ imageUrl }: GrowthProps) {
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-6">
@@ -15,8 +20,14 @@ export default function Growth() {
           className="flex flex-col lg:flex-row items-center gap-12"
         >
           <div className="lg:w-1/2">
-            <div className="w-full h-80 bg-gray-200 rounded-lg shadow-lg">
-              {/* Placeholder for an impact-related image */}
+            {/* The placeholder div is replaced with a standard <img> tag */}
+            <div className="relative w-full h-80 rounded-lg shadow-lg overflow-hidden">
+              <img
+                src={imageUrl}
+                alt="Transforming Institutes into Hubs of Innovation"
+                // Tailwind classes to make the image fill the container
+                className="absolute w-full h-full object-cover"
+              />
             </div>
           </div>
           <div className="lg:w-1/2 text-center lg:text-left">
@@ -24,7 +35,7 @@ export default function Growth() {
               Transforming Institutes into Hubs of Innovation
             </h2>
             <p className="text-gray-600 mb-8">
-              [cite_start]Our platform enables early academic rescue, immersive learning, and social responsibility for a measurable societal impact. [cite: 27]
+              Our platform enables early academic rescue, immersive learning, and social responsibility for a measurable societal impact.
             </p>
             <div className="space-y-6">
               <div className="flex items-center justify-center lg:justify-start gap-4">
@@ -42,7 +53,7 @@ export default function Growth() {
                 </div>
                 <div>
                   <h3 className="font-bold text-lg">Immersive Learning</h3>
-                  [cite_start]<p className="text-gray-500">Engage students with low-cost, high-tech tools. [cite: 20]</p>
+                  <p className="text-gray-500">Engage students with low-cost, high-tech tools.</p>
                 </div>
               </div>
                <div className="flex items-center justify-center lg:justify-start gap-4">
@@ -51,7 +62,7 @@ export default function Growth() {
                 </div>
                 <div>
                   <h3 className="font-bold text-lg">Social Responsibility</h3>
-                  [cite_start]<p className="text-gray-500">Connect students with community problems. [cite: 22]</p>
+                  <p className="text-gray-500">Connect students with community problems.</p>
                 </div>
               </div>
             </div>

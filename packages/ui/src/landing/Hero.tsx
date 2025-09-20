@@ -55,7 +55,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mt-8 max-w-2xl mx-auto text-lg text-gray-700"
         >
-          [cite_start]A lightweight, explainable platform that uses existing resources to predict student drop-out risk before it's too late. [cite: 5, 6]
+          A lightweight, explainable platform that uses existing resources to predict student drop-out risk before it's too late.
         </motion.p>
         
         <motion.div

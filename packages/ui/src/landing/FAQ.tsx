@@ -5,10 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
 const faqs = [
-  { q: "How does the system detect at-risk students?", a: "It auto-ingests spreadsheets of attendance, scores, and fee records and applies transparent, rule-based thresholds to flag students in a clear, color-coded view. [cite: 8, 9, 10]" },
-  { q: "Is the facial recognition attendance system mandatory?", a: "It is consent-based and designed to reduce proxy marking. [cite_start]The system includes fallback options to ensure reliable tracking for everyone. [cite: 12, 14]" },
-  { q: "how to deal with privacy?", a: "The system analyzes student facial reactions and quick polls during a lecture to create heatmaps on the lecture timeline, showing where students are most confused. [cite_start]This helps teachers improve delivery. [cite: 16, 17]" },
-  { q: "How does the Community-Linked Learning work?", a: "It bridges classroom learning with real-world local problems from partners like village councils and industries. [cite_start]Students can earn recognition and micro-scholarships for solving these issues. [cite: 22, 25]" },
+  { q: "How does the system detect at-risk students?", a: "It auto-ingests spreadsheets of attendance, scores, and fee records and applies transparent, rule-based thresholds to flag students in a clear, color-coded view." },
+  { q: "Is the facial recognition attendance system mandatory?", a: "It is consent-based and designed to reduce proxy marking. The system includes fallback options to ensure reliable tracking for everyone." },
+  { q: "What are 'confusion hotspots'?", a: "The system analyzes student facial reactions and quick polls during a lecture to create heatmaps on the lecture timeline, showing where students are most confused. This helps teachers improve delivery." },
+  { q: "How does the Community-Linked Learning work?", a: "It bridges classroom learning with real-world local problems from partners like village councils and industries. Students can earn recognition and micro-scholarships for solving these issues." },
 ];
 
 const AccordionItem = ({ q, a }: { q: string, a: string }) => {

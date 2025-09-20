@@ -41,7 +41,7 @@ export async function updateStudentDetails(formData: FormData) {
   const { predicted_exam_score } = await response.json();
 
   // Determine if the student is at risk based on the predicted score.
-  const isAtRisk = predicted_exam_score < 50;
+
 
   await prisma.student.update({
     where: {
@@ -50,7 +50,7 @@ export async function updateStudentDetails(formData: FormData) {
     data: {
       ...parsed,
       predictedscore: predicted_exam_score,
-      isAtRisk: isAtRisk, // Update the isAtRisk field accordingly.
+      // Update the isAtRisk field accordingly.
     },
   });
 

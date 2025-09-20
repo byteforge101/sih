@@ -1,0 +1,15 @@
+-- AlterTable
+ALTER TABLE "public"."Student" ADD COLUMN     "age_at_enrollment" INTEGER,
+ADD COLUMN     "application_mode" TEXT,
+ADD COLUMN     "attendances" TEXT,
+ADD COLUMN     "course" TEXT,
+ADD COLUMN     "debtor" TEXT,
+ADD COLUMN     "displaced" TEXT,
+ADD COLUMN     "fathers_occupation" TEXT,
+ADD COLUMN     "fathers_qualification" TEXT,
+ADD COLUMN     "international" TEXT,
+ADD COLUMN     "mothers_occupation" TEXT,
+ADD COLUMN     "mothers_qualification" TEXT,
+ADD COLUMN     "previous_qualification" TEXT,
+ADD COLUMN     "scholarship_holder" TEXT,
+ADD COLUMN     "tuition_fees_up_to_date" TEXT;

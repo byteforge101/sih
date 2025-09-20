@@ -11,7 +11,7 @@ import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 const studentLinks = [
   { href: '/mainapp/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/mainapp/profile', label: 'My Profile', icon: User },
+  { href: '/mainapp/student-profile', label: 'My Profile', icon: User },
   { href: '/mainapp/student-details', label: 'My Details', icon: ClipboardEdit },
   { href: '/mainapp/courses', label: 'My Courses', icon: BookOpen },
   { href: '/mainapp/meeting', label: 'Meetings', icon: Video },
@@ -24,7 +24,8 @@ const mentorLinks = [
   { href: '/mainapp/my-mentees', label: 'My Mentees', icon: Users },
   { href: '/mainapp/counseling', label: 'Counseling', icon: HeartHandshake },
   { href: '/mainapp/meeting', label: 'Meetings', icon: Video },
-  { href: '/mainapp/community-qs', label: 'Mentor Qs', icon: HelpCircle },
+  { href: '/mainapp/community-qs', label: 'Community Qs', icon: HelpCircle },
+  {href: '/take-attendance', label: 'take-attendance', icon: HelpCircle }
 ];
 const guardianLinks = [
   { href: '/mainapp/dashboard', label: 'Dashboard', icon: LayoutDashboard }, { href: '/mainapp/wards', label: 'My Wards', icon: Shield },
