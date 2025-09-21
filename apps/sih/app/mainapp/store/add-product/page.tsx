@@ -1,7 +1,7 @@
 'use server'; // This directive is important for Next.js
 
 import { addProduct } from "../../../../actions/store/actions";
-import { AddProductForm } from "@repo/ui/store/AddProductForm";
+import { AddProductForm } from "./AddProductForm";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../../../lib/auth";
 

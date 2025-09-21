@@ -6,7 +6,7 @@ import { addToCart, getCart } from '../../../actions/store/actions';
 
 import { useTransition, useState, useEffect } from 'react';
 import Link from 'next/link';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, PlusCircle } from 'lucide-react';
 
 type Product = {
     id: string;
@@ -51,9 +51,23 @@ export default function StoreClientPage({ products, userRole }: { products: Prod
 
     return (
         <div className="space-y-8">
-            <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
-                <h1 className="text-4xl font-bold text-gray-800">Reward Store</h1>
-                <p className="text-slate-500 mt-2">Spend your well-earned points on exclusive goodies and merch.</p>
+            <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="flex justify-between items-center">
+                <div>
+                    <h1 className="text-4xl font-bold text-gray-800">Reward Store</h1>
+                    <p className="text-slate-500 mt-2">Spend your well-earned points on exclusive goodies and merch.</p>
+                </div>
+                {isMentor && (
+                    <Link href="/mainapp/store/add-product">
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="flex items-center gap-2 bg-cyan-500 text-white px-4 py-2 rounded-lg font-semibold shadow-lg hover:shadow-cyan-500/40 transition-all duration-300"
+                        >
+                            <PlusCircle size={20} />
+                            <span>Add New Item</span>
+                        </motion.div>
+                    </Link>
+                )}
             </motion.div>
 
             <motion.div

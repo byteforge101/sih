@@ -13,7 +13,7 @@ type Product = {
     images: { url: string }[];
 };
 
-export default function ProductDetailsClient({ product }: { product: Product }) {
+export default function ProductDetailsClient({ product, userRole }: { product: Product, userRole: string }) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isPending, startTransition] = useTransition();
 
@@ -30,6 +30,8 @@ export default function ProductDetailsClient({ product }: { product: Product }) 
             await addToCart(product.id);
         });
     };
+
+    const isMentor = userRole === 'MENTOR';
 
     return (
         <div className="container mx-auto p-4 md:p-8">
@@ -76,18 +78,20 @@ export default function ProductDetailsClient({ product }: { product: Product }) 
                         <span>{product.price} Points</span>
                     </div>
 
-                    <div className="mt-10 flex gap-4">
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={handleAddToCart}
-                            disabled={isPending}
-                            className="flex-1 flex items-center justify-center gap-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-cyan-500/40 transition-all duration-300 disabled:opacity-60"
-                        >
-                            <ShoppingCart size={22} />
-                            {isPending ? "Adding..." : "Add to Cart"}
-                        </motion.button>
-                    </div>
+                    {!isMentor && (
+                        <div className="mt-10 flex gap-4">
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={handleAddToCart}
+                                disabled={isPending}
+                                className="flex-1 flex items-center justify-center gap-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-cyan-500/40 transition-all duration-300 disabled:opacity-60"
+                            >
+                                <ShoppingCart size={22} />
+                                {isPending ? "Adding..." : "Add to Cart"}
+                            </motion.button>
+                        </div>
+                    )}
                 </div>
             </motion.div>
         </div>

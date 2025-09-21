@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, FormEvent } from 'react';
+import { useState, useRef, FormEvent, ChangeEvent } from 'react';
 import { useFormStatus } from 'react-dom';
 import { motion } from 'framer-motion';
 import { UploadCloud, X, Award } from 'lucide-react';
@@ -29,28 +29,16 @@ export function AddProductForm({ addProductAction }: { addProductAction: (formDa
     const fileInputRef = useRef<HTMLInputElement>(null);
     const formRef = useRef<HTMLFormElement>(null);
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log("File input changed!");
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const newFiles = Array.from(e.target.files || []);
-        console.log("Newly selected files:", newFiles);
-
-        if (newFiles.length === 0) {
-            console.log("No new files selected.");
-            return;
-        }
+        if (newFiles.length === 0) return;
 
         const newPreviews = newFiles.map(file => URL.createObjectURL(file));
 
-        setFiles(prevFiles => {
-            console.log("Previous files state:", prevFiles);
-            const updatedFiles = [...prevFiles, ...newFiles];
-            console.log("Updated files state:", updatedFiles);
-            return updatedFiles;
-        });
-
+        // Correctly appends new files to the existing array
+        setFiles(prevFiles => [...prevFiles, ...newFiles]);
         setPreviews(prevPreviews => [...prevPreviews, ...newPreviews]);
 
-        // Reset the file input so the user can select the same file again
         if (fileInputRef.current) {
             fileInputRef.current.value = "";
         }
@@ -59,11 +47,13 @@ export function AddProductForm({ addProductAction }: { addProductAction: (formDa
     const removeImage = (indexToRemove: number) => {
         setFiles(prevFiles => prevFiles.filter((_, index) => index !== indexToRemove));
         setPreviews(prevPreviews => {
-            const previewToRemove = prevPreviews[indexToRemove];
+            const newPreviews = [...prevPreviews];
+            const previewToRemove = newPreviews[indexToRemove];
             if (previewToRemove) {
                 URL.revokeObjectURL(previewToRemove);
             }
-            return prevPreviews.filter((_, index) => index !== indexToRemove);
+            newPreviews.splice(indexToRemove, 1);
+            return newPreviews;
         });
     };
 
@@ -75,33 +65,27 @@ export function AddProductForm({ addProductAction }: { addProductAction: (formDa
         }
         setIsSubmitting(true);
 
-        const formData = new FormData();
-        // Append other form fields from the form element
-        const formElements = e.currentTarget.elements as HTMLFormControlsCollection;
-        for (const element of Array.from(formElements)) {
-            if (element.getAttribute('name')) {
-                const inputElement = element as HTMLInputElement;
-                formData.append(inputElement.name, inputElement.value);
-            }
-        }
-        
-        // Now, append the files from our state
+        const formData = new FormData(e.currentTarget);
+        formData.delete('images'); // Remove default file input
         files.forEach(file => {
             formData.append('images', file);
         });
 
         try {
             const result = await addProductAction(formData);
-            if (result.productId) {
+            if (result && result.productId) {
                 alert("Product added successfully!");
                 formRef.current?.reset();
                 setFiles([]);
                 setPreviews([]);
-                router.push(`/mainapp/store`);
+                router.push(`/mainapp/store/${result.productId}`);
+            } else {
+                // This will catch cases where the action completes but doesn't return the expected ID
+                throw new Error("Action did not return a product ID.");
             }
         } catch (error) {
             console.error("Failed to add product:", error);
-            alert(`Failed to add product. Please try again. Error: ${error instanceof Error ? error.message : String(error)}`);
+            alert(`Failed to add product. Please try again. \nError: ${error instanceof Error ? error.message : String(error)}`);
         } finally {
             setIsSubmitting(false);
         }

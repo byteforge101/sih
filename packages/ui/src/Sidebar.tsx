@@ -4,7 +4,7 @@ import { Session } from 'next-auth';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  LayoutDashboard, User, Users, BookOpen, HeartHandshake, Shield, GraduationCap, ChevronLeft, ChevronRight, LucideIcon, Video, Camera, HelpCircle, ClipboardEdit
+  LayoutDashboard,Store, ShoppingCart, User, Users, BookOpen, HeartHandshake, Shield, GraduationCap, ChevronLeft, ChevronRight, LucideIcon, Video, Camera, HelpCircle, ClipboardEdit
 } from 'lucide-react';
 import React, { useState } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
@@ -18,6 +18,8 @@ const studentLinks = [
   { href: '/mainapp/community-qs', label: 'Mentor Qs', icon: HelpCircle },
   { href: '/mainapp/projects', label: 'Community Projects', icon: HeartHandshake },
   { href: '/mainapp/face-enrollment', label: 'Enroll Face', icon: Camera },
+  { href: '/mainapp/cart', label: 'Cart', icon: ShoppingCart },
+  { href: '/mainapp/store', label: 'Store', icon: Store },
 ];
 const mentorLinks = [
   { href: '/mainapp/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -25,7 +27,8 @@ const mentorLinks = [
   { href: '/mainapp/counseling', label: 'Counseling', icon: HeartHandshake },
   { href: '/mainapp/meeting', label: 'Meetings', icon: Video },
   { href: '/mainapp/community-qs', label: 'Community Qs', icon: HelpCircle },
-  {href: '/take-attendance', label: 'take-attendance', icon: HelpCircle }
+  {href: '/take-attendance', label: 'take-attendance', icon: HelpCircle },
+  { href: '/mainapp/store', label: 'Store', icon: Store }
 ];
 const guardianLinks = [
   { href: '/mainapp/dashboard', label: 'Dashboard', icon: LayoutDashboard }, { href: '/mainapp/wards', label: 'My Wards', icon: Shield },
