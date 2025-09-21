@@ -58,69 +58,66 @@ model User {
 }
 
 model Student {
-  id                       String                            @id @default(cuid())
-  userId                   String                            @unique
-  user                     User                              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  rollNumber               String                            @unique
-  enrollmentYear           Int
-  isAtRisk                 Boolean                           @default(false)
-  rewardPoints             Int                               @default(0)
-  encoding                 Unsupported("vector(4096)")?
-  mentorId                 String?
-  mentor                   Mentor?                           @relation(fields: [mentorId], references: [id])
-  guardianId               String?
-  guardian                 Guardian?                         @relation(fields: [guardianId], references: [id])
-  attendance               AttendanceRecord[]
-  meetingAttendance        MeetingAttendance[] 
-  scores                   ScoreRecord[]
-  fees                     FeeRecord[]
-  counselingSessions       CounselingSession[]
-  projectEnrollments       StudentProject[]
-  communityQuestionSubmissions CommunityQuestionSubmission[]
-
-
-
-  age                      Int?
-  predictedscore           Float?
-  gender                   String?
-  study_hours_per_day      Int?
-  social_media_hours       Int?
-  part_time_job            String?
-  attendance_percentage    Int?
-  sleep_hours              Int?
-  diet_quality             String?
-  exercise_hours           Int?
-  parental_education_level String?
-  mental_health            Int?
-
-  application_mode                      String?
-  profileCompleted                      Boolean?
-  course                                String?
-  attendances                           String? // Renamed from attendance
-  previous_qualification                String?
-  mothers_qualification                 String?
-  fathers_qualification                 String?
-  mothers_occupation                    String?
-  fathers_occupation                    String?
-  displaced                             String?
-  debtor                                String?
-  tuition_fees_up_to_date               String?
-
-  scholarship_holder                    String?
-  age_at_enrollment                     Int?
-  international                         String?
-    curricular_units_1st_sem_credited     Int?
-  curricular_units_1st_sem_enrolled     Int?
-  curricular_units_1st_sem_evaluations  Int?
-  curricular_units_1st_sem_approved     Int?
-  curricular_units_1st_sem_grade        Float?
+  id                             String                      @id @default(cuid())
+  userId                         String                      @unique
+  user                           User                        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rollNumber                     String                      @unique
+  enrollmentYear                 Int
+  isAtRisk                       Boolean                     @default(false)
+  rewardPoints                   Int                         @default(0)
+  encoding                       Unsupported("vector(4096)")?
+  mentorId                       String?
+  mentor                         Mentor?                     @relation(fields: [mentorId], references: [id])
+  guardianId                     String?
+  guardian                       Guardian?                   @relation(fields: [guardianId], references: [id])
+  attendance                     AttendanceRecord[]
+  meetingAttendance              MeetingAttendance[]
+  scores                         ScoreRecord[]
+  fees                           FeeRecord[]
+  counselingSessions             CounselingSession[]
+  projectEnrollments             StudentProject[]
+  communityQuestionSubmissions   CommunityQuestionSubmission[]
+  age                            Int?
+  predictedscore                 Float?
+  gender                         String?
+  study_hours_per_day            Int?
+  social_media_hours             Int?
+  part_time_job                  String?
+  attendance_percentage          Int?
+  sleep_hours                    Int?
+  diet_quality                   String?
+  exercise_hours                 Int?
+  parental_education_level       String?
+  mental_health                  Int?
+  application_mode               String?
+  profileCompleted               Boolean?
+  course                         String?
+  attendances                    String? // Renamed from attendance
+  previous_qualification         String?
+  mothers_qualification          String?
+  fathers_qualification          String?
+  mothers_occupation             String?
+  fathers_occupation             String?
+  displaced                      String?
+  debtor                         String?
+  tuition_fees_up_to_date        String?
+  scholarship_holder             String?
+  age_at_enrollment              Int?
+  international                  String?
+  curricular_units_1st_sem_credited    Int?
+  curricular_units_1st_sem_enrolled    Int?
+  curricular_units_1st_sem_evaluations Int?
+  curricular_units_1st_sem_approved    Int?
+  curricular_units_1st_sem_grade       Float?
   curricular_units_1st_sem_without_evaluations Int?
-  curricular_units_2nd_sem_credited     Int?
-  curricular_units_2nd_sem_enrolled     Int?
-  curricular_units_2nd_sem_evaluations  Int?
-  curricular_units_2nd_sem_approved     Int?
-  curricular_units_2nd_sem_grade        Float?
+  curricular_units_2nd_sem_credited    Int?
+  curricular_units_2nd_sem_enrolled    Int?
+  curricular_units_2nd_sem_evaluations Int?
+  curricular_units_2nd_sem_approved    Int?
+  curricular_units_2nd_sem_grade       Float?
   curricular_units_2nd_sem_without_evaluations Int?
+  cart                           Cart?
+  orders                         Order[]
 }
 
 model Mentor {
@@ -132,6 +129,7 @@ model Mentor {
   counselingSessions CounselingSession[]
   meetings           Meeting[]
   communityQuestions CommunityQuestion[]
+  products           Product[]
 }
 
 model Guardian {
@@ -162,13 +160,13 @@ model MeetingAttendance {
 }
 
 model AttendanceRecord {
-  id              String          @id @default(cuid())
+  id              String           @id @default(cuid())
   date            DateTime
   status          AttendanceStatus
   studentId       String
-  student         Student         @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  student         Student          @relation(fields: [studentId], references: [id], onDelete: Cascade)
   courseSessionId String
-  courseSession   CourseSession   @relation(fields: [courseSessionId], references: [id], onDelete: Cascade)
+  courseSession   CourseSession    @relation(fields: [courseSessionId], references: [id], onDelete: Cascade)
 
   @@unique([studentId, courseSessionId])
 }
@@ -314,4 +312,63 @@ model CommunityQuestionSubmission {
   communityQuestionId String
   communityQuestion   CommunityQuestion @relation(fields: [communityQuestionId], references: [id], onDelete: Cascade)
   createdAt           DateTime          @default(now())
+}
+
+model Product {
+  id          String         @id @default(cuid())
+  name        String
+  description String         @db.Text
+  price       Int
+  images      ProductImage[]
+  mentorId    String
+  mentor      Mentor         @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  cartItems   CartItem[]
+  orderItems  OrderItem[]
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  url       String
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Cart {
+  id        String     @id @default(cuid())
+  studentId String     @unique
+  student   Student    @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  items     CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  cartId    String
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int
+  createdAt DateTime @default(now())
+}
+
+model Order {
+  id          String      @id @default(cuid())
+  studentId   String
+  student     Student     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  items       OrderItem[]
+  totalPoints Int
+  createdAt   DateTime    @default(now())
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int
+  price     Int
 }
