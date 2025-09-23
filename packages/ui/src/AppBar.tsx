@@ -4,12 +4,11 @@ import { Session } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
 import { LogIn, LogOut, Menu, Search, Bell, Award } from "lucide-react";
 import { motion } from "framer-motion";
-import { useSidebar } from "./SidebarContext"; // <-- 1. Import the new hook
+import { useSidebar } from "./SidebarContext";
 
 export default function AppBar({
   session,
   rewardPoints,
-  // The 'onMenuClick' prop is no longer needed
 }: {
   session: Session | null;
   rewardPoints?: number | null;
@@ -18,28 +17,30 @@ export default function AppBar({
     ?.split(" ")
     .map((n) => n[0])
     .join("");
-  const { toggle: toggleSidebar } = useSidebar(); // <-- 2. Get the toggle action from context
+  const { toggle: toggleSidebar } = useSidebar();
 
   return (
-    <header className="bg-white/60 backdrop-blur-xl border-b border-slate-200/30 p-4 flex justify-between items-center sticky top-0 z-30">
+    // --- REVAMPED: Glassmorphism header with aurora effect ---
+    <header className="aurora-bg m-4 rounded-2xl p-4 flex justify-between items-center sticky top-4 z-30">
       <div className="flex items-center gap-2">
-        {/* --- THIS IS THE KEY CHANGE --- */}
         <motion.button
           whileTap={{ scale: 0.9 }}
-          onClick={toggleSidebar} // <-- 3. Connect the button to the context's toggle action
-          className="lg:hidden p-2 rounded-full hover:bg-slate-200/50 transition-colors"
+          whileHover={{ scale: 1.1, backgroundColor: 'rgba(var(--surface-rgb), 1)' }}
+          onClick={toggleSidebar}
+          className="lg:hidden p-2 rounded-full transition-colors"
         >
-          <Menu className="text-slate-700" />
+          <Menu className="text-slate-300" />
         </motion.button>
+        {/* --- REVAMPED: Futuristic search input --- */}
         <div className="relative hidden md:block">
           <Search
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none"
             size={20}
           />
           <input
             type="text"
-            placeholder="Search..."
-            className="pl-10 pr-4 py-2 w-64 rounded-full bg-slate-100/80 border border-transparent focus:bg-white focus:border-cyan-400 focus:ring-2 focus:ring-cyan-300/50 outline-none transition-all"
+            placeholder="Search modules, mentees..."
+            className="pl-11 pr-4 py-2.5 w-72 rounded-full bg-slate-800/50 border border-slate-700 focus:bg-slate-800 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-300/30 outline-none transition-all duration-300 placeholder-slate-500"
           />
         </div>
       </div>
@@ -47,51 +48,65 @@ export default function AppBar({
       <div className="flex items-center gap-4">
         {session?.user ? (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }}
             className="flex items-center gap-4"
           >
             {(session?.user as any)?.role === "STUDENT" &&
               rewardPoints !== null && (
-                <div className="flex items-center gap-2 bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-semibold">
+                // --- REVAMPED: Glowing reward points badge ---
+                <motion.div
+                  whileHover={{ scale: 1.05, boxShadow: '0 0 15px rgba(250, 204, 21, 0.5)' }}
+                  className="flex items-center gap-2 bg-amber-400/10 text-amber-300 px-4 py-2 rounded-full text-sm font-semibold border border-amber-400/20 cursor-pointer"
+                >
                   <Award size={16} />
                   <span>{rewardPoints}</span>
-                </div>
+                </motion.div>
               )}
             <motion.button
-              whileHover={{ scale: 1.1 }}
-              className="p-2 rounded-full hover:bg-slate-200/50 transition-colors"
+              whileHover={{ scale: 1.1, color: '#fff', textShadow: '0 0 8px #fff' }}
+              whileTap={{ scale: 0.9 }}
+              className="p-2 rounded-full text-slate-400 hover:bg-slate-800/50 transition-colors"
             >
-              <Bell className="text-slate-600" />
+              <Bell />
             </motion.button>
             <div className="flex items-center gap-3">
               <div className="text-right hidden sm:block">
-                <p className="font-semibold text-slate-800">
+                <p className="font-semibold text-slate-200">
                   {session.user.name}
                 </p>
-                <p className="text-xs text-slate-500 capitalize">
+                <p className="text-xs text-slate-400 capitalize">
                   {String((session.user as any).role).toLowerCase()}
                 </p>
               </div>
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-400 to-emerald-500 text-white flex items-center justify-center text-xl font-bold border-2 border-white shadow-lg">
+              {/* --- REVAMPED: Enhanced user avatar with a glow effect --- */}
+              <motion.div
+                whileHover={{ scale: 1.05, boxShadow: '0 0 20px var(--glow-primary)' }}
+                className="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-500 to-emerald-600 text-white flex items-center justify-center text-xl font-bold border-2 border-slate-800/80 shadow-lg cursor-pointer"
+              >
                 {userInitials}
-              </div>
+              </motion.div>
             </div>
+            {/* --- REVAMPED: More dynamic logout button --- */}
             <motion.button
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, backgroundPosition: '100% 0' }}
               whileTap={{ scale: 0.95 }}
               onClick={() => signOut()}
-              className="px-4 py-2 flex items-center gap-2 bg-white text-slate-600 rounded-lg hover:bg-red-500 hover:text-white transition-all duration-300 shadow-md border border-slate-200/80"
+              className="px-5 py-2.5 flex items-center gap-2 bg-gradient-to-r from-red-500/40 via-red-500/80 to-red-500/40 text-white rounded-lg transition-all duration-300 bg-size-200 bg-pos-0"
+              style={{ backgroundSize: '200% 100%' }}
             >
               <LogOut size={18} />
+              <span>Logout</span>
             </motion.button>
           </motion.div>
         ) : (
           <motion.button
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }}
+            whileHover={{ scale: 1.05, boxShadow: '0 0 25px var(--glow-primary)' }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => signIn()}
-            className="px-6 py-2 flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:shadow-lg hover:shadow-cyan-500/40 transition-all duration-300"
+            className="px-6 py-2.5 flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg shadow-lg shadow-cyan-500/20 transition-all duration-300"
           >
             <LogIn size={18} />
             <span className="font-semibold">Login</span>

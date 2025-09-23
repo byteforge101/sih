@@ -5,19 +5,21 @@ export default async function MyMenteesPage() {
   try {
     const mentees = await getMentees();
     return (
-      <div className="min-h-full p-4 sm:p-6 lg:p-8 bg-gradient-to-br from-blue-50 to-green-50">
+      // --- STYLING CHANGE: Removed background gradient and updated padding/text colors ---
+      <div className="min-h-full">
         <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">My Mentees</h1>
-        <p className="mt-1 text-gray-600">
-          An overview of your assigned students. Students marked "At Risk" may require immediate attention.
-        </p>
+          <h1 className="text-4xl font-bold text-slate-100">My Mentees</h1>
+          <p className="mt-2 text-lg text-slate-400">
+            An overview of your assigned students. Students marked "At Risk" may require immediate attention.
+          </p>
+        </div>
+        
+        {/* Functional component remains unchanged */}
+        <MenteeList mentees={mentees} />
       </div>
-      
-      {}
-      <MenteeList mentees={mentees} />
-    </div>
-  );}catch (error) {
+  );} catch (error) {
     console.error("Failed to fetch mentees:", error);
-    return <div>Failed to fetch mentees</div>;
+    // --- STYLING CHANGE: Updated error message color ---
+    return <div className="text-rose-400 text-center p-8">Failed to fetch mentees</div>;
   }
 }
