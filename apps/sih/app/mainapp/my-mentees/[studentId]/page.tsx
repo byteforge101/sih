@@ -1,22 +1,25 @@
 import db from "@repo/prisma/client";
 
-// Glass aesthetic DetailItem with subtle transparency and blur
+// Ultra-modern glass DetailItem with enhanced aesthetics
 const DetailItem = ({ label, value }: { label: string; value: string | number | null | undefined }) => (
-    <div className="bg-white/5 backdrop-blur-sm rounded-lg p-3 border border-white/10 hover:bg-white/10 transition-all duration-300">
-        <p className="text-xs font-medium text-gray-400 mb-1">{label}</p>
-        <p className="text-sm font-semibold text-white">
-            {value ?? <span className="text-gray-500 italic">Not Available</span>}
+    <div className="bg-white/8 backdrop-blur-lg rounded-2xl p-4 border border-white/15 hover:bg-white/12 hover:border-white/25 transition-all duration-500 shadow-lg hover:shadow-2xl hover:shadow-white/5 group hover:scale-[1.02]">
+        <p className="text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wide group-hover:text-gray-300 transition-colors duration-300">{label}</p>
+        <p className="text-base font-bold text-white group-hover:text-gray-100 transition-colors duration-300">
+            {value ?? <span className="text-gray-500 italic font-medium">Not Available</span>}
         </p>
     </div>
 );
 
-// Glass aesthetic SectionTitle with subtle glow
+// Ultra-modern glass SectionTitle with enhanced visual impact
 const SectionTitle = ({ title }: { title: string }) => (
-    <div className="col-span-full mb-4">
-        <h3 className="text-lg font-bold text-white mb-2 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-            {title}
-        </h3>
-        <div className="h-px bg-gradient-to-r from-white/20 via-white/10 to-transparent"></div>
+    <div className="col-span-full mb-6">
+        <div className="relative">
+            <h3 className="text-2xl font-black text-white mb-3 bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent drop-shadow-sm">
+                {title}
+            </h3>
+            <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-white/30 via-white/60 to-white/30 rounded-full"></div>
+            <div className="absolute -bottom-0.5 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+        </div>
     </div>
 );
 
@@ -35,7 +38,7 @@ export default async function MenteeDetailsPage({ params }: { params: { studentI
 
   if (!student) {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 p-8">
+        <div className="p-8">
             <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 text-center border border-white/20">
                 <p className="text-rose-400 text-lg">Student not found.</p>
             </div>
@@ -44,42 +47,42 @@ export default async function MenteeDetailsPage({ params }: { params: { studentI
   }
 
   return (
-    // Dark gradient background for the glass effect
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 p-4 sm:p-6 lg:p-8">
-        {/* Main glass container with glassmorphism effect */}
-        <div className="bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 shadow-2xl shadow-black/50 p-6 sm:p-8">
+    // Transparent outer container
+    <div className="p-4 sm:p-6 lg:p-8">
+        {/* Ultra-modern main glass container */}
+        <div className="bg-white/8 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl shadow-black/30 p-8 sm:p-10 hover:shadow-3xl hover:shadow-black/40 transition-all duration-700">
             
-            {/* Header section with user info */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-                <div className="space-y-1">
-                    <h1 className="text-3xl font-extrabold bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">
+            {/* Enhanced header section */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-6">
+                <div className="space-y-2">
+                    <h1 className="text-4xl font-black bg-gradient-to-r from-white via-gray-50 to-gray-200 bg-clip-text text-transparent drop-shadow-lg">
                         {student.user.name}
                     </h1>
-                    <p className="text-gray-400 text-sm font-medium">{student.user.email}</p>
+                    <p className="text-gray-300 text-base font-medium tracking-wide">{student.user.email}</p>
                 </div>
                 
                 {student.isAtRisk && (
-                    <div className="flex items-center space-x-3 bg-red-500/20 backdrop-blur-sm text-red-200 px-6 py-3 rounded-full border border-red-500/30 shadow-lg">
-                        <span className="relative flex h-3 w-3">
+                    <div className="flex items-center space-x-3 bg-red-500/15 backdrop-blur-lg text-red-200 px-8 py-4 rounded-full border border-red-500/25 shadow-2xl shadow-red-500/10 hover:bg-red-500/20 transition-all duration-300">
+                        <span className="relative flex h-4 w-4">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                            <span className="relative inline-flex rounded-full h-4 w-4 bg-red-500 shadow-lg"></span>
                         </span>
-                        <span className="text-sm font-bold tracking-wide">AT RISK</span>
+                        <span className="text-base font-black tracking-wider">AT RISK</span>
                     </div>
                 )}
             </div>
 
-            {/* Predicted Score Card with glass effect */}
+            {/* Enhanced Predicted Score Card */}
             {student.predictedscore != null && (
-                <div className="mb-8 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-sm p-6 rounded-2xl border border-white/20 shadow-xl">
-                    <h3 className="text-lg font-bold text-white mb-2">Predicted Score</h3>
-                    <p className="text-4xl font-extrabold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                <div className="mb-10 bg-gradient-to-br from-blue-500/15 via-purple-500/15 to-indigo-500/15 backdrop-blur-lg p-8 rounded-3xl border border-white/25 shadow-2xl hover:shadow-3xl hover:shadow-blue-500/10 transition-all duration-500 group">
+                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-blue-100 transition-colors duration-300">Predicted Score</h3>
+                    <p className="text-6xl font-black bg-gradient-to-r from-blue-300 via-purple-300 to-indigo-300 bg-clip-text text-transparent drop-shadow-lg">
                         {student.predictedscore.toFixed(2)}
                     </p>
                 </div>
             )}
             
-            <div className="space-y-8">
+            <div className="space-y-12">
                 {/* Academic Profile Section */}
                 <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <SectionTitle title="Academic Profile" />

@@ -43,21 +43,23 @@ const VideoCard = ({
     }
   };
   
-  const cardStyle = isPinned && variant === 'thumbnail' ? 'border-4 border-blue-500' : 'border-4 border-transparent';
-  const mentorStyle = isLocal && variant === 'main' ? 'border-4 border-violet-500 shadow-violet-500/20' : '';
+  const cardStyle = isPinned && variant === 'thumbnail' ? 'border-4 border-white/40 shadow-2xl shadow-white/10' : 'border-2 border-white/20';
+  const mentorStyle = isLocal && variant === 'main' ? 'border-4 border-white/50 shadow-2xl shadow-white/20' : '';
 
   return (
-    <div ref={containerRef} className={`relative aspect-video bg-slate-700 rounded-xl overflow-hidden shadow-lg transition-all duration-300 group ${cardStyle} ${mentorStyle}`}>
+    <div ref={containerRef} className={`relative aspect-video bg-black/30 backdrop-blur-lg rounded-2xl overflow-hidden shadow-2xl transition-all duration-500 group hover:shadow-3xl hover:shadow-white/5 ${cardStyle} ${mentorStyle}`}>
       <video ref={videoRef} autoPlay playsInline muted={isMuted} className="w-full h-full object-cover" />
-      <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/60 to-transparent">
-        <span className="text-white text-sm font-medium drop-shadow-md">{isLocal ? "You" : `Participant ${participantId.substring(0, 4)}`}</span>
+      <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 via-black/40 to-transparent backdrop-blur-sm">
+        <span className="text-white text-sm font-bold drop-shadow-lg bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
+          {isLocal ? "You" : `Participant ${participantId.substring(0, 4)}`}
+        </span>
       </div>
-      <div className="absolute top-2 right-2 flex items-center gap-2 transition-opacity duration-300">
-        <button onClick={onPin} className="p-2 bg-black/40 rounded-full text-white hover:bg-blue-500 backdrop-blur-sm">
-          {variant === 'main' && !isLocal ? <PinOff size={20} /> : <Pin size={16} />}
+      <div className="absolute top-3 right-3 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+        <button onClick={onPin} className="p-2 bg-white/15 backdrop-blur-lg rounded-full text-white hover:bg-white/25 border border-white/20 shadow-xl hover:scale-110 transition-all duration-300">
+          {variant === 'main' && !isLocal ? <PinOff size={18} /> : <Pin size={16} />}
         </button>
-        <button onClick={toggleFullscreen} className="p-2 bg-black/40 rounded-full text-white hover:bg-blue-500 backdrop-blur-sm">
-          <Maximize size={variant === 'main' ? 20 : 16} />
+        <button onClick={toggleFullscreen} className="p-2 bg-white/15 backdrop-blur-lg rounded-full text-white hover:bg-white/25 border border-white/20 shadow-xl hover:scale-110 transition-all duration-300">
+          <Maximize size={variant === 'main' ? 18 : 16} />
         </button>
       </div>
     </div>
@@ -229,19 +231,21 @@ export default function MeetingRoom({ meetingId, userRole }: { meetingId: string
   
   if (isLoading) {
     return (
-        <div className="flex items-center justify-center h-full bg-slate-100">
-            <div className="text-center">
-                <LoaderCircle className="mx-auto h-12 w-12 text-violet-500 animate-spin" />
-                <h2 className="mt-4 text-lg font-medium text-slate-700">Connecting to meeting...</h2>
-                <p className="text-slate-500">Please allow camera and microphone access.</p>
+        <div className="flex items-center justify-center h-full bg-transparent">
+            <div className="bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl shadow-black/30 p-12 text-center">
+                <LoaderCircle className="mx-auto h-16 w-16 text-white animate-spin mb-6" />
+                <h2 className="text-2xl font-bold text-white mb-3 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
+                  Connecting to meeting...
+                </h2>
+                <p className="text-gray-300 font-medium">Please allow camera and microphone access.</p>
             </div>
         </div>
     );
   }
 
   return (
-    <div className="h-full bg-slate-100 flex flex-col md:flex-row p-4 gap-4">
-        <div className="flex-1 flex flex-col items-center justify-center gap-4">
+    <div className="h-full bg-transparent flex flex-col md:flex-row p-4 gap-4">
+        <div className="flex-1 flex flex-col items-center justify-center gap-6">
             <div className="w-full h-full flex items-center justify-center">
                 {mainStream ? (
                     <VideoCard 
@@ -254,26 +258,61 @@ export default function MeetingRoom({ meetingId, userRole }: { meetingId: string
                         variant="main"
                     />
                 ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-slate-200 rounded-xl">
-                        <p className="text-slate-500">Waiting for participants...</p>
+                    <div className="w-full h-full flex items-center justify-center bg-white/5 backdrop-blur-lg rounded-3xl border border-white/20 shadow-2xl">
+                        <div className="text-center">
+                            <div className="w-24 h-24 mx-auto mb-4 bg-white/10 rounded-full flex items-center justify-center">
+                                <Video className="w-12 h-12 text-white/60" />
+                            </div>
+                            <p className="text-white/80 text-lg font-medium">Waiting for participants...</p>
+                        </div>
                     </div>
                 )}
             </div>
-            <div className="p-4 bg-white/60 backdrop-blur-xl border border-slate-200/50 rounded-full flex justify-center items-center gap-4 shadow-lg">
-                <button onClick={toggleAudio} className={`p-4 rounded-full transition-colors ${isAudioMuted ? 'bg-red-500 text-white' : 'bg-slate-200 text-slate-700 hover:bg-slate-300'}`}>
-                    {isAudioMuted ? <MicOff /> : <Mic />}
+            
+            {/* Glass Control Panel */}
+            <div className="bg-white/10 backdrop-blur-2xl border border-white/25 rounded-3xl flex justify-center items-center gap-6 shadow-2xl shadow-black/20 p-6">
+                <button 
+                    onClick={toggleAudio} 
+                    className={`p-4 rounded-2xl transition-all duration-300 backdrop-blur-lg border-2 shadow-xl hover:scale-110 ${
+                        isAudioMuted 
+                            ? 'bg-red-500/80 border-red-400/50 text-white shadow-red-500/20' 
+                            : 'bg-white/15 border-white/25 text-white hover:bg-white/25'
+                    }`}
+                >
+                    {isAudioMuted ? <MicOff size={24} /> : <Mic size={24} />}
                 </button>
-                <button onClick={toggleVideo} className={`p-4 rounded-full transition-colors ${isVideoHidden ? 'bg-red-500 text-white' : 'bg-slate-200 text-slate-700 hover:bg-slate-300'}`}>
-                    {isVideoHidden ? <VideoOff /> : <Video />}
+                
+                <button 
+                    onClick={toggleVideo} 
+                    className={`p-4 rounded-2xl transition-all duration-300 backdrop-blur-lg border-2 shadow-xl hover:scale-110 ${
+                        isVideoHidden 
+                            ? 'bg-red-500/80 border-red-400/50 text-white shadow-red-500/20' 
+                            : 'bg-white/15 border-white/25 text-white hover:bg-white/25'
+                    }`}
+                >
+                    {isVideoHidden ? <VideoOff size={24} /> : <Video size={24} />}
                 </button>
-                 <button onClick={() => router.back()} className="p-4 rounded-full bg-red-500 text-white hover:bg-red-600 transition-colors">
-                    <PhoneOff />
+                
+                <button 
+                    onClick={() => router.back()} 
+                    className="p-4 rounded-2xl bg-red-500/80 border-2 border-red-400/50 text-white hover:bg-red-400/90 transition-all duration-300 backdrop-blur-lg shadow-xl shadow-red-500/20 hover:scale-110"
+                >
+                    <PhoneOff size={24} />
                 </button>
             </div>
         </div>
 
-        <div className="w-full md:w-64 bg-white/60 backdrop-blur-xl border border-slate-200/50 rounded-2xl p-4 flex flex-row md:flex-col gap-4 overflow-x-auto md:overflow-y-auto">
-            <h2 className="font-bold text-slate-700 text-lg hidden md:block">Participants ({participants.length})</h2>
+        {/* Glass Participants Panel */}
+        <div className="w-full md:w-64 bg-white/8 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 flex flex-row md:flex-col gap-4 overflow-x-auto md:overflow-y-auto shadow-2xl shadow-black/20">
+            <div className="hidden md:block mb-4">
+                <h2 className="font-bold text-white text-xl mb-2 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
+                  Participants
+                </h2>
+                <div className="text-sm text-gray-300 bg-white/10 backdrop-blur-sm rounded-full px-3 py-1 inline-block border border-white/20">
+                  {participants.length} online
+                </div>
+            </div>
+            
             {thumbnailParticipants.map(({ id, stream }) => (
                 <div key={id} className="w-48 md:w-full flex-shrink-0">
                     <VideoCard 
@@ -286,6 +325,7 @@ export default function MeetingRoom({ meetingId, userRole }: { meetingId: string
                     />
                 </div>
             ))}
+            
              {userRole === "STUDENT" && localStream && mainStream?.id !== 'local' && thumbnailParticipants.every(p => p.id !== 'local') && (
                 <div className="w-48 md:w-full flex-shrink-0">
                     <VideoCard 

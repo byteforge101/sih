@@ -50,20 +50,20 @@ export default function StoreClientPage({ products, userRole }: { products: Prod
     const productIdsInCart = cart?.items.map(item => item.productId) || [];
 
     return (
-        <div className="space-y-8">
-            <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="flex justify-between items-center">
+        <div className="space-y-10 p-4 md:p-8 text-white">
+            <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="bg-white/8 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl shadow-black/30 p-8 flex justify-between items-center">
                 <div>
-                    <h1 className="text-4xl font-bold text-gray-800">Reward Store</h1>
-                    <p className="text-slate-500 mt-2">Spend your well-earned points on exclusive goodies and merch.</p>
+                    <h1 className="text-4xl font-black text-white bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">Reward Store</h1>
+                    <p className="text-gray-300 text-lg font-medium mt-2">Spend your well-earned points on exclusive goodies and merch.</p>
                 </div>
                 {isMentor && (
                     <Link href="/mainapp/store/add-product">
                         <motion.div
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="flex items-center gap-2 bg-cyan-500 text-white px-4 py-2 rounded-lg font-semibold shadow-lg hover:shadow-cyan-500/40 transition-all duration-300"
+                            className="inline-flex items-center justify-center font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform focus:outline-none focus:ring-2 focus:ring-offset-2 backdrop-blur-lg border shadow-xl bg-white/15 border-white/25 text-white hover:bg-white/25 shadow-white/10 focus:ring-white/30"
                         >
-                            <PlusCircle size={20} />
+                            <PlusCircle size={20} className="mr-2" />
                             <span>Add New Item</span>
                         </motion.div>
                     </Link>
@@ -71,7 +71,7 @@ export default function StoreClientPage({ products, userRole }: { products: Prod
             </motion.div>
 
             <motion.div
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-12"
                 variants={{
                     hidden: { opacity: 0 },
                     visible: {
@@ -93,7 +93,7 @@ export default function StoreClientPage({ products, userRole }: { products: Prod
                             />
                             {isInCart && (
                                 <Link href="/mainapp/cart">
-                                    <div className="mt-2 flex items-center justify-center gap-2 text-sm font-semibold text-green-600 bg-green-100 p-2 rounded-lg">
+                                    <div className="mt-4 flex items-center justify-center gap-2 text-sm font-bold text-green-200 bg-green-500/20 backdrop-blur-sm p-3 rounded-2xl border border-green-500/30 shadow-lg">
                                         <CheckCircle size={16} />
                                         <span>Added to Cart</span>
                                     </div>

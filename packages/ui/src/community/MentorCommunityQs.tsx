@@ -11,12 +11,12 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button: React.FC<ButtonProps> = ({ children, className, isLoading, ...rest }) => {
   const baseClasses = `
-    inline-flex items-center justify-center font-semibold py-2 px-4 rounded-lg 
+    inline-flex items-center justify-center font-bold py-3 px-6 rounded-2xl 
     transition-all duration-300 transform focus:outline-none focus:ring-2 focus:ring-offset-2
-    disabled:opacity-60 disabled:cursor-not-allowed
+    disabled:opacity-60 disabled:cursor-not-allowed backdrop-blur-lg border shadow-xl
   `;
   
-  const combinedClassName = `${baseClasses} ${className || 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-500/20 hover:-translate-y-0.5 focus:ring-indigo-500'}`;
+  const combinedClassName = `${baseClasses} ${className || 'bg-white/15 border-white/25 text-white hover:bg-white/25 shadow-white/10 hover:scale-105 focus:ring-white/30'}`;
 
   return (
     <button className={combinedClassName.trim()} disabled={isLoading} {...rest}>
@@ -111,65 +111,65 @@ export default function MentorCommunityQs({ questions, handleCreateQuestion, han
 
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10 p-4 md:p-8 text-white">
       <AnimatePresence mode="wait">
         {selectedQuestion ? (
           <motion.div key="submissions-view" initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -50 }}>
-            <button onClick={() => setSelectedQuestion(null)} className="flex items-center gap-2 font-semibold text-slate-600 hover:text-indigo-600 mb-6">
+            <button onClick={() => setSelectedQuestion(null)} className="inline-flex items-center gap-2 font-bold text-gray-300 hover:text-white mb-8 transition-colors duration-300">
               <ArrowLeft size={20} />
               Back to All Questions
             </button>
-            <div className="bg-white/60 backdrop-blur-lg p-6 rounded-2xl shadow-lg border border-slate-200/50 mb-6">
-                <h2 className="text-xl font-bold text-slate-800 mb-2">Question:</h2>
-                <p className="whitespace-pre-wrap text-slate-700">{selectedQuestion.description}</p>
-                {selectedQuestion.imageUrl && <img onClick={() => setZoomedImageUrl(selectedQuestion.imageUrl)} src={selectedQuestion.imageUrl} alt="Question" className="max-w-md rounded-lg mt-4 cursor-pointer hover:opacity-80 transition" />}
+            <div className="bg-white/8 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl shadow-black/30 p-8 mb-8">
+                <h2 className="text-lg font-bold text-gray-300 uppercase tracking-wider mb-4">Question:</h2>
+                <p className="whitespace-pre-wrap text-gray-200 text-lg">{selectedQuestion.description}</p>
+                {selectedQuestion.imageUrl && <img onClick={() => setZoomedImageUrl(selectedQuestion.imageUrl)} src={selectedQuestion.imageUrl} alt="Question" className="max-w-md rounded-2xl mt-4 cursor-pointer hover:opacity-80 transition-all duration-300 hover:scale-105 border border-white/20 shadow-lg" />}
             </div>
-             <h3 className="text-2xl font-bold text-slate-800 mb-4">Submissions ({selectedQuestion.submissions.length})</h3>
-             <div className="space-y-4">
+             <h3 className="text-3xl font-black text-white mb-6 bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">Submissions ({selectedQuestion.submissions.length})</h3>
+             <div className="space-y-6">
                 {selectedQuestion.submissions.map((s: any) => (
-                  <div key={s.id} className="p-4 bg-white rounded-xl shadow-md border border-slate-200/80">
+                  <div key={s.id} className="p-6 bg-white/8 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl shadow-black/30">
                       <div className="flex justify-between items-start">
                           <div>
-                              <p className="font-bold text-slate-800">{s.student.user.name}</p>
-                              <p className="whitespace-pre-wrap text-slate-600 mt-2">{s.answerText}</p>
+                              <p className="font-bold text-white text-lg">{s.student.user.name}</p>
+                              <p className="whitespace-pre-wrap text-gray-300 mt-2">{s.answerText}</p>
                           </div>
-                          {s.status === 'PENDING' ? <span className="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-semibold rounded-full">Pending</span>
-                           : s.status === 'APPROVED' ? <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">Approved</span>
-                           : <span className="px-2 py-1 bg-red-100 text-red-700 text-xs font-semibold rounded-full">Disapproved</span>
+                          {s.status === 'PENDING' ? <span className="inline-flex items-center gap-2 px-3 py-2 rounded-full text-xs font-bold border shadow-lg bg-yellow-500/20 backdrop-blur-sm text-yellow-200 border-yellow-500/30">Pending</span>
+                           : s.status === 'APPROVED' ? <span className="inline-flex items-center gap-2 px-3 py-2 rounded-full text-xs font-bold border shadow-lg bg-green-500/20 backdrop-blur-sm text-green-200 border-green-500/30">Approved</span>
+                           : <span className="inline-flex items-center gap-2 px-3 py-2 rounded-full text-xs font-bold border shadow-lg bg-red-500/20 backdrop-blur-sm text-red-200 border-red-500/30">Disapproved</span>
                           }
                       </div>
-                      {s.answerImageUrl && <img onClick={() => setZoomedImageUrl(s.answerImageUrl)} src={s.answerImageUrl} alt="Answer" className="max-w-xs rounded-lg mt-3 cursor-pointer hover:opacity-80 transition" />}
+                      {s.answerImageUrl && <img onClick={() => setZoomedImageUrl(s.answerImageUrl)} src={s.answerImageUrl} alt="Answer" className="max-w-xs rounded-xl mt-4 cursor-pointer hover:opacity-80 transition border border-white/20 shadow-lg" />}
                       {s.status === 'PENDING' && (
-                          <div className="mt-4 pt-4 border-t border-slate-200 flex items-center gap-2">
-                              <Button onClick={() => handleStatusClick(s.id, 'APPROVED')} className="bg-green-500 hover:bg-green-600 text-white shadow-green-500/20 focus:ring-green-500 !py-1.5 !px-3 text-sm" isLoading={updatingSubmissionId === s.id} disabled={!!updatingSubmissionId}><Check size={16} className="mr-1"/> Approve</Button>
-                              <Button onClick={() => handleStatusClick(s.id, 'DISAPPROVED')} className="bg-red-500 hover:bg-red-600 text-white shadow-red-500/20 focus:ring-red-500 !py-1.5 !px-3 text-sm" isLoading={updatingSubmissionId === s.id} disabled={!!updatingSubmissionId}><X size={16} className="mr-1"/> Disapprove</Button>
+                          <div className="mt-6 pt-6 border-t border-white/20 flex items-center gap-4">
+                              <Button onClick={() => handleStatusClick(s.id, 'APPROVED')} className="bg-green-500/20 border-green-500/30 text-green-200 hover:bg-green-500/30 !py-2 !px-4 text-sm" isLoading={updatingSubmissionId === s.id} disabled={!!updatingSubmissionId}><Check size={16} className="mr-1"/> Approve</Button>
+                              <Button onClick={() => handleStatusClick(s.id, 'DISAPPROVED')} className="bg-red-500/20 border-red-500/30 text-red-200 hover:bg-red-500/30 !py-2 !px-4 text-sm" isLoading={updatingSubmissionId === s.id} disabled={!!updatingSubmissionId}><X size={16} className="mr-1"/> Disapprove</Button>
                           </div>
                       )}
                   </div>
                 ))}
-                {selectedQuestion.submissions.length === 0 && <p className="text-slate-500">No submissions yet for this question.</p>}
+                {selectedQuestion.submissions.length === 0 && <p className="text-gray-400">No submissions yet for this question.</p>}
              </div>
           </motion.div>
         ) : (
           <motion.div key="questions-list" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-             <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
-                <h1 className="text-3xl font-bold text-slate-800">Community Questions</h1>
-                <p className="text-slate-500">Post questions for your mentees and review their submissions.</p>
+             <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="bg-white/8 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl shadow-black/30 p-8">
+                <h1 className="text-4xl font-black text-white mb-3 bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">Community Questions</h1>
+                <p className="text-gray-300 text-lg font-medium">Post questions for your mentees and review their submissions.</p>
             </motion.div>
-            <form onSubmit={handleSubmit} className="p-6 mt-8 bg-white/60 backdrop-blur-lg rounded-2xl shadow-lg border border-slate-200/50 space-y-4">
-                <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Ask a new question..." className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" required disabled={isCreating} />
-                <input type="file" accept="image/*" onChange={handleImageChange} disabled={isCreating} className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"/>
-                {imagePreview && <img src={imagePreview} alt="Preview" className="max-w-xs rounded-lg" />}
-                <Button type="submit" isLoading={isCreating}><Upload size={18} className="mr-2"/> {isCreating ? 'Posting...' : 'Post Question'}</Button>
+            <form onSubmit={handleSubmit} className="p-8 mt-10 bg-white/8 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl shadow-black/30 space-y-6">
+                <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Ask a new question..." className="w-full p-4 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/40 transition-all duration-300 shadow-lg text-lg" required disabled={isCreating} rows={4}/>
+                <input type="file" accept="image/*" onChange={handleImageChange} disabled={isCreating} className="w-full p-4 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl text-white file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-white/20 file:text-white hover:file:bg-white/30 file:backdrop-blur-sm file:border file:border-white/20 file:shadow-lg transition-all duration-300"/>
+                {imagePreview && <img src={imagePreview} alt="Preview" className="max-w-xs rounded-xl border border-white/20 shadow-lg" />}
+                <Button type="submit" isLoading={isCreating} className="bg-gradient-to-r from-white/20 to-gray-200/20"><Upload size={18} className="mr-2"/> {isCreating ? 'Posting...' : 'Post Question'}</Button>
             </form>
-            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {questions.map((q) => (
-                <motion.div key={q.id} variants={itemVariants} onClick={() => setSelectedQuestion(q)} className="bg-white rounded-xl shadow-md border border-slate-200/80 p-6 cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                <motion.div key={q.id} variants={itemVariants} onClick={() => setSelectedQuestion(q)} className="bg-white/8 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl shadow-black/30 p-8 flex flex-col justify-between hover:shadow-3xl hover:shadow-black/40 hover:scale-[1.02] transition-all duration-500 group">
                     <div>
-                        <p className="whitespace-pre-wrap text-slate-700 line-clamp-4">{q.description}</p>
-                        {q.imageUrl && <img onClick={(e) => { e.stopPropagation(); setZoomedImageUrl(q.imageUrl); }} src={q.imageUrl} alt="Question" className="w-full h-40 object-cover rounded-lg mt-4 cursor-pointer hover:opacity-80 transition" />}
+                        <p className="whitespace-pre-wrap text-gray-200 text-lg font-medium line-clamp-5 mb-6 group-hover:text-white transition-colors">{q.description}</p>
+                        {q.imageUrl && <img onClick={(e) => { e.stopPropagation(); setZoomedImageUrl(q.imageUrl); }} src={q.imageUrl} alt="Question" className="w-full h-40 object-cover rounded-2xl mt-4 cursor-pointer hover:opacity-80 transition-all duration-300 hover:scale-105 border border-white/20 shadow-lg" />}
                     </div>
-                    <div className="mt-4 pt-4 border-t border-slate-200 flex items-center justify-between text-sm font-medium text-slate-500">
+                    <div className="mt-8 pt-6 border-t border-white/20 flex items-center justify-between text-sm font-bold text-gray-400 group-hover:text-gray-300 transition-colors">
                         <div className="flex items-center gap-1.5"><MessageSquare size={16}/><span>{q.submissions.length} Submissions</span></div>
                          <div className="flex items-center gap-1.5"><ImageIcon size={16}/><span>{q.imageUrl ? 'Image Attached' : 'No Image'}</span></div>
                     </div>
@@ -188,17 +188,17 @@ export default function MentorCommunityQs({ questions, handleCreateQuestion, han
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setZoomedImageUrl(null)}
-                className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+                className="fixed inset-0 bg-black/80 backdrop-blur-lg z-50 flex items-center justify-center p-4"
             >
                 <motion.img
                     layoutId={zoomedImageUrl}
                     src={zoomedImageUrl}
                     alt="Zoomed view"
-                    className="max-w-full max-h-[90vh] rounded-lg shadow-2xl"
+                    className="max-w-full max-h-[90vh] rounded-2xl shadow-2xl border border-white/20"
                     onClick={(e) => e.stopPropagation()} // Prevents modal from closing when clicking the image
                 />
-                 <button onClick={() => setZoomedImageUrl(null)} className="absolute top-4 right-4 p-2 bg-white/20 rounded-full text-white hover:bg-white/30 transition">
-                    <X size={24}/>
+                 <button onClick={() => setZoomedImageUrl(null)} className="absolute top-6 right-6 p-3 bg-white/15 backdrop-blur-lg rounded-2xl text-white hover:bg-white/25 transition-all duration-300 shadow-xl border border-white/20">
+                    <X size={28}/>
                  </button>
             </motion.div>
         )}

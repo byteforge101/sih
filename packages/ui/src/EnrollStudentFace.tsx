@@ -2,7 +2,33 @@
 
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import Webcam from "react-webcam";
-import { Button } from "./Button";
+
+// --- Glass Button Component ---
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    isLoading?: boolean;
+}
+  
+const Button: React.FC<ButtonProps> = ({ children, className, isLoading, ...rest }) => {
+    const baseClasses = `
+      inline-flex items-center justify-center font-semibold py-2 px-4 rounded-xl 
+      transition-all duration-300 transform focus:outline-none focus:ring-2 focus:ring-offset-2
+      disabled:opacity-60 disabled:cursor-not-allowed backdrop-blur-lg border shadow-lg
+    `;
+    
+    const combinedClassName = `${baseClasses} ${className || 'bg-white/15 border-white/25 text-white hover:bg-white/25 shadow-white/10 hover:scale-105 focus:ring-white/30'}`;
+  
+    return (
+      <button className={combinedClassName.trim()} disabled={isLoading} {...rest}>
+        {isLoading && (
+          <svg className="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        )}
+        {children}
+      </button>
+    );
+};
 
 // --- API Configuration ---
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
@@ -119,37 +145,44 @@ export const EnrollStudentFace = ({ handleEnroll }: EnrollStudentFaceProps) => {
     socketRef.current?.close();
   };
 
+  const getStatusColor = () => {
+    switch (status) {
+        case "SUCCESS": return "text-green-300";
+        case "ERROR": return "text-red-300";
+        default: return "text-gray-300";
+    }
+  }
+
   return (
-    <div className="p-4 border rounded-lg bg-white shadow-md">
-      <h2 className="text-xl font-bold mb-4">Smart Face Enrollment</h2>
+    <div className="bg-white/5  backdrop-blur-lg p-4 rounded-xl shadow-inner border border-white/10">
       <div className="flex flex-col md:flex-row gap-4">
         <Webcam
           audio={false}
           ref={webcamRef}
           screenshotFormat="image/jpeg"
-          className="rounded-md w-full md:w-1/2"
+          className="rounded-xl w-full md:w-1/2 shadow-md border border-white/20 aspect-square  object-cover"
           mirrored={true}
         />
-        <div className="w-full md:w-1/2">
+        <div className="w-full md:w-1/2 aspect-square">
           {capturedImage ? (
             <img
               src={capturedImage}
               alt="Captured student"
-              className="rounded-md"
+              className="rounded-xl w-full h-full object-cover shadow-md border border-white/20"
             />
           ) : (
-            <div className="w-full h-full bg-gray-200 rounded-md flex items-center justify-center text-center p-4">
-              <p className="text-slate-600">{message}</p>
+            <div className="w-full h-full bg-black/20 rounded-xl flex items-center justify-center text-center p-2 border border-white/20">
+              <p className="text-gray-300 text-base">{message}</p>
             </div>
           )}
         </div>
       </div>
-      <div className="mt-4 flex justify-center gap-4">
+      <div className="mt-4 flex flex-wrap justify-center gap-2">
         {status === "IDLE" && (
           <Button onClick={startAnalysis}>Start Auto-Capture</Button>
         )}
         {status === "ANALYZING" && (
-          <Button onClick={reset} className="bg-red-500 hover:bg-red-700">
+          <Button onClick={reset} className="bg-red-500/20 border-red-500/30 text-red-200 hover:bg-red-500/30">
             Cancel
           </Button>
         )}
@@ -157,13 +190,13 @@ export const EnrollStudentFace = ({ handleEnroll }: EnrollStudentFaceProps) => {
           <>
             <Button
               onClick={onEnrollSubmit}
-              className="bg-green-500 hover:bg-green-700"
+              className="bg-green-500/20 border-green-500/30 text-green-200 hover:bg-green-500/30"
             >
               Enroll This Photo
             </Button>
             <Button
               onClick={reset}
-              className="bg-yellow-500 hover:bg-yellow-700"
+              className="bg-yellow-500/20 border-yellow-500/30 text-yellow-200 hover:bg-yellow-500/30"
             >
               Try Again
             </Button>
@@ -174,8 +207,9 @@ export const EnrollStudentFace = ({ handleEnroll }: EnrollStudentFaceProps) => {
         )}
       </div>
        {(status === "ENROLLING" || status === "SUCCESS" || status === "ERROR") && (
-        <p className="mt-4 text-center font-bold">{message}</p>
+        <p className={`mt-4 text-center text-base font-semibold ${getStatusColor()}`}>{message}</p>
       )}
     </div>
   );
 };
+
