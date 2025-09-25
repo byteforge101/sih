@@ -75,8 +75,9 @@ model Student {
   scores                         ScoreRecord[]
   fees                           FeeRecord[]
   counselingSessions             CounselingSession[]
-  projectEnrollments             StudentProject[]
+ 
   communityQuestionSubmissions   CommunityQuestionSubmission[]
+  communityProjectSubmissions   CommunityProjectSubmission[]
   age                            Int?
   predictedscore                 Float?
   gender                         String?
@@ -129,6 +130,7 @@ model Mentor {
   counselingSessions CounselingSession[]
   meetings           Meeting[]
   communityQuestions CommunityQuestion[]
+  communityProjects             CommunityProject[]
   products           Product[]
 }
 
@@ -244,43 +246,33 @@ model ThreeDAsset {
 }
 
 model CommunityProject {
-  id                   String           @id @default(cuid())
-  title                String
-  description          String           @db.Text
-  status               String
-  partnerId            String?
-  partner              CommunityPartner? @relation(fields: [partnerId], references: [id])
-  studentEnrollments StudentProject[]
+  id           String                         @id @default(cuid())
+  projectId    String                         @unique  // Custom project ID
+  title        String
+  description  String                         @db.Text
+  organization String
+  domain       String
+  details      String?                        @db.Text
+  reward       Int?                           // Reward points for completion
+  imageUrl     String?
+  mentorId     String
+  mentor       Mentor                         @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+  createdAt    DateTime                       @default(now())
+  submissions  CommunityProjectSubmission[]
 }
 
-model CommunityPartner {
-  id       String             @id @default(cuid())
-  name     String
-  type     String
-  projects CommunityProject[]
-}
-
-model StudentProject {
-  studentId          String
-  student            Student          @relation(fields: [studentId], references: [id])
-  communityProjectId String
-  communityProject   CommunityProject @relation(fields: [communityProjectId], references: [id])
-  role               String?
-  contributionNotes  String?          @db.Text
-  rewards            Reward[]
-
-  @@id([studentId, communityProjectId])
-}
-
-model Reward {
-  id                   String         @id @default(cuid())
-  description          String
-  amount               Float?
-  dateAwarded          DateTime
+model CommunityProjectSubmission {
+  id                   String            @id @default(cuid())
+  answerText           String?           @db.Text
+  answerImageUrl       String?
+  status               SubmissionStatus  @default(PENDING)
   studentId            String
-  communityProjectId String
-  studentProject       StudentProject @relation(fields: [studentId, communityProjectId], references: [studentId, communityProjectId])
+  student              Student           @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  communityProjectId   String
+  communityProject     CommunityProject  @relation(fields: [communityProjectId], references: [id], onDelete: Cascade)
+  createdAt            DateTime          @default(now())
 }
+
 
 model Meeting {
   id        String   @id @default(cuid())
