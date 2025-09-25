@@ -32,7 +32,7 @@ export const ProductCard = ({ product, addToCartAction, isMentor }: ProductCardP
       className="group relative"
     >
       <Link href={`/mainapp/store/${product.id}`} className="block">
-        <div className="relative w-full aspect-[4/3] bg-gray-200 rounded-2xl overflow-hidden">
+        <div className="relative w-full aspect-[4/3] bg-white/5 rounded-3xl overflow-hidden border border-white/20 shadow-2xl shadow-black/30 group-hover:shadow-3xl group-hover:shadow-black/40 transition-all duration-500 hover:scale-[1.02]">
           {product.images?.[0] ? (
             <img
               src={product.images[0].url}
@@ -40,14 +40,14 @@ export const ProductCard = ({ product, addToCartAction, isMentor }: ProductCardP
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
           ) : (
-             <div className="w-full h-full bg-gray-300 flex items-center justify-center text-gray-500">No Image</div>
+             <div className="w-full h-full bg-black/20 flex items-center justify-center text-gray-400">No Image</div>
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
         </div>
         <div className="mt-4">
-          <h3 className="text-lg font-bold text-gray-800 group-hover:text-cyan-600 transition-colors">{product.name}</h3>
+          <h3 className="text-lg font-bold text-gray-200 group-hover:text-white transition-colors">{product.name}</h3>
           <div className="flex items-center justify-between mt-2">
-            <div className="flex items-center gap-1.5 bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-semibold">
+            <div className="inline-flex items-center gap-2 px-3 py-2 rounded-full text-xs font-bold border shadow-lg bg-yellow-500/20 backdrop-blur-sm text-yellow-200 border-yellow-500/30">
               <Award size={16} />
               <span>{product.price} Points</span>
             </div>
@@ -56,7 +56,7 @@ export const ProductCard = ({ product, addToCartAction, isMentor }: ProductCardP
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={handleAddToCart}
-                className="p-2 rounded-full bg-white text-gray-500 shadow-md hover:bg-cyan-500 hover:text-white transition-all"
+                className="p-3 bg-white/15 backdrop-blur-lg rounded-2xl hover:bg-white/25 border border-white/20 shadow-xl transition-all duration-300 text-white"
               >
                 <ShoppingCart size={20} />
               </motion.button>

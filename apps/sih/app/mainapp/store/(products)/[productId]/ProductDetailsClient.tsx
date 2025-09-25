@@ -34,21 +34,21 @@ export default function ProductDetailsClient({ product, userRole }: { product: P
     const isMentor = userRole === 'MENTOR';
 
     return (
-        <div className="container mx-auto p-4 md:p-8">
+        <div className="min-h-screen text-white p-4 md:p-8">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16"
+                className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 max-w-7xl mx-auto bg-white/8 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl shadow-black/30 p-8"
             >
                 {/* Image Slider */}
-                <div className="relative aspect-square lg:aspect-[4/3] w-full bg-gray-200 rounded-2xl overflow-hidden shadow-lg">
+                <div className="relative aspect-square w-full bg-black/20 rounded-2xl overflow-hidden shadow-lg border border-white/10">
                     <motion.div
                         key={currentIndex}
-                        initial={{ opacity: 0, x: 100 }}
+                        initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -100 }}
-                        transition={{ duration: 0.5, ease: 'easeInOut' }}
+                        exit={{ opacity: 0, x: -50 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
                         className="w-full h-full"
                     >
                         <img
@@ -59,10 +59,10 @@ export default function ProductDetailsClient({ product, userRole }: { product: P
                     </motion.div>
                     {product.images.length > 1 && (
                         <>
-                            <button onClick={handlePrev} className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-black/40 rounded-full text-white hover:bg-black/60 transition-colors">
+                            <button onClick={handlePrev} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-white/15 backdrop-blur-lg rounded-full text-white hover:bg-white/25 transition-all duration-300 shadow-xl border border-white/20">
                                 <ChevronLeft size={24} />
                             </button>
-                            <button onClick={handleNext} className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-black/40 rounded-full text-white hover:bg-black/60 transition-colors">
+                            <button onClick={handleNext} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-white/15 backdrop-blur-lg rounded-full text-white hover:bg-white/25 transition-all duration-300 shadow-xl border border-white/20">
                                 <ChevronRight size={24} />
                             </button>
                         </>
@@ -71,9 +71,9 @@ export default function ProductDetailsClient({ product, userRole }: { product: P
 
                 {/* Product Details */}
                 <div className="flex flex-col justify-center">
-                    <h1 className="text-4xl lg:text-5xl font-extrabold text-gray-800">{product.name}</h1>
-                    <p className="mt-4 text-gray-600 text-lg leading-relaxed">{product.description}</p>
-                    <div className="flex items-center gap-2 bg-yellow-100 text-yellow-800 px-4 py-2 rounded-full text-lg font-bold mt-8 w-fit">
+                    <h1 className="text-4xl lg:text-5xl font-black text-white bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">{product.name}</h1>
+                    <p className="mt-6 text-gray-300 text-lg leading-relaxed">{product.description}</p>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-base font-bold border shadow-lg bg-yellow-500/20 backdrop-blur-sm text-yellow-200 border-yellow-500/30 mt-8 w-fit">
                         <Award size={20} />
                         <span>{product.price} Points</span>
                     </div>
@@ -85,9 +85,9 @@ export default function ProductDetailsClient({ product, userRole }: { product: P
                                 whileTap={{ scale: 0.95 }}
                                 onClick={handleAddToCart}
                                 disabled={isPending}
-                                className="flex-1 flex items-center justify-center gap-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-cyan-500/40 transition-all duration-300 disabled:opacity-60"
+                                className="w-full inline-flex items-center justify-center font-bold py-4 px-6 rounded-2xl transition-all duration-300 transform focus:outline-none focus:ring-2 focus:ring-offset-2 backdrop-blur-lg border shadow-xl bg-white/15 border-white/25 text-white hover:bg-white/25 shadow-white/10 focus:ring-white/30 disabled:opacity-60 disabled:cursor-not-allowed text-lg"
                             >
-                                <ShoppingCart size={22} />
+                                <ShoppingCart size={22} className="mr-3" />
                                 {isPending ? "Adding..." : "Add to Cart"}
                             </motion.button>
                         </div>

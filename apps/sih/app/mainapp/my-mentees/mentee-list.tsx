@@ -21,7 +21,7 @@ export function MenteeList({ mentees }: { mentees: any[] }) {
     };
 
     return (
-        <div>
+        <div className="p-4">
             <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-6">
                 {mentees.map((mentee) => {
                     const name = mentee.user?.name || 'N/A';
@@ -31,36 +31,36 @@ export function MenteeList({ mentees }: { mentees: any[] }) {
                     return (
                         <div 
                             key={mentee.id} 
-                            className="bg-white rounded-xl shadow-md p-5 transition-all duration-300 hover:shadow-xl hover:scale-[1.03] flex flex-col justify-between"
+                            className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl shadow-black/20 p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-black/30 hover:scale-[1.02] hover:bg-white/15 flex flex-col justify-between group"
                         >
                             <div className="flex items-start justify-between">
                                 {/* Avatar and Name */}
                                 <div className="flex items-center gap-4">
-                                    <div className="flex-shrink-0 h-14 w-14 flex items-center justify-center rounded-full bg-gradient-to-r from-cyan-400 to-emerald-500 text-white font-bold text-xl shadow-lg shadow-cyan-500/30">
+                                    <div className="flex-shrink-0 h-14 w-14 flex items-center justify-center rounded-full bg-gradient-to-r from-gray-300 via-white to-gray-300 text-gray-800 font-bold text-lg shadow-xl shadow-white/20 ring-2 ring-white/30">
                                         {initials}
                                     </div>
                                     <div>
-                                        <p className="font-bold text-xl text-gray-800">{mentee.user?.name}</p>
-                                        <p className="text-sm text-gray-500">{mentee.user?.email}</p>
+                                        <p className="font-bold text-xl text-white group-hover:text-gray-100 transition-colors">{mentee.user?.name}</p>
+                                        <p className="text-sm text-gray-300">{mentee.user?.email}</p>
                                     </div>
                                 </div>
                                 
                                 {/* Status Badges */}
                                 <div className="flex flex-col items-end gap-2">
                                     {mentee.isAtRisk && (
-                                        <div className="flex items-center gap-2 bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold uppercase">
+                                        <div className="flex items-center gap-2 bg-red-500/15 backdrop-blur-sm text-red-300 px-3 py-2 rounded-full text-xs font-bold uppercase border border-red-500/30 shadow-lg">
                                             <AtRiskIcon />
                                             <span>At Risk</span>
                                         </div>
                                     )}
                                     {hasPredictedScore && mentee.predictedscore < 50 && (
-                                        <div className="flex items-center gap-2 bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-bold uppercase">
+                                        <div className="flex items-center gap-2 bg-amber-500/15 backdrop-blur-sm text-amber-300 px-3 py-2 rounded-full text-xs font-bold uppercase border border-amber-500/30 shadow-lg">
                                             <LowScoreIcon />
                                             <span>Low Score</span>
                                         </div>
                                     )}
                                     {hasPredictedScore && mentee.predictedscore >= 50 && (
-                                        <div className="flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold uppercase">
+                                        <div className="flex items-center gap-2 bg-emerald-500/15 backdrop-blur-sm text-emerald-300 px-3 py-2 rounded-full text-xs font-bold uppercase border border-emerald-500/30 shadow-lg">
                                             <AcceptableScoreIcon />
                                             <span>Acceptable score</span>
                                         </div>
@@ -72,14 +72,14 @@ export function MenteeList({ mentees }: { mentees: any[] }) {
                             <div className="flex items-center gap-3 mt-6">
                                 <Link 
                                     href={`/mainapp/my-mentees/${mentee.id}`} 
-                                    className="flex-1 text-center bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center"
+                                    className="flex-1 text-center bg-white/10 backdrop-blur-sm hover:bg-white/20 text-gray-100 px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-300 flex items-center justify-center border border-white/20 hover:border-white/40 shadow-lg hover:shadow-xl"
                                 >
                                     <DetailsIcon/>
                                     Details
                                 </Link>
                                 <button
                                     onClick={() => setSelectedStudentId(mentee.id)}
-                                    className="flex-1 text-center bg-gradient-to-r from-cyan-400 to-emerald-500 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/30 flex items-center justify-center"
+                                    className="flex-1 text-center bg-gradient-to-r from-white/20 to-gray-200/20 backdrop-blur-sm text-white px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-300 hover:from-white/30 hover:to-gray-200/30 hover:shadow-xl hover:shadow-white/20 flex items-center justify-center border border-white/30 hover:border-white/50"
                                 >
                                     <PredictIcon/>
                                     Predict

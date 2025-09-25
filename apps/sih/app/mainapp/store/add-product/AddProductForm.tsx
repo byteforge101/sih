@@ -14,7 +14,7 @@ function SubmitButton({ isSubmitting }: { isSubmitting: boolean }) {
         <button
             type="submit"
             disabled={disabled}
-            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-gradient-to-r from-cyan-500 to-emerald-600 hover:from-cyan-600 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-300"
+            className="w-full inline-flex items-center justify-center font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform focus:outline-none focus:ring-2 focus:ring-offset-2 backdrop-blur-lg border shadow-xl bg-white/15 border-white/25 text-white hover:bg-white/25 shadow-white/10 hover:scale-105 focus:ring-white/30 disabled:opacity-60 disabled:cursor-not-allowed"
         >
             {disabled ? "Adding Product..." : "Add Product"}
         </button>
@@ -35,7 +35,6 @@ export function AddProductForm({ addProductAction }: { addProductAction: (formDa
 
         const newPreviews = newFiles.map(file => URL.createObjectURL(file));
 
-        // Correctly appends new files to the existing array
         setFiles(prevFiles => [...prevFiles, ...newFiles]);
         setPreviews(prevPreviews => [...prevPreviews, ...newPreviews]);
 
@@ -66,7 +65,7 @@ export function AddProductForm({ addProductAction }: { addProductAction: (formDa
         setIsSubmitting(true);
 
         const formData = new FormData(e.currentTarget);
-        formData.delete('images'); // Remove default file input
+        formData.delete('images');
         files.forEach(file => {
             formData.append('images', file);
         });
@@ -80,7 +79,6 @@ export function AddProductForm({ addProductAction }: { addProductAction: (formDa
                 setPreviews([]);
                 router.push(`/mainapp/store/${result.productId}`);
             } else {
-                // This will catch cases where the action completes but doesn't return the expected ID
                 throw new Error("Action did not return a product ID.");
             }
         } catch (error) {
@@ -96,41 +94,41 @@ export function AddProductForm({ addProductAction }: { addProductAction: (formDa
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="max-w-2xl mx-auto bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-xl border border-gray-200/50"
+            className="max-w-3xl mx-auto bg-white/8 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl shadow-black/30 p-8 md:p-10 text-white"
         >
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">Add New Product</h1>
-            <p className="text-gray-500 mb-8">Fill out the details below to add a new item to the reward store.</p>
-            <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+            <h1 className="text-4xl font-black text-white mb-3 bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">Add New Product</h1>
+            <p className="text-gray-300 text-lg font-medium mb-10">Fill out the details below to add a new item to the reward store.</p>
+            <form ref={formRef} onSubmit={handleSubmit} className="space-y-8">
                 <div>
-                    <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-1.5">Product Name</label>
-                    <input type="text" name="name" id="name" required className="block w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-gray-800 shadow-sm focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500" />
+                    <label htmlFor="name" className="block text-sm font-bold text-gray-300 mb-3 uppercase tracking-wide">Product Name</label>
+                    <input type="text" name="name" id="name" required className="w-full p-4 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/40 transition-all duration-300 shadow-lg text-lg" />
                 </div>
                 <div>
-                    <label htmlFor="description" className="block text-sm font-semibold text-gray-700 mb-1.5">Description</label>
-                    <textarea name="description" id="description" rows={4} required className="block w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-gray-800 shadow-sm focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500" />
+                    <label htmlFor="description" className="block text-sm font-bold text-gray-300 mb-3 uppercase tracking-wide">Description</label>
+                    <textarea name="description" id="description" rows={4} required className="w-full p-4 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/40 transition-all duration-300 shadow-lg text-lg" />
                 </div>
                 <div>
-                    <label htmlFor="price" className="block text-sm font-semibold text-gray-700 mb-1.5">Price (in Reward Points)</label>
+                    <label htmlFor="price" className="block text-sm font-bold text-gray-300 mb-3 uppercase tracking-wide">Price (in Reward Points)</label>
                     <div className="relative">
-                         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                            <Award className="h-5 w-5 text-gray-400" />
+                         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+                            <Award className="h-6 w-6 text-gray-400" />
                         </div>
-                        <input type="number" name="price" id="price" required className="block w-full rounded-lg border border-gray-200 bg-white pl-10 pr-4 py-2.5 text-gray-800 shadow-sm focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500" />
+                        <input type="number" name="price" id="price" required className="w-full p-4 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/40 transition-all duration-300 shadow-lg text-lg pl-12" />
                     </div>
                 </div>
                 <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-1.5">Product Images</label>
-                    <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                    <label className="block text-sm font-bold text-gray-300 mb-3 uppercase tracking-wide">Product Images</label>
+                    <div className="mt-4 flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-white/20 px-6 py-12 text-center bg-white/5 hover:border-white/40 transition-colors">
                         <div className="text-center">
-                            <UploadCloud className="mx-auto h-12 w-12 text-gray-300" />
-                            <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                                <label htmlFor="images" className="relative cursor-pointer rounded-md bg-white font-semibold text-cyan-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-cyan-600 focus-within:ring-offset-2 hover:text-cyan-500">
+                            <UploadCloud className="mx-auto h-12 w-12 text-gray-400" />
+                            <div className="mt-4 flex text-base leading-6 text-gray-400">
+                                <label htmlFor="images" className="relative cursor-pointer rounded-md font-semibold text-white hover:text-gray-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-white/50 focus-within:ring-offset-2 focus-within:ring-offset-gray-900">
                                     <span>Upload files</span>
                                     <input ref={fileInputRef} id="images" name="images" type="file" multiple accept="image/*" className="sr-only" onChange={handleFileChange} />
                                 </label>
                                 <p className="pl-1">or drag and drop</p>
                             </div>
-                            <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+                            <p className="text-sm leading-5 text-gray-500">PNG, JPG, GIF up to 10MB</p>
                         </div>
                     </div>
                 </div>
@@ -139,11 +137,11 @@ export function AddProductForm({ addProductAction }: { addProductAction: (formDa
                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         {previews.map((src, index) => (
                             <motion.div key={src} initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="relative aspect-square">
-                                <img src={src} alt={`Preview ${index + 1}`} className="h-full w-full object-cover rounded-md" />
+                                <img src={src} alt={`Preview ${index + 1}`} className="h-full w-full object-cover rounded-xl border-2 border-white/10" />
                                 <button
                                     type="button"
                                     onClick={() => removeImage(index)}
-                                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 shadow-md hover:bg-red-600"
+                                    className="absolute -top-2 -right-2 p-1.5 bg-red-500/80 backdrop-blur-sm border border-white/20 text-white rounded-full shadow-lg hover:bg-red-500 transition-all transform hover:scale-110"
                                 >
                                     <X size={16} />
                                 </button>

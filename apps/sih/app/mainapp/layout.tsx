@@ -4,7 +4,7 @@ import AppBar from "@repo/ui/AppBar";
 import Sidebar from "@repo/ui/Sidebar";
 import MobileSidebar from "@repo/ui/MobileSidebar";
 import { getStudentRewards } from "../../actions/community/actions";
-import { SidebarProvider } from "@repo/ui/SidebarContext"; // <-- 1. Import the provider
+import { SidebarProvider } from "@repo/ui/SidebarContext";
 
 export default async function MainAppLayout({
   children,
@@ -19,19 +19,27 @@ export default async function MainAppLayout({
   }
 
   return (
-    // 2. Wrap the entire layout content with the SidebarProvider.
-    // This makes the sidebar state available to all child components.
     <SidebarProvider>
-      <div className="flex h-screen bg-slate-100">
+      {/* --- NEW: Video Background Element --- */}
+      <div className="video-background-container">
+        <video autoPlay loop muted>
+          {/* Make sure this path matches your video file in the public folder */}
+          <source src="/videos/mainapp-bg.mp4" type="video/mp4" />
+        </video>
+      </div>
+
+      {/* Remove the 'main-app-background' class from this div */}
+      <div className="flex min-h-screen w-full">
         {/* --- Desktop Sidebar --- */}
-        <div className="hidden lg:flex">
+        <div className="hidden lg:block">
           <Sidebar session={session} />
         </div>
 
-        <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 flex flex-col w-full">
           <AppBar session={session} rewardPoints={rewardPoints} />
-          <main className="flex-1 overflow-x-hidden overflow-y-auto p-4 sm:p-6 lg:p-8">
-            {children}
+          
+          <main className="flex-1 overflow-y-auto">
+            <div className="p-4 sm:p-6 lg:p-8">{children}</div>
           </main>
         </div>
 

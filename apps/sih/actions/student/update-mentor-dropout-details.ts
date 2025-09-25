@@ -35,7 +35,7 @@ export async function updateMentorDropoutDetails(studentId: string, data: any) {
     const response = await fetch("https://priyanshu631-sih-facial-recognition-api.hf.space/dropout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({        course: studentdetails?.course,
+      body: JSON.stringify({ course: studentdetails?.course,
         application_mode: studentdetails?.application_mode,
         attendance: studentdetails?.attendances,
         previous_qualification: studentdetails?.previous_qualification,
@@ -52,8 +52,24 @@ export async function updateMentorDropoutDetails(studentId: string, data: any) {
         international: studentdetails?.international,
         ...data}),
     });
-
-    if (!response.ok) {
+console.log("this is response" +response);
+console.log("this is data" + JSON.stringify({ course: studentdetails?.course,
+  application_mode: studentdetails?.application_mode,
+  attendance: studentdetails?.attendances,
+  previous_qualification: studentdetails?.previous_qualification,
+  mothers_qualification: studentdetails?.mothers_qualification,
+  fathers_qualification: studentdetails?.fathers_qualification,
+  mothers_occupation: studentdetails?.mothers_occupation,
+  fathers_occupation: studentdetails?.fathers_occupation,
+  displaced: studentdetails?.displaced,
+  debtor: studentdetails?.debtor,
+  tuition_fees_up_to_date: studentdetails?.tuition_fees_up_to_date,
+  gender: studentdetails?.gender,
+  scholarship_holder: studentdetails?.scholarship_holder,
+  age_at_enrollment: studentdetails?.age_at_enrollment,
+  international: studentdetails?.international,
+  ...data}));
+      if (!response.ok) {
       throw new Error("Prediction API request failed");
     }
 
