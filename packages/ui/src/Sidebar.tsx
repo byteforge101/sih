@@ -16,7 +16,7 @@ const studentLinks = [
   { href: '/mainapp/courses', label: 'My Courses', icon: BookOpen },
   { href: '/mainapp/meeting', label: 'Join Meetings', icon: Video },
   { href: '/mainapp/community-qs', label: 'Mentor Qs', icon: HelpCircle },
-  { href: '/mainapp/projects', label: 'Community Projects', icon: HeartHandshake },
+  { href: '/mainapp/community-projects', label: 'Community Projects', icon: HeartHandshake },
   { href: '/mainapp/face-enrollment', label: 'Enroll Face', icon: Camera },
   { href: '/mainapp/cart', label: 'Cart', icon: ShoppingCart },
   { href: '/mainapp/store', label: 'Redeem Rewards', icon: Store },
@@ -27,7 +27,8 @@ const mentorLinks = [
   { href: '/mainapp/meeting', label: 'Create Meetings', icon: Video },
   { href: '/mainapp/community-qs', label: 'Mentor Qs', icon: HelpCircle },
   { href: '/take-attendance', label: 'Take Attendance', icon: Vote },
-  { href: '/mainapp/store', label: 'Rewards', icon: Store }
+  { href: '/mainapp/store', label: 'Rewards', icon: Store },
+  { href: '/mainapp/community-projects', label: 'Community Projects', icon: HeartHandshake }
 ];
 const guardianLinks = [
   { href: '/mainapp/dashboard', label: 'Dashboard', icon: LayoutDashboard }, { href: '/mainapp/wards', label: 'My Wards', icon: Shield },
