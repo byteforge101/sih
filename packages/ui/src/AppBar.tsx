@@ -20,27 +20,25 @@ export default function AppBar({
   const { toggle: toggleSidebar } = useSidebar();
 
   return (
-    // --- REVAMPED: Glassmorphism header with aurora effect ---
-    <header className="aurora-bg m-4 rounded-2xl p-4 flex justify-between items-center sticky top-4 z-30">
-      <div className="flex items-center gap-2">
+    <header className="bg-white/8 backdrop-blur-2xl m-4 rounded-3xl p-4 flex justify-between items-center sticky top-4 z-30 border border-white/20 shadow-2xl shadow-black/30">
+      <div className="flex items-center gap-4">
         <motion.button
           whileTap={{ scale: 0.9 }}
-          whileHover={{ scale: 1.1, backgroundColor: 'rgba(var(--surface-rgb), 1)' }}
+          whileHover={{ scale: 1.1 }}
           onClick={toggleSidebar}
-          className="lg:hidden p-2 rounded-full transition-colors"
+          className="lg:hidden p-3 bg-white/10 rounded-full text-white hover:bg-white/20 transition-colors"
         >
-          <Menu className="text-slate-300" />
+          <Menu />
         </motion.button>
-        {/* --- REVAMPED: Futuristic search input --- */}
         <div className="relative hidden md:block">
           <Search
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none"
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
             size={20}
           />
           <input
             type="text"
-            placeholder="Search modules, mentees..."
-            className="pl-11 pr-4 py-2.5 w-72 rounded-full bg-slate-800/50 border border-slate-700 focus:bg-slate-800 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-300/30 outline-none transition-all duration-300 placeholder-slate-500"
+            placeholder="Search..."
+            className="w-full py-3 pr-4 pl-12 bg-white/10 backdrop-blur-lg border border-white/20 rounded-full text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/40 transition-all duration-300 shadow-sm"
           />
         </div>
       </div>
@@ -54,59 +52,55 @@ export default function AppBar({
           >
             {(session?.user as any)?.role === "STUDENT" &&
               rewardPoints !== null && (
-                // --- REVAMPED: Glowing reward points badge ---
                 <motion.div
-                  whileHover={{ scale: 1.05, boxShadow: '0 0 15px rgba(250, 204, 21, 0.5)' }}
-                  className="flex items-center gap-2 bg-amber-400/10 text-amber-300 px-4 py-2 rounded-full text-sm font-semibold border border-amber-400/20 cursor-pointer"
+                  whileHover={{ scale: 1.05 }}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-bold border shadow-lg bg-yellow-500/20 backdrop-blur-sm text-yellow-200 border-yellow-500/30 cursor-pointer"
                 >
                   <Award size={16} />
                   <span>{rewardPoints}</span>
                 </motion.div>
               )}
             <motion.button
-              whileHover={{ scale: 1.1, color: '#fff', textShadow: '0 0 8px #fff' }}
+              whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="p-2 rounded-full text-slate-400 hover:bg-slate-800/50 transition-colors"
+              className="p-3 bg-white/10 rounded-full text-white hover:bg-white/20 transition-colors"
             >
               <Bell />
             </motion.button>
             <div className="flex items-center gap-3">
               <div className="text-right hidden sm:block">
-                <p className="font-semibold text-slate-200">
+                <p className="font-semibold text-white">
                   {session.user.name}
                 </p>
-                <p className="text-xs text-slate-400 capitalize">
+                <p className="text-xs text-gray-300 capitalize">
                   {String((session.user as any).role).toLowerCase()}
                 </p>
               </div>
-              {/* --- REVAMPED: Enhanced user avatar with a glow effect --- */}
               <motion.div
-                whileHover={{ scale: 1.05, boxShadow: '0 0 20px var(--glow-primary)' }}
-                className="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-500 to-emerald-600 text-white flex items-center justify-center text-xl font-bold border-2 border-slate-800/80 shadow-lg cursor-pointer"
+                whileHover={{ scale: 1.05 }}
+                className="w-12 h-12 rounded-full bg-gradient-to-br from-sky-500 to-cyan-400 text-white flex items-center justify-center text-xl font-bold border-2 border-white/20 shadow-lg cursor-pointer"
               >
                 {userInitials}
               </motion.div>
             </div>
-            {/* --- REVAMPED: More dynamic logout button --- */}
             <motion.button
-              whileHover={{ scale: 1.05, backgroundPosition: '100% 0' }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => signOut()}
-              className="px-5 py-2.5 flex items-center gap-2 bg-gradient-to-r from-red-500/40 via-red-500/80 to-red-500/40 text-white rounded-lg transition-all duration-300 bg-size-200 bg-pos-0"
-              style={{ backgroundSize: '200% 100%' }}
+              className="inline-flex items-center justify-center gap-2 font-bold py-2.5 px-5 rounded-xl transition-all duration-300 transform focus:outline-none focus:ring-2 focus:ring-offset-2 backdrop-blur-lg border shadow-md bg-red-500/20 border-red-500/30 text-red-200 hover:bg-red-500/30 hover:text-red-100"
             >
               <LogOut size={18} />
-              <span>Logout</span>
+              <span className="hidden md:inline">Logout</span>
             </motion.button>
           </motion.div>
         ) : (
           <motion.button
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }}
-            whileHover={{ scale: 1.05, boxShadow: '0 0 25px var(--glow-primary)' }}
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => signIn()}
-            className="px-6 py-2.5 flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg shadow-lg shadow-cyan-500/20 transition-all duration-300"
+            className="inline-flex items-center justify-center font-bold py-2.5 px-6 rounded-xl transition-all duration-300 transform focus:outline-none focus:ring-2 focus:ring-offset-2 backdrop-blur-lg border shadow-xl bg-white/15 border-white/25 text-white hover:bg-white/25 shadow-white/10 focus:ring-white/30"
           >
             <LogIn size={18} />
             <span className="font-semibold">Login</span>
@@ -116,3 +110,4 @@ export default function AppBar({
     </header>
   );
 }
+
