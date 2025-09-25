@@ -2,8 +2,8 @@ import React from 'react';
 
 // A helper component for each detail item - REDESIGNED
 const DetailItem = ({ label, value, Icon }: { label: string; value: string | number; Icon: any }) => (
-    <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg shadow-sm border border-gray-200 flex items-center space-x-4 transition-all duration-300 hover:shadow-md hover:border-cyan-300">
-        <div className="flex-shrink-0 bg-cyan-100 text-cyan-600 rounded-full p-2">
+    <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg shadow-sm border border-gray-200 flex items-center space-x-4 transition-all duration-300 hover:shadow-md hover:border-blue-300">
+        <div className="flex-shrink-0 bg-blue-100 text-blue-600 rounded-full p-2">
             <Icon className="h-6 w-6" />
         </div>
         <div>
@@ -28,7 +28,7 @@ export const StudentProfileCard = ({ student ,className=''}: { student: any,clas
     return (
         <div className={`bg-gray-50 p-4 sm:p-6 lg:p-8 rounded-2xl shadow-2xl w-full border border-gray-100 mt-8 ${className}`}>
             {/* --- Header with Gradient --- */}
-            <div className="bg-gradient-to-r from-cyan-400 to-emerald-500 p-8 rounded-xl shadow-lg shadow-cyan-500/30 -mt-16 mb-12 flex justify-between items-center">
+            <div className="bg-gradient-to-r from-blue-500 to-blue-700 p-8 rounded-xl shadow-lg shadow-blue-500/30 -mt-16 mb-12 flex justify-between items-center">
                 <h2 className="text-4xl font-extrabold text-white tracking-tight">{student.user?.name}</h2>
                 <div className="flex items-center space-x-2 bg-white/20 text-white px-4 py-2 rounded-full backdrop-blur-sm">
                     <CheckCircleIcon />

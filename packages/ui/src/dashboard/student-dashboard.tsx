@@ -99,7 +99,7 @@ export default function StudentDashboard({ data }: { data: StudentDashboardData 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <StatCard title="Attendance" value={`${stats.attendancePercentage}%`} icon={CheckCircle} color="from-green-400 to-emerald-500" />
                 <StatCard title="Current CGPA" value={stats.cgpa} icon={BarChart2} color="from-blue-400 to-cyan-500" />
-                <StatCard title="Overdue Fees" value={`$${stats.overdueFees}`} icon={DollarSign} color="from-red-400 to-rose-500" />
+                <StatCard title="Overdue Fees" value={`₹${stats.overdueFees}`} icon={DollarSign} color="from-red-400 to-rose-500" />
                 <StatCard title="Enrolled Courses" value={stats.totalCourses} icon={BookOpen} color="from-purple-400 to-violet-500" />
             </div>
         </div>

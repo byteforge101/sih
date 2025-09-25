@@ -35,14 +35,30 @@ export default function StoreClientPage({ products, userRole }: { products: Prod
         }
     }, [userRole]);
 
-    // FIX: Made the handleAddToCart function async
+    // This function will now control the entire timing sequence.
     const handleAddToCart = async (productId: string) => {
         startTransition(async () => {
-            await addToCart(productId);
-            const updatedCart = await getCart();
-            setCart(updatedCart);
+            const startTime = Date.now();
             
+            // This time controls the duration of the '...' and ensures a smooth transition.
+            const MINIMUM_VISUAL_TIME = 800; 
 
+            // 1. Run the core action to add the item to the cart.
+            await addToCart(productId);
+
+            // 2. Fetch the updated cart state.
+            const updatedCart = await getCart();
+            
+            const elapsedTime = Date.now() - startTime;
+            const delayNeeded = Math.max(0, MINIMUM_VISUAL_TIME - elapsedTime);
+            
+            // 3. CRITICAL: Wait for the required delay BEFORE updating the cart state.
+            // This is the promise that the child component's 'finally' block is waiting on.
+            await new Promise(resolve => setTimeout(resolve, delayNeeded));
+
+            // 4. Update cart state. This happens immediately AFTER the delay,
+            // which ensures the 'Added to Cart' message appears smoothly.
+            setCart(updatedCart);
         });
     };
 
@@ -61,7 +77,7 @@ export default function StoreClientPage({ products, userRole }: { products: Prod
                         <motion.div
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="flex items-center gap-2 bg-cyan-500 text-white px-4 py-2 rounded-lg font-semibold shadow-lg hover:shadow-cyan-500/40 transition-all duration-300"
+                            className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold shadow-lg hover:shadow-blue-500/40 transition-all duration-300"
                         >
                             <PlusCircle size={20} />
                             <span>Add New Item</span>
@@ -93,7 +109,7 @@ export default function StoreClientPage({ products, userRole }: { products: Prod
                             />
                             {isInCart && (
                                 <Link href="/mainapp/cart">
-                                    <div className="mt-2 flex items-center justify-center gap-2 text-sm font-semibold text-green-600 bg-green-100 p-2 rounded-lg">
+                                    <div className="mt-2 flex items-center justify-center gap-2 text-sm font-semibold text-blue-600 bg-blue-100 p-2 rounded-lg">
                                         <CheckCircle size={16} />
                                         <span>Added to Cart</span>
                                     </div>

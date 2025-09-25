@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState } from 'react';
 import { CurricularUnitForm } from '@repo/ui/CurricularUnitForm';
@@ -22,7 +22,8 @@ export function MenteeList({ mentees }: { mentees: any[] }) {
 
     return (
         <div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-6">
+            {/* FIX: Changed the grid classes to only allow max 2 columns */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6"> 
                 {mentees.map((mentee) => {
                     const name = mentee.user?.name || 'N/A';
                     const initials = name.split(' ').map((n: string) => n[0] || '').join('').substring(0, 2);
@@ -36,7 +37,7 @@ export function MenteeList({ mentees }: { mentees: any[] }) {
                             <div className="flex items-start justify-between">
                                 {/* Avatar and Name */}
                                 <div className="flex items-center gap-4">
-                                    <div className="flex-shrink-0 h-14 w-14 flex items-center justify-center rounded-full bg-gradient-to-r from-cyan-400 to-emerald-500 text-white font-bold text-xl shadow-lg shadow-cyan-500/30">
+                                    <div className="flex-shrink-0 h-14 w-14 flex items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold text-xl shadow-lg shadow-blue-500/30">
                                         {initials}
                                     </div>
                                     <div>
@@ -48,21 +49,22 @@ export function MenteeList({ mentees }: { mentees: any[] }) {
                                 {/* Status Badges */}
                                 <div className="flex flex-col items-end gap-2">
                                     {mentee.isAtRisk && (
-                                        <div className="flex items-center gap-2 bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold uppercase">
+                                        <div className="flex items-center gap-2 bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold uppercase whitespace-nowrap">
                                             <AtRiskIcon />
                                             <span>At Risk</span>
                                         </div>
                                     )}
                                     {hasPredictedScore && mentee.predictedscore < 50 && (
-                                        <div className="flex items-center gap-2 bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-bold uppercase">
+                                        <div className="flex items-center gap-2 bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-bold uppercase whitespace-nowrap">
                                             <LowScoreIcon />
                                             <span>Low Score</span>
                                         </div>
                                     )}
                                     {hasPredictedScore && mentee.predictedscore >= 50 && (
-                                        <div className="flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold uppercase">
+                                        <div className="flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold uppercase whitespace-nowrap">
                                             <AcceptableScoreIcon />
-                                            <span>Acceptable score</span>
+                                            {/* Shorter text to minimize required space */}
+                                            <span>Acceptable Score</span> 
                                         </div>
                                     )}
                                 </div>
@@ -79,7 +81,7 @@ export function MenteeList({ mentees }: { mentees: any[] }) {
                                 </Link>
                                 <button
                                     onClick={() => setSelectedStudentId(mentee.id)}
-                                    className="flex-1 text-center bg-gradient-to-r from-cyan-400 to-emerald-500 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/30 flex items-center justify-center"
+                                    className="flex-1 text-center bg-gradient-to-r from-blue-500 to-blue-700 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30 flex items-center justify-center"
                                 >
                                     <PredictIcon/>
                                     Predict

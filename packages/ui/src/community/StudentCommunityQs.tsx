@@ -177,7 +177,12 @@ export default function StudentCommunityQs({ questions, handleSubmitAnswer }: St
         })}
       </motion.div>
 
-      <dialog ref={dialogRef} onClose={handleCloseModal} className="p-0 rounded-2xl shadow-2xl backdrop:bg-black/50 w-full max-w-lg">
+      <dialog 
+        ref={dialogRef} 
+        onClose={handleCloseModal} 
+        // FIX: Add classes to force center alignment (often needed due to browser defaults/CSS)
+        className="p-0 rounded-2xl shadow-2xl backdrop:bg-black/50 w-full max-w-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+      >
         <AnimatePresence>
         {selectedQuestion && (
             <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}>

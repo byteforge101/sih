@@ -44,7 +44,7 @@ const VideoCard = ({
   };
   
   const cardStyle = isPinned && variant === 'thumbnail' ? 'border-4 border-blue-500' : 'border-4 border-transparent';
-  const mentorStyle = isLocal && variant === 'main' ? 'border-4 border-violet-500 shadow-violet-500/20' : '';
+  const mentorStyle = isLocal && variant === 'main' ? 'border-4 border-blue-500 shadow-blue-500/20' : '';
 
   return (
     <div ref={containerRef} className={`relative aspect-video bg-slate-700 rounded-xl overflow-hidden shadow-lg transition-all duration-300 group ${cardStyle} ${mentorStyle}`}>
@@ -231,7 +231,7 @@ export default function MeetingRoom({ meetingId, userRole }: { meetingId: string
     return (
         <div className="flex items-center justify-center h-full bg-slate-100">
             <div className="text-center">
-                <LoaderCircle className="mx-auto h-12 w-12 text-violet-500 animate-spin" />
+                <LoaderCircle className="mx-auto h-12 w-12 text-blue-500 animate-spin" />
                 <h2 className="mt-4 text-lg font-medium text-slate-700">Connecting to meeting...</h2>
                 <p className="text-slate-500">Please allow camera and microphone access.</p>
             </div>

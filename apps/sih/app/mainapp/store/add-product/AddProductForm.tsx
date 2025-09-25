@@ -14,7 +14,7 @@ function SubmitButton({ isSubmitting }: { isSubmitting: boolean }) {
         <button
             type="submit"
             disabled={disabled}
-            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-gradient-to-r from-cyan-500 to-emerald-600 hover:from-cyan-600 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-300"
+            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-300"
         >
             {disabled ? "Adding Product..." : "Add Product"}
         </button>
@@ -103,11 +103,11 @@ export function AddProductForm({ addProductAction }: { addProductAction: (formDa
             <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                 <div>
                     <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-1.5">Product Name</label>
-                    <input type="text" name="name" id="name" required className="block w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-gray-800 shadow-sm focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500" />
+                    <input type="text" name="name" id="name" required className="block w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-gray-800 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
                 </div>
                 <div>
                     <label htmlFor="description" className="block text-sm font-semibold text-gray-700 mb-1.5">Description</label>
-                    <textarea name="description" id="description" rows={4} required className="block w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-gray-800 shadow-sm focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500" />
+                    <textarea name="description" id="description" rows={4} required className="block w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-gray-800 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
                 </div>
                 <div>
                     <label htmlFor="price" className="block text-sm font-semibold text-gray-700 mb-1.5">Price (in Reward Points)</label>
@@ -115,7 +115,7 @@ export function AddProductForm({ addProductAction }: { addProductAction: (formDa
                          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                             <Award className="h-5 w-5 text-gray-400" />
                         </div>
-                        <input type="number" name="price" id="price" required className="block w-full rounded-lg border border-gray-200 bg-white pl-10 pr-4 py-2.5 text-gray-800 shadow-sm focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500" />
+                        <input type="number" name="price" id="price" required className="block w-full rounded-lg border border-gray-200 bg-white pl-10 pr-4 py-2.5 text-gray-800 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
                     </div>
                 </div>
                 <div>
@@ -124,7 +124,7 @@ export function AddProductForm({ addProductAction }: { addProductAction: (formDa
                         <div className="text-center">
                             <UploadCloud className="mx-auto h-12 w-12 text-gray-300" />
                             <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                                <label htmlFor="images" className="relative cursor-pointer rounded-md bg-white font-semibold text-cyan-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-cyan-600 focus-within:ring-offset-2 hover:text-cyan-500">
+                                <label htmlFor="images" className="relative cursor-pointer rounded-md bg-white font-semibold text-blue-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-600 focus-within:ring-offset-2 hover:text-blue-500">
                                     <span>Upload files</span>
                                     <input ref={fileInputRef} id="images" name="images" type="file" multiple accept="image/*" className="sr-only" onChange={handleFileChange} />
                                 </label>

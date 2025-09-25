@@ -39,7 +39,7 @@ interface StudentProfileFormProps {
 
 // Reusable styles for a consistent and modern look
 const labelStyle = "block text-sm font-semibold text-gray-700 mb-1.5";
-const inputStyle = "block w-full appearance-none rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-gray-800 placeholder-gray-400 shadow-sm focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 sm:text-sm transition duration-200";
+const inputStyle = "block w-full appearance-none rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-gray-800 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 sm:text-sm transition duration-200";
 const errorStyle = "mt-2 text-sm text-red-600";
 const fieldsetStyles = "bg-white/70 backdrop-blur-sm p-6 rounded-xl border border-gray-200/80 shadow-sm";
 
@@ -78,7 +78,7 @@ export function StudentProfileForm({
             <div className="space-y-8">
                 {/* Academic Information Section */}
                 <fieldset className={fieldsetStyles}>
-                    <div className="flex items-center gap-3 mb-6 text-cyan-600">
+                    <div className="flex items-center gap-3 mb-6 text-blue-600">
                         <AcademicCapIcon />
                         <legend className="text-xl font-bold">Academic Profile</legend>
                     </div>
@@ -120,7 +120,7 @@ export function StudentProfileForm({
 
                 {/* Family Information Section */}
                 <fieldset className={fieldsetStyles}>
-                     <div className="flex items-center gap-3 mb-6 text-cyan-600">
+                     <div className="flex items-center gap-3 mb-6 text-blue-600">
                         <UserGroupIcon />
                         <legend className="text-xl font-bold">Family Background</legend>
                     </div>
@@ -162,7 +162,7 @@ export function StudentProfileForm({
 
                 {/* Additional Information Section */}
                 <fieldset className={fieldsetStyles}>
-                    <div className="flex items-center gap-3 mb-6 text-cyan-600">
+                    <div className="flex items-center gap-3 mb-6 text-blue-600">
                         <ClipboardIcon />
                         <legend className="text-xl font-bold">Personal & Financial Details</legend>
                     </div>
@@ -229,7 +229,7 @@ export function StudentProfileForm({
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-gradient-to-r from-cyan-400 to-emerald-500 hover:from-cyan-500 hover:to-emerald-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-300"
+                    className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-300"
                 >
                     {isSubmitting ? "Submitting Profile..." : "Submit Profile"}
                 </button>

@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, ShoppingCart, Award } from 'lucide-react';
+import { ChevronLeft, ChevronRight, PlusCircle, Award } from 'lucide-react';
 import { addToCart } from '../../../../../actions/store/actions';
 
 type Product = {
@@ -85,9 +85,9 @@ export default function ProductDetailsClient({ product, userRole }: { product: P
                                 whileTap={{ scale: 0.95 }}
                                 onClick={handleAddToCart}
                                 disabled={isPending}
-                                className="flex-1 flex items-center justify-center gap-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-cyan-500/40 transition-all duration-300 disabled:opacity-60"
+                                className="flex-1 flex items-center justify-center gap-3 bg-gradient-to-r from-blue-500 to-blue-700 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-blue-500/40 transition-all duration-300 disabled:opacity-60"
                             >
-                                <ShoppingCart size={22} />
+                                <PlusCircle size={22} />
                                 {isPending ? "Adding..." : "Add to Cart"}
                             </motion.button>
                         </div>

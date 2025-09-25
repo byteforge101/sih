@@ -75,7 +75,7 @@ const InputWithIcon = ({ Icon, error, ...props }: InputWithIconProps) => {
         className={`w-full pl-8 pr-4 py-3 bg-transparent border-b-2 transition ${
           error 
             ? 'border-red-500 focus:border-red-500' 
-            : 'border-slate-300 focus:border-indigo-500'
+            : 'border-slate-300 focus:border-blue-500'
         } focus:outline-none`}
       />
       {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
@@ -128,7 +128,7 @@ const AuthPage: React.FC = () => {
                     style={{ backgroundImage: `url(${images[imageIndex]})` }}
                 />
             </AnimatePresence>
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/70 to-indigo-700/80" />
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/70 to-blue-700/80" />
             
             <div className="relative z-10 flex flex-col justify-between h-full p-12 text-white">
                 <div>
@@ -136,14 +136,14 @@ const AuthPage: React.FC = () => {
                         <div className="bg-white/20 p-2 rounded-lg">
                             <GraduationCap size={32} />
                         </div>
-                        <h1 className="text-2xl font-bold tracking-wider bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">learnova</h1>
+                        <h1 className="text-2xl font-bold tracking-wider bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">Learnova</h1>
                     </div>
-                    <p className="mt-8 text-indigo-100 text-lg leading-relaxed font-light backdrop-blur-[2px]">
+                    <p className="mt-8 text-blue-100 text-lg leading-relaxed font-light backdrop-blur-[2px]">
                         Empowering institutions with AI to predict student success and foster growth. Welcome to the future of education.
                     </p>
                 </div>
-                <div className="text-sm text-indigo-300">
-                    &copy; {new Date().getFullYear()} learnova.
+                <div className="text-sm text-blue-300">
+                    &copy; {new Date().getFullYear()} Learnova
                 </div>
             </div>
         </div>
@@ -154,8 +154,8 @@ const AuthPage: React.FC = () => {
                  <div className="relative mx-auto mb-10 w-fit bg-slate-100 p-1.5 rounded-full flex items-center gap-2">
                     <button
                     onClick={() => setIsSignUp(false)}
-                    className={`relative z-10 px-6 py-2 rounded-full text-sm font-semibold transition-colors ${
-                        !isSignUp ? 'text-white' : 'text-slate-600'
+                    className={`relative z-10 px-6 py-2 rounded-full text-sm font-bold transition-colors ${
+                        !isSignUp ? 'text-white' : 'text-slate-300'
                     }`}
                     >
                     Sign In
@@ -163,14 +163,14 @@ const AuthPage: React.FC = () => {
                     {!isSignUp && (
                     <motion.div
                         layoutId="active-pill"
-                        className="absolute inset-0 bg-indigo-600 shadow-lg rounded-full"
+                        className="absolute inset-0 bg-blue-600 shadow-lg rounded-full"
                         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                     />
                     )}
                     <button
                     onClick={() => setIsSignUp(true)}
                     className={`relative z-10 px-6 py-2 rounded-full text-sm font-semibold transition-colors ${
-                        isSignUp ? 'text-white' : 'text-slate-600'
+                        isSignUp ? 'text-white' : 'text-slate-300'
                     }`}
                     >
                     Sign Up
@@ -178,7 +178,7 @@ const AuthPage: React.FC = () => {
                     {isSignUp && (
                     <motion.div
                         layoutId="active-pill"
-                        className="absolute inset-0 bg-indigo-600 shadow-lg rounded-full"
+                        className="absolute inset-0 bg-blue-600 shadow-lg rounded-full"
                         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                     />
                     )}
@@ -314,7 +314,7 @@ const SignUpForm = () => {
                 </motion.div>
                 <motion.div variants={formVariants} initial="hidden" animate="visible" custom={4}>
                     <label className="block text-sm font-medium text-slate-700 mb-1.5">I am a...</label>
-                    <select name="role" value={formData.role} onChange={handleChange} className="w-full px-4 py-3 bg-white border-b-2 border-slate-300 focus:border-indigo-500 focus:outline-none transition appearance-none">
+                    <select name="role" value={formData.role} onChange={handleChange} className="w-full px-4 py-3 bg-white border-b-2 border-slate-300 focus:border-blue-500 focus:outline-none transition appearance-none">
                         <option value="STUDENT">Student</option>
                         <option value="MENTOR">Mentor</option>
                         <option value="GUARDIAN">Guardian</option>
@@ -338,7 +338,7 @@ const SignUpForm = () => {
                         </motion.div>
                     )}
                 </AnimatePresence>
-                <motion.button type="submit" disabled={isLoading} variants={formVariants} initial="hidden" animate="visible" custom={5} className="w-full bg-indigo-600 text-white font-semibold py-3 rounded-xl shadow-lg shadow-indigo-500/20 hover:bg-indigo-700 transition-all duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400 disabled:cursor-not-allowed">
+                <motion.button type="submit" disabled={isLoading} variants={formVariants} initial="hidden" animate="visible" custom={5} className="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl shadow-lg shadow-blue-500/20 hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400 disabled:cursor-not-allowed">
                     {isLoading ? 'Creating Account...' : 'Create Account'}
                 </motion.button>
             </form>
@@ -394,7 +394,7 @@ const SignInForm = () => {
                     <InputWithIcon Icon={Lock} type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
                 </motion.div>
 
-                <motion.button type="submit" disabled={isLoading} variants={formVariants} initial="hidden" animate="visible" custom={3} className="w-full bg-indigo-600 text-white font-semibold py-3 rounded-xl shadow-lg shadow-indigo-500/20 hover:bg-indigo-700 transition-all duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400 disabled:cursor-not-allowed">
+                <motion.button type="submit" disabled={isLoading} variants={formVariants} initial="hidden" animate="visible" custom={3} className="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl shadow-lg shadow-blue-500/20 hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400 disabled:cursor-not-allowed">
                     {isLoading ? 'Signing In...' : 'Sign In'}
                 </motion.button>
 
@@ -404,7 +404,7 @@ const SignInForm = () => {
                     <div className="flex-grow border-t border-slate-200"></div>
                 </motion.div>
 
-                <motion.button onClick={handleGoogleSignIn} disabled={isLoading} variants={formVariants} initial="hidden" animate="visible" custom={5} type="button" className="w-full flex items-center justify-center gap-3 bg-white border border-slate-300 text-slate-700 font-semibold py-3 rounded-xl hover:bg-slate-50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-slate-200 disabled:cursor-not-allowed">
+                <motion.button onClick={handleGoogleSignIn} disabled={isLoading} variants={formVariants} initial="hidden" animate="visible" custom={5} type="button" className="w-full flex items-center justify-center gap-3 bg-white border border-slate-300 text-slate-700 font-semibold py-3 rounded-xl hover:bg-slate-50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-slate-200 disabled:cursor-not-allowed">
                     <GoogleIcon />
                     Sign in with Google
                 </motion.button>
