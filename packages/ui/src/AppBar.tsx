@@ -39,7 +39,7 @@ export default function AppBar({
           <input
             type="text"
             placeholder="Search..."
-            className="pl-10 pr-4 py-2 w-64 rounded-full bg-slate-100/80 border border-transparent focus:bg-white focus:border-cyan-400 focus:ring-2 focus:ring-cyan-300/50 outline-none transition-all"
+            className="pl-10 pr-4 py-2 w-64 rounded-full bg-slate-100/80 border border-transparent focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-300/50 outline-none transition-all"
           />
         </div>
       </div>
@@ -73,7 +73,7 @@ export default function AppBar({
                   {String((session.user as any).role).toLowerCase()}
                 </p>
               </div>
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-400 to-emerald-500 text-white flex items-center justify-center text-xl font-bold border-2 border-white shadow-lg">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 text-white flex items-center justify-center text-xl font-bold border-2 border-white shadow-lg">
                 {userInitials}
               </div>
             </div>
@@ -91,7 +91,7 @@ export default function AppBar({
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             onClick={() => signIn()}
-            className="px-6 py-2 flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:shadow-lg hover:shadow-cyan-500/40 transition-all duration-300"
+            className="px-6 py-2 flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg hover:shadow-lg hover:shadow-blue-500/40 transition-all duration-300"
           >
             <LogIn size={18} />
             <span className="font-semibold">Login</span>

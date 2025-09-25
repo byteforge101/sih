@@ -36,7 +36,7 @@ const CustomInputField = React.forwardRef<HTMLInputElement, { label: string; nam
             ref={ref}
             name={name}
             {...props}
-            className={`mt-1 block w-full pl-3 pr-3 py-2 text-base border ${error ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm bg-gray-50`}
+            className={`mt-1 block w-full pl-3 pr-3 py-2 text-base border ${error ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md shadow-sm bg-gray-50`}
         />
         {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
     </div>
@@ -127,7 +127,7 @@ export function CurricularUnitForm({ studentId, onClose, updateAction }: { stude
 
                         <div className="flex justify-end gap-4 pt-4">
                             <button type="button" onClick={onClose} className="px-6 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 font-semibold">Cancel</button>
-                            <button type="submit" disabled={isSubmitting} className="px-6 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 font-semibold disabled:bg-gray-400">
+                            <button type="submit" disabled={isSubmitting} className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 font-semibold disabled:bg-gray-400">
                                 {isSubmitting ? "Predicting..." : "Predict"}
                             </button>
                         </div>

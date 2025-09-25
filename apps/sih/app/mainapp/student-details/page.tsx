@@ -33,14 +33,14 @@ export default async function StudentDetailsPage() {
 
           {/* Display the predicted score here for better visibility if it exists */}
           {student?.predictedscore && (
-            <div className="mt-8 rounded-2xl border-2 border-cyan-500 bg-cyan-50 p-6 shadow-lg">
-              <p className="text-sm font-semibold text-cyan-800">
+            <div className="mt-8 rounded-2xl border-2 border-blue-500 bg-blue-50 p-6 shadow-lg">
+              <p className="text-sm font-semibold text-blue-800">
                 PREDICTED EXAM SCORE
               </p>
-              <p className="mt-2 text-5xl font-bold tracking-tight text-cyan-700">
+              <p className="mt-2 text-5xl font-bold tracking-tight text-blue-700">
                 {student.predictedscore.toFixed(2)}
               </p>
-              <p className="mt-2 text-xs text-cyan-600">
+              <p className="mt-2 text-xs text-blue-600">
                 This prediction is based on the data you provided. Keep it updated for accuracy.
               </p>
             </div>
@@ -72,7 +72,7 @@ export default async function StudentDetailsPage() {
                   name="age"
                   type="number"
                   defaultValue={student?.age ?? ""}
-                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
               </div>
 
@@ -85,7 +85,7 @@ export default async function StudentDetailsPage() {
                   id="gender"
                   name="gender"
                   defaultValue={student?.gender ?? ""}
-                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-400"
                 >
                   <option value="" disabled>Select gender</option>
                   <option value="Male">Male</option>
@@ -103,7 +103,7 @@ export default async function StudentDetailsPage() {
                   name="study_hours_per_day"
                   type="number"
                   defaultValue={student?.study_hours_per_day ?? ""}
-                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
               </div>
 
@@ -117,7 +117,7 @@ export default async function StudentDetailsPage() {
                   name="social_media_hours"
                   type="number"
                   defaultValue={student?.social_media_hours ?? ""}
-                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
               </div>
               
@@ -130,7 +130,7 @@ export default async function StudentDetailsPage() {
                   id="part_time_job"
                   name="part_time_job"
                   defaultValue={student?.part_time_job ?? ""}
-                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-400"
                 >
                   <option value="" disabled>Select</option>
                   <option value="Yes">Yes</option>
@@ -148,7 +148,7 @@ export default async function StudentDetailsPage() {
                   name="attendance_percentage"
                   type="number"
                   defaultValue={student?.attendance_percentage ?? ""}
-                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
               </div>
 
@@ -162,7 +162,7 @@ export default async function StudentDetailsPage() {
                   name="sleep_hours"
                   type="number"
                   defaultValue={student?.sleep_hours ?? ""}
-                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
               </div>
 
@@ -175,7 +175,7 @@ export default async function StudentDetailsPage() {
                   id="diet_quality"
                   name="diet_quality"
                   defaultValue={student?.diet_quality ?? ""}
-                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-400"
                 >
                   <option value="" disabled>Select</option>
                   <option value="Good">Good</option>
@@ -194,7 +194,7 @@ export default async function StudentDetailsPage() {
                   name="exercise_hours"
                   type="number"
                   defaultValue={student?.exercise_hours ?? ""}
-                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
               </div>
 
@@ -210,7 +210,7 @@ export default async function StudentDetailsPage() {
                   min="0"
                   max="10"
                   defaultValue={student?.mental_health ?? ""}
-                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
               </div>
 
@@ -223,7 +223,7 @@ export default async function StudentDetailsPage() {
                   id="parental_education_level"
                   name="parental_education_level"
                   defaultValue={student?.parental_education_level ?? ""}
-                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                  className="mt-1 block w-full rounded-lg border border-gray-200 bg-white/70 px-3 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-400"
                 >
                   <option value="" disabled>Select</option>
                   <option value="None">None</option>
@@ -239,7 +239,7 @@ export default async function StudentDetailsPage() {
             <div className="flex justify-end border-t border-white/50 bg-white/20 p-6">
               <button
                 type="submit"
-                className="transform rounded-full border-b-4 border-cyan-700 bg-gradient-to-b from-cyan-400 to-cyan-500 px-6 py-2 font-bold text-white shadow-lg transition-all duration-150 hover:from-cyan-500 hover:to-cyan-600 active:translate-y-px active:border-cyan-500"
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-300"
               >
                 Save Changes
               </button>

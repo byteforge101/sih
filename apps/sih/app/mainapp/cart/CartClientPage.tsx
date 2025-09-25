@@ -130,9 +130,9 @@ export default function CartClientPage({ initialCart, initialOrders }: { initial
                         <button
                             onClick={handlePurchase}
                             disabled={isPending || !cart?.items.length}
-                            className="mt-6 w-full bg-cyan-600 text-white font-bold py-3 rounded-lg hover:bg-cyan-700 transition disabled:bg-gray-300"
+                            className="mt-6 w-full bg-blue-700 text-white font-bold py-3 rounded-lg hover:bg-blue-800 transition disabled:bg-gray-300"
                         >
-                            {isPending ? "Processing..." : "Purchase"}
+                            {isPending ? "Processing..." : "Redeem"}
                         </button>
                     </div>
                 </div>

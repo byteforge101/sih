@@ -12,7 +12,7 @@ const DetailItem = ({ label, value }: { label: string; value: string | number | 
 
 // A helper for section titles - Updated with new color
 const SectionTitle = ({ title }: { title: string }) => (
-    <h3 className="text-xl font-bold text-gray-900 border-b-2 border-cyan-200 pb-2 mb-6 col-span-full">{title}</h3>
+    <h3 className="text-xl font-bold text-gray-900 border-b-2 border-blue-200 pb-2 mb-6 col-span-full">{title}</h3>
 );
 
 
@@ -56,7 +56,7 @@ export default async function MenteeDetailsPage({ params }: { params: { studentI
 
             {/* --- Predicted Score Card - Updated with new gradient --- */}
             {student.predictedscore != null && (
-                 <div className="mb-8 bg-gradient-to-r from-cyan-400 to-emerald-500 p-6 rounded-lg shadow-lg shadow-cyan-500/30 text-white">
+                 <div className="mb-8 bg-gradient-to-r from-blue-500 to-blue-700 p-6 rounded-lg shadow-lg shadow-blue-500/30 text-white">
                     <h3 className="text-xl font-bold">Predicted Score</h3>
                     <p className="text-4xl font-extrabold">{student.predictedscore.toFixed(2)}</p>
                  </div>

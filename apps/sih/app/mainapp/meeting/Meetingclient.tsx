@@ -30,17 +30,17 @@ export default function MeetingClient({ meetings, userRole }: { meetings: any[];
               placeholder="Meeting Title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="flex-grow border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-violet-400"
+              className="flex-grow border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
             <input
               type="datetime-local"
               value={startTime}
               onChange={(e) => setStartTime(e.target.value)}
-              className="border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-violet-400"
+              className="border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
             <button
               onClick={handleCreateMeeting}
-              className="px-6 py-2 bg-violet-600 text-white font-semibold rounded-lg shadow hover:bg-violet-700 transition"
+              className="px-6 py-2 bg-blue-700 text-white font-bold rounded-lg shadow hover:bg-blue-800 transition"
             >
               Create Meeting
             </button>
@@ -61,7 +61,7 @@ export default function MeetingClient({ meetings, userRole }: { meetings: any[];
               </div>
               <button
                 onClick={() => router.push(`/mainapp/meeting/${meeting.id}`)}
-                className="px-5 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition"
+                className="px-5 py-2 bg-blue-700 text-white font-semibold rounded-lg hover:bg-blue-800 transition"
               >
                 {userRole === 'MENTOR' ? 'Start Meeting' : 'Join Meeting'}
               </button>

@@ -73,8 +73,8 @@ export default function Header() {
         >
           <a href="#" className="flex items-center gap-2">
             <GraduationCap className="w-8 h-8 text-blue-500" />
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-gray-700 bg-clip-text text-transparent">
-              learnova
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-blue-800 bg-clip-text text-transparent">
+              Learnova
             </h1>
           </a>
         </motion.div>
@@ -98,7 +98,7 @@ export default function Header() {
             <motion.button
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300"
+              className="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-6 py-2 rounded-lg font-bold shadow-md hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300"
             >
               Dashboard Login
             </motion.button>
@@ -135,7 +135,7 @@ export default function Header() {
           {/* --- FIX FOR MOBILE BUTTON --- */}
           <motion.li variants={listItemVariants}>
              <a href="/auth">
-               <button className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-xl">
+               <button className="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-8 py-3 rounded-lg font-bold text-xl">
                  Dashboard Login
                </button>
              </a>
